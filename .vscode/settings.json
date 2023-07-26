@@ -4,6 +4,9 @@
   "files.associations": {
     "*.tera": "handlebars" // Allow syntax highlighting for template variables.
   },
+  "files.readonlyInclude": {
+    "**/generated/**": true
+  },
   "files.eol": "\n",
   "rust-analyzer.check.allTargets": true,
   "rust-analyzer.check.features": "all",
