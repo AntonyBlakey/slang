@@ -8,6 +8,7 @@ publish = false
 [dependencies]
 anyhow = { workspace = true }
 infra_utils = { workspace = true }
+lazy_static = "1.4.0"
 proc-macro2 = { workspace = true }
 quote = { workspace = true }
 
