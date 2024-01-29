@@ -139,6 +139,7 @@ impl RustGenerator {
             "napi_interface/cursor.rs",
             "napi_interface/parse_error.rs",
             "napi_interface/parse_output.rs",
+            "napi_interface/query.rs",
             "napi_interface/text_index.rs",
             "napi_interface/mod.rs",
             "parser_support/mod.rs",
