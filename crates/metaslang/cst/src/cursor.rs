@@ -49,7 +49,7 @@ impl<T: KindTypes> Cursor<T> {
     }
 
     fn set_from_ancestor_node(&mut self, ancestor: &Rc<PathAncestor<T>>) {
-        self.parent = ancestor.parent.clone();
+        self.parent.clone_from(&ancestor.parent);
         self.node = Node::<T>::Nonterminal(ancestor.nonterminal_node.clone());
         self.child_number = ancestor.child_number;
         self.text_offset = ancestor.text_offset;
@@ -169,7 +169,7 @@ impl<T: KindTypes> Cursor<T> {
 
             fn next(&mut self) -> Option<Self::Item> {
                 if let Some(a) = self.a.take() {
-                    self.a = a.parent.clone();
+                    self.a.clone_from(&a.parent);
                     Some(a.nonterminal_node.clone())
                 } else {
                     None

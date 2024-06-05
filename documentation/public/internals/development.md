@@ -26,5 +26,5 @@ We manage versioning through [changesets](https://github.com/changesets/changese
 
 Our `$REPO_ROOT/.github/dependabot.yml` config runs automatic updates to our dependencies on a weekly basis. This handles `github-actions`, `npm`, `cargo`, and `pip` packages. However, two kinds of dependencies still need to be updated manually for now:
 
-1. Rust toolchains: `$RUST_STABLE_VERSION` and `$RUST_NIGHTLY_VERSION` defined in `hermit.hcl` and updated via `rustup install`.
+1. Rust toolchains: `$RUST_STABLE_VERSION` defined in `hermit.hcl` and updated via `rustup install`.
 2. Hermit binaries defined in `$REPO_ROOT/bin/XXX.pkg`, and updated via `hermit install`.

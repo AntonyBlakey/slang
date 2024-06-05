@@ -17,28 +17,14 @@ pub fn setup_cargo() -> Result<()> {
     if !GitHub::is_running_in_ci() {
         rustup_add_components(
             env!("RUST_STABLE_VERSION"),
-            ["rust-analyzer", "rust-docs", "rust-src"],
+            ["rust-analyzer", "rust-docs", "rust-src", "rustfmt"],
         )?;
     }
-
-    // Additionally, we also need 'rustfmt nightly', as we use experimental options.
-    // So let's install the '$RUST_NIGHTLY_VERSION' toolchain along with the 'rustfmt' component.
-    rustup_install_toolchain(env!("RUST_NIGHTLY_VERSION"))?;
-    rustup_add_components(env!("RUST_NIGHTLY_VERSION"), ["rustfmt"])?;
 
     // Make sure we have the latest dependencies:
     run_cargo_fetch()?;
 
     Ok(())
-}
-
-fn rustup_install_toolchain(toolchain: &str) -> Result<()> {
-    Command::new("rustup")
-        .arg("install")
-        .flag("--no-self-update")
-        .property("--profile", "minimal")
-        .arg(toolchain)
-        .run()
 }
 
 fn rustup_add_components(

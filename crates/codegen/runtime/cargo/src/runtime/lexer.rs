@@ -70,6 +70,7 @@ pub(crate) trait Lexer {
     fn delimiters<LexCtx: IsLexicalContext>() -> &'static [(TerminalKind, TerminalKind)];
 
     /// Peeks the next terminal, including trivia. Does not advance the input.
+    #[allow(dead_code)]
     fn peek_terminal<LexCtx: IsLexicalContext>(
         &self,
         input: &mut ParserContext<'_>,
