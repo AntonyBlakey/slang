@@ -1,0 +1,12 @@
+resource query {
+    static parse: func(text: string) -> result<query>;
+}
+
+resource query-match-iterator {
+    next: func() -> result<option<query-match>>;
+}
+
+record query-match {
+    query-number: u32,
+    captures: HashMap<string, list<cursor>>,
+}

@@ -24,6 +24,7 @@ pub fn create_tera_instance(input_dir: &Path) -> Result<Tera> {
     instance.register_filter("camel_case", camel_case_filter);
     instance.register_filter("pascal_case", pascal_case_filter);
     instance.register_filter("snake_case", snake_case_filter);
+    instance.register_filter("kebab_case", kebab_case_filter);
 
     instance.register_filter("default_array", default_array_filter);
     instance.register_filter("default_object", default_object_filter);
@@ -65,6 +66,17 @@ fn snake_case_filter(value: &Value, args: &HashMap<String, Value>) -> tera::Resu
             .as_str()
             .expect("Expected a string value")
             .to_snake_case(),
+    ))
+}
+
+fn kebab_case_filter(value: &Value, args: &HashMap<String, Value>) -> tera::Result<Value> {
+    assert_eq!(args.len(), 0, "Expected no arguments");
+
+    Ok(Value::String(
+        value
+            .as_str()
+            .expect("Expected a string value")
+            .to_kebab_case(),
     ))
 }
 

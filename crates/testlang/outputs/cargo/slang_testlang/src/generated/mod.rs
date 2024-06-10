@@ -13,6 +13,9 @@ pub mod parse_error;
 pub mod parse_output;
 
 #[cfg(feature = "slang_napi_interfaces")]
+pub mod wit;
+
+#[cfg(feature = "slang_napi_interfaces")]
 pub mod napi_interface;
 
 mod metaslang_cst {

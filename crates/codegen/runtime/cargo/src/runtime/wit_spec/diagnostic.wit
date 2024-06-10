@@ -1,0 +1,12 @@
+enum severity {
+    Error,
+    Warning,
+    Information,
+    Hint,
+}
+
+resource diagnostic {
+    severity: func() -> severity;
+    text-range: func() -> text-range;
+    message: func() -> string;
+}
