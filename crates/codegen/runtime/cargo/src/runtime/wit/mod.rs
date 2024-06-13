@@ -1,17 +1,14 @@
-// pub mod cst;
-// pub mod cursor;
-// pub mod diagnostic;
-// pub mod parse_error;
-// pub mod parse_output;
-// pub mod query;
-// pub mod text_index;
+pub mod cst;
+pub mod diagnostic;
+pub mod kinds;
+pub mod language;
+pub mod text_index;
+pub mod world;
 
 pub mod glue;
+
 #[path = "generated/slang.rs"]
 pub mod slang;
-
-// #[path = "generated/kinds.rs"]
-// pub mod kinds;
 
 // #[path = "generated/ast_selectors.rs"]
 // pub mod ast_selectors;

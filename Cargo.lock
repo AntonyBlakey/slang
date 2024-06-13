@@ -431,7 +431,6 @@ dependencies = [
  "strum",
  "strum_macros",
  "thiserror",
- "wit-bindgen",
 ]
 
 [[package]]
@@ -1973,7 +1972,6 @@ dependencies = [
  "strum",
  "strum_macros",
  "thiserror",
- "wit-bindgen",
 ]
 
 [[package]]
@@ -1990,7 +1988,6 @@ dependencies = [
  "strum_macros",
  "testlang_language",
  "thiserror",
- "wit-bindgen",
 ]
 
 [[package]]
@@ -2007,7 +2004,6 @@ dependencies = [
  "strum",
  "strum_macros",
  "thiserror",
- "wit-bindgen",
 ]
 
 [[package]]
