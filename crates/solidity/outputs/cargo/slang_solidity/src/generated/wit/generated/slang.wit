@@ -1,0 +1,10 @@
+// This file is generated automatically by infrastructure scripts. Please don't edit by hand.
+
+package nomic:slang@1.0.0;
+
+world slang {
+    export language;
+    export cst;
+    export diagnostic;
+    export text-index;
+}

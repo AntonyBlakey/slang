@@ -5,6 +5,7 @@ use anyhow::Result;
 use codegen_language_definition::model::Language;
 use infra_utils::cargo::CargoWorkspace;
 use infra_utils::codegen::CodegenTemplates;
+use infra_utils::commands::Command;
 use serde::Serialize;
 
 use crate::model::RuntimeModel;
@@ -49,6 +50,17 @@ impl OutputLanguage {
         let mut templates = CodegenTemplates::new(self.source_dir()?)?;
 
         templates.render_stubs(&model)
+    }
+
+    pub fn generate_wit(&self, dir: &Path) -> Result<()> {
+        CargoWorkspace::install_binary("wit-bindgen-cli")?;
+        Command::new("wit-bindgen")
+            .arg("rust")
+            .arg(dir.join("generated/").to_str().unwrap())
+            .flag("--rustfmt")
+            .property("--out-dir", dir.join("generated/").to_str().unwrap())
+            .run()?;
+        Ok(())
     }
 
     fn source_dir(&self) -> Result<PathBuf> {

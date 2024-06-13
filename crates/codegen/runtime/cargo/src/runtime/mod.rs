@@ -10,7 +10,6 @@ pub mod language;
 pub mod parse_error;
 pub mod parse_output;
 
-#[cfg(feature = "slang_napi_interfaces")]
 pub mod wit;
 
 #[cfg(feature = "slang_napi_interfaces")]

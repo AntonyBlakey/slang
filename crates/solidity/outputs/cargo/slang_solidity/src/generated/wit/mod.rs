@@ -1,12 +1,16 @@
 // This file is generated automatically by infrastructure scripts. Please don't edit by hand.
 
-pub mod cst;
-pub mod cursor;
-pub mod diagnostic;
-pub mod parse_error;
-pub mod parse_output;
-pub mod query;
-pub mod text_index;
+// pub mod cst;
+// pub mod cursor;
+// pub mod diagnostic;
+// pub mod parse_error;
+// pub mod parse_output;
+// pub mod query;
+// pub mod text_index;
+
+pub mod glue;
+#[path = "generated/slang.rs"]
+pub mod slang;
 
 // #[path = "generated/kinds.rs"]
 // pub mod kinds;

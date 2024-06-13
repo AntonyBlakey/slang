@@ -1,6 +1,0 @@
-resource parse-error {
-    // is-a diagnostic
-    severity: func() -> severity;
-    text-range: func() -> text-range;
-    message: func() -> string;
-}

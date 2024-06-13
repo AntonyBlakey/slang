@@ -1,0 +1,29 @@
+interface language {
+
+    use cst.{node, cursor};
+    use diagnostic.{severity};
+    use kinds.{nonterminal-kind};
+    use text-index.{text-range};
+
+    resource language {
+        new: static func(version: string) -> result<language, string>;
+        version: func() -> string;
+        supported-versions: func() -> list<string>;
+        parse: func(kind: nonterminal-kind, input: string) -> parse-output;
+    }
+
+    resource parse-error {
+        // is-a diagnostic
+        severity: func() -> severity;
+        text-range: func() -> text-range;
+        message: func() -> string;
+    }
+
+    resource parse-output {
+        tree: func() -> node;
+        errors: func() -> list<parse-error>;
+        is-valid: func() -> bool;
+        create-tree-cursor: func() -> cursor;
+    }
+
+}

@@ -22,6 +22,7 @@ serde_json = { workspace = true, optional = true }
 strum = { workspace = true }
 strum_macros = { workspace = true }
 thiserror = { workspace = true }
+wit-bindgen = { workspace = true }
 
 # Since the source code is copied over as-is, we need to retain exact feature set with target crate,
 # i.e `slang_solidity_node_addon`.

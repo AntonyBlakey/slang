@@ -1,0 +1,20 @@
+// This file is generated automatically by infrastructure scripts. Please don't edit by hand.
+
+interface diagnostic {
+
+    use text-index.{text-range};
+
+    enum severity {
+        error,
+        warning,
+        information,
+        hint,
+    }
+
+    resource diagnostic {
+        severity: func() -> severity;
+        text-range: func() -> text-range;
+        message: func() -> string;
+    }
+
+}

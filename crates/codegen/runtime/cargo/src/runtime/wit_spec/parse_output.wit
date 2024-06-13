@@ -1,6 +1,0 @@
-resource parse-output {
-    tree: func() -> node;
-    errors: func() -> list<parse-error>;
-    is-valid: func() -> bool;
-    create-tree-cursor: func() -> cursor;
-}
