@@ -13,21 +13,19 @@ pub mod slang;
 // pub mod ast_selectors;
 
 pub mod ffi {
-    pub use crate::wit::slang::{
-        exports::nomic::slang::{
-            cst::{
-                self, Cursor, GuestCursor, GuestNonterminalNode, GuestQuery,
-                GuestQueryMatchIterator, GuestTerminalNode, Node, NonterminalNode, Query,
-                QueryMatch, QueryMatchIterator, TerminalNode,
-            },
-            diagnostic::Severity,
-            language::{
-                self, GuestLanguage, GuestParseError, GuestParseOutput, Language, ParseError,
-                ParseOutput,
-            },
-            text_index::{TextIndex, TextRange},
+    pub use crate::wit::slang::exports::nomic::slang::{
+        cst::{
+            self, Cursor, GuestCursor, GuestNonterminalNode, GuestQuery, GuestQueryMatchIterator,
+            GuestTerminalNode, Node, NonterminalNode, Query, QueryMatch, QueryMatchIterator,
+            TerminalNode,
         },
-        nomic::slang::kinds::{EdgeLabel, NonterminalKind, TerminalKind},
+        diagnostic::Severity,
+        kinds::{EdgeLabel, NonterminalKind, TerminalKind},
+        language::{
+            self, GuestLanguage, GuestParseError, GuestParseOutput, Language, ParseError,
+            ParseOutput,
+        },
+        text_index::{TextIndex, TextRange},
     };
 }
 

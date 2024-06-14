@@ -5,6 +5,7 @@ package nomic:slang@1.0.0;
 world slang {
     export language;
     export cst;
+    export kinds;
     export diagnostic;
     export text-index;
 }
