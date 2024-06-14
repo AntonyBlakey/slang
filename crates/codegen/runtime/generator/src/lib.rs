@@ -56,9 +56,9 @@ impl OutputLanguage {
         CargoWorkspace::install_binary("wit-bindgen-cli")?;
         Command::new("wit-bindgen")
             .arg("rust")
-            .arg(dir.join("generated/").to_str().unwrap())
+            .arg(dir.join("wit/generated/").to_str().unwrap())
             .flag("--rustfmt")
-            .property("--out-dir", dir.join("generated/").to_str().unwrap())
+            .property("--out-dir", dir.join("wit/generated/").to_str().unwrap())
             .run()?;
         Ok(())
     }

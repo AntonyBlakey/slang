@@ -10,6 +10,7 @@ description = "Cargo runtime copied over by codegen"
 [build-dependencies]
 anyhow = { workspace = true }
 codegen_runtime_generator = { workspace = true }
+infra_utils = { workspace = true }
 
 [dependencies]
 ariadne = { workspace = true, optional = true }

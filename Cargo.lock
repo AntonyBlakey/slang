@@ -387,6 +387,7 @@ dependencies = [
  "anyhow",
  "ariadne",
  "codegen_runtime_generator",
+ "infra_utils",
  "metaslang_cst",
  "napi",
  "napi-derive",
