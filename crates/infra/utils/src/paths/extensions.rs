@@ -115,6 +115,19 @@ pub(crate) trait PrivatePathExtensions {
 
 impl PrivatePathExtensions for Path {
     fn repo_root() -> PathBuf {
-        PathBuf::from(var("REPO_ROOT").expect("$REPO_ROOT is not defined."))
+        if let Ok(root) = var("REPO_ROOT") {
+            PathBuf::from(root)
+        } else {
+            let mut cd = std::env::current_dir().expect("Failed to get current directory");
+            loop {
+                if cd.join(".git").exists() {
+                    break cd;
+                }
+                assert!(
+                    cd.pop(),
+                    "$REPO_ROOT is not defined and no .git directory found."
+                );
+            }
+        }
     }
 }
