@@ -11,10 +11,4 @@ interface diagnostic {
         hint,
     }
 
-    resource diagnostic {
-        severity: func() -> severity;
-        text-range: func() -> text-range;
-        message: func() -> string;
-    }
-
 }

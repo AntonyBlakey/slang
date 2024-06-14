@@ -15,7 +15,6 @@ interface cst {
         text-len: func() -> text-index;
         children: func() -> list<node>;
         create-cursor: func(text-offset: text-index) -> cursor;
-        to-json: func() -> string;
         unparse: func() -> string;
     }
 
@@ -23,8 +22,6 @@ interface cst {
         kind: func() -> terminal-kind;
         text-len: func() -> text-index;
         text: func() -> string;
-        to-json: func() -> string;
-        create-cursor: func(text-offset: text-index) -> cursor;
     }
 
     resource cursor {

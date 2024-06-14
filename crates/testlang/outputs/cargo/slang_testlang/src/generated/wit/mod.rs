@@ -5,9 +5,6 @@ pub mod diagnostic;
 pub mod kinds;
 pub mod language;
 pub mod text_index;
-pub mod world;
-
-pub mod glue;
 
 #[path = "generated/slang.rs"]
 pub mod slang;
@@ -15,19 +12,87 @@ pub mod slang;
 // #[path = "generated/ast_selectors.rs"]
 // pub mod ast_selectors;
 
-type RustCursor = crate::cursor::Cursor;
-// type RustEdge = crate::cst::Edge;
-type RustNode = crate::cst::Node;
-type RustParseError = crate::parse_error::ParseError;
-type RustParseOutput = crate::parse_output::ParseOutput;
-type RustQuery = crate::query::Query;
-type RustQueryMatch = crate::query::QueryMatch;
-type RustQueryMatchIterator = crate::query::QueryMatchIterator;
-type RustNonterminalNode = crate::cst::NonterminalNode;
-type RustTextIndex = crate::text_index::TextIndex;
-type RustTextRange = crate::text_index::TextRange;
-type RustTerminalNode = crate::cst::TerminalNode;
+pub mod ffi {
+    pub use crate::wit::slang::{
+        exports::nomic::slang::{
+            cst::{
+                self, Cursor, GuestCursor, GuestNonterminalNode, GuestQuery,
+                GuestQueryMatchIterator, GuestTerminalNode, Node, NonterminalNode, Query,
+                QueryMatch, QueryMatchIterator, TerminalNode,
+            },
+            diagnostic::Severity,
+            language::{
+                self, GuestLanguage, GuestParseError, GuestParseOutput, Language, ParseError,
+                ParseOutput,
+            },
+            text_index::{TextIndex, TextRange},
+        },
+        nomic::slang::kinds::{EdgeLabel, NonterminalKind, TerminalKind},
+    };
+}
 
-type NonterminalKind = crate::kinds::NonterminalKind;
-type TerminalKind = crate::kinds::TerminalKind;
-type EdgeLabel = crate::kinds::EdgeLabel;
+pub mod rust {
+    pub use crate::{
+        cst::{Edge, Node, NonterminalNode, TerminalNode},
+        cursor::Cursor,
+        diagnostic::{Diagnostic, Severity},
+        kinds::{EdgeLabel, NonterminalKind, TerminalKind},
+        language::Language,
+        parse_error::ParseError,
+        parse_output::ParseOutput,
+        query::{Query, QueryMatch, QueryMatchIterator},
+        text_index::{TextIndex, TextRange},
+    };
+}
+
+macro_rules! define_wrapper_base {
+    ($name:ident, $rust:ty, $impl:tt) => {
+        paste::paste! {
+            #[repr(transparent)]
+            pub struct [<$name Wrapper>] ($rust);
+            impl From<$rust> for ffi::$name {
+                #[inline]
+                fn from(value: $rust) -> Self {
+                    ffi::$name::new( [<$name Wrapper>] (value))
+                }
+            }
+            impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
+        }
+    };
+}
+
+macro_rules! define_wrapper {
+    ($name:ident $impl:tt) => {
+        $crate::wit::define_wrapper_base!($name, rust::$name, $impl);
+    };
+}
+
+macro_rules! define_rc_wrapper {
+    ($name:ident $impl:tt) => {
+        $crate::wit::define_wrapper_base!($name, std::rc::Rc<rust::$name>, $impl);
+    };
+}
+
+macro_rules! enum_to_enum {
+    ($name:ident) => {
+        enum_to_enum!(ffi::$name, rust::$name);
+        enum_to_enum!(rust::$name, ffi::$name);
+    };
+    ($from:ty, $to:ty) => {
+        impl From<$from> for $to {
+            #[inline]
+            fn from(value: $from) -> Self {
+                unsafe { core::mem::transmute(value) }
+            }
+        }
+    };
+}
+
+// The trick: https://stackoverflow.com/questions/26731243/how-do-i-use-a-macro-across-module-files
+pub(crate) use {define_rc_wrapper, define_wrapper, define_wrapper_base, enum_to_enum};
+
+use slang::export;
+use slang::exports; // Needed for the macro. It is bad form that they don't fully qualify usage in the macro.
+#[allow(clippy::upper_case_acronyms)]
+struct API;
+export!(API);

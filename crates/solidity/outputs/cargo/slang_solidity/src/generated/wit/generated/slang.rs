@@ -4388,37 +4388,6 @@ pub mod exports {
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
-                pub unsafe fn _export_method_nonterminal_node_to_json_cabi<
-                    T: GuestNonterminalNode,
-                >(
-                    arg0: *mut u8,
-                ) -> *mut u8 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 =
-                        T::to_json(NonterminalNodeBorrow::lift(arg0 as u32 as usize).get());
-                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    let vec2 = (result0.into_bytes()).into_boxed_slice();
-                    let ptr2 = vec2.as_ptr().cast::<u8>();
-                    let len2 = vec2.len();
-                    ::core::mem::forget(vec2);
-                    *ptr1.add(4).cast::<usize>() = len2;
-                    *ptr1.add(0).cast::<*mut u8>() = ptr2.cast_mut();
-                    ptr1
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn __post_return_method_nonterminal_node_to_json<
-                    T: GuestNonterminalNode,
-                >(
-                    arg0: *mut u8,
-                ) {
-                    let l0 = *arg0.add(0).cast::<*mut u8>();
-                    let l1 = *arg0.add(4).cast::<usize>();
-                    _rt::cabi_dealloc(l0, l1, 1);
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
                 pub unsafe fn _export_method_nonterminal_node_unparse_cabi<
                     T: GuestNonterminalNode,
                 >(
@@ -4504,56 +4473,6 @@ pub mod exports {
                     let l0 = *arg0.add(0).cast::<*mut u8>();
                     let l1 = *arg0.add(4).cast::<usize>();
                     _rt::cabi_dealloc(l0, l1, 1);
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn _export_method_terminal_node_to_json_cabi<T: GuestTerminalNode>(
-                    arg0: *mut u8,
-                ) -> *mut u8 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 = T::to_json(TerminalNodeBorrow::lift(arg0 as u32 as usize).get());
-                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    let vec2 = (result0.into_bytes()).into_boxed_slice();
-                    let ptr2 = vec2.as_ptr().cast::<u8>();
-                    let len2 = vec2.len();
-                    ::core::mem::forget(vec2);
-                    *ptr1.add(4).cast::<usize>() = len2;
-                    *ptr1.add(0).cast::<*mut u8>() = ptr2.cast_mut();
-                    ptr1
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn __post_return_method_terminal_node_to_json<T: GuestTerminalNode>(
-                    arg0: *mut u8,
-                ) {
-                    let l0 = *arg0.add(0).cast::<*mut u8>();
-                    let l1 = *arg0.add(4).cast::<usize>();
-                    _rt::cabi_dealloc(l0, l1, 1);
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn _export_method_terminal_node_create_cursor_cabi<
-                    T: GuestTerminalNode,
-                >(
-                    arg0: *mut u8,
-                    arg1: i32,
-                    arg2: i32,
-                    arg3: i32,
-                    arg4: i32,
-                ) -> i32 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 = T::create_cursor(
-                        TerminalNodeBorrow::lift(arg0 as u32 as usize).get(),
-                        super::super::super::super::exports::nomic::slang::text_index::TextIndex {
-                            utf8: arg1 as u32,
-                            utf16: arg2 as u32,
-                            line: arg3 as u32,
-                            column: arg4 as u32,
-                        },
-                    );
-                    (result0).take_handle() as i32
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -5255,7 +5174,6 @@ pub mod exports {
                     fn text_len(&self) -> TextIndex;
                     fn children(&self) -> _rt::Vec<Node>;
                     fn create_cursor(&self, text_offset: TextIndex) -> Cursor;
-                    fn to_json(&self) -> _rt::String;
                     fn unparse(&self) -> _rt::String;
                 }
                 pub trait GuestTerminalNode: 'static {
@@ -5306,8 +5224,6 @@ pub mod exports {
                     fn kind(&self) -> TerminalKind;
                     fn text_len(&self) -> TextIndex;
                     fn text(&self) -> _rt::String;
-                    fn to_json(&self) -> _rt::String;
-                    fn create_cursor(&self, text_offset: TextIndex) -> Cursor;
                 }
                 pub trait GuestCursor: 'static {
                     #[doc(hidden)]
@@ -5505,14 +5421,6 @@ pub mod exports {
     unsafe extern "C" fn export_method_nonterminal_node_create_cursor(arg0: *mut u8,arg1: i32,arg2: i32,arg3: i32,arg4: i32,) -> i32 {
       $($path_to_types)*::_export_method_nonterminal_node_create_cursor_cabi::<<$ty as $($path_to_types)*::Guest>::NonterminalNode>(arg0, arg1, arg2, arg3, arg4)
     }
-    #[export_name = "nomic:slang/cst@1.0.0#[method]nonterminal-node.to-json"]
-    unsafe extern "C" fn export_method_nonterminal_node_to_json(arg0: *mut u8,) -> *mut u8 {
-      $($path_to_types)*::_export_method_nonterminal_node_to_json_cabi::<<$ty as $($path_to_types)*::Guest>::NonterminalNode>(arg0)
-    }
-    #[export_name = "cabi_post_nomic:slang/cst@1.0.0#[method]nonterminal-node.to-json"]
-    unsafe extern "C" fn _post_return_method_nonterminal_node_to_json(arg0: *mut u8,) {
-      $($path_to_types)*::__post_return_method_nonterminal_node_to_json::<<$ty as $($path_to_types)*::Guest>::NonterminalNode>(arg0)
-    }
     #[export_name = "nomic:slang/cst@1.0.0#[method]nonterminal-node.unparse"]
     unsafe extern "C" fn export_method_nonterminal_node_unparse(arg0: *mut u8,) -> *mut u8 {
       $($path_to_types)*::_export_method_nonterminal_node_unparse_cabi::<<$ty as $($path_to_types)*::Guest>::NonterminalNode>(arg0)
@@ -5536,18 +5444,6 @@ pub mod exports {
     #[export_name = "cabi_post_nomic:slang/cst@1.0.0#[method]terminal-node.text"]
     unsafe extern "C" fn _post_return_method_terminal_node_text(arg0: *mut u8,) {
       $($path_to_types)*::__post_return_method_terminal_node_text::<<$ty as $($path_to_types)*::Guest>::TerminalNode>(arg0)
-    }
-    #[export_name = "nomic:slang/cst@1.0.0#[method]terminal-node.to-json"]
-    unsafe extern "C" fn export_method_terminal_node_to_json(arg0: *mut u8,) -> *mut u8 {
-      $($path_to_types)*::_export_method_terminal_node_to_json_cabi::<<$ty as $($path_to_types)*::Guest>::TerminalNode>(arg0)
-    }
-    #[export_name = "cabi_post_nomic:slang/cst@1.0.0#[method]terminal-node.to-json"]
-    unsafe extern "C" fn _post_return_method_terminal_node_to_json(arg0: *mut u8,) {
-      $($path_to_types)*::__post_return_method_terminal_node_to_json::<<$ty as $($path_to_types)*::Guest>::TerminalNode>(arg0)
-    }
-    #[export_name = "nomic:slang/cst@1.0.0#[method]terminal-node.create-cursor"]
-    unsafe extern "C" fn export_method_terminal_node_create_cursor(arg0: *mut u8,arg1: i32,arg2: i32,arg3: i32,arg4: i32,) -> i32 {
-      $($path_to_types)*::_export_method_terminal_node_create_cursor_cabi::<<$ty as $($path_to_types)*::Guest>::TerminalNode>(arg0, arg1, arg2, arg3, arg4)
     }
     #[export_name = "nomic:slang/cst@1.0.0#[method]cursor.reset"]
     unsafe extern "C" fn export_method_cursor_reset(arg0: *mut u8,) {
@@ -5749,9 +5645,6 @@ pub mod exports {
                 #[cfg(target_arch = "wasm32")]
                 static __FORCE_SECTION_REF: fn() =
                     super::super::super::super::__link_custom_section_describing_imports;
-                use super::super::super::super::_rt;
-                pub type TextRange =
-                    super::super::super::super::exports::nomic::slang::text_index::TextRange;
                 #[repr(u8)]
                 #[derive(Clone, Copy, Eq, PartialEq)]
                 pub enum Severity {
@@ -5791,309 +5684,15 @@ pub mod exports {
                     }
                 }
 
-                #[derive(Debug)]
-                #[repr(transparent)]
-                pub struct Diagnostic {
-                    handle: _rt::Resource<Diagnostic>,
-                }
-
-                type _DiagnosticRep<T> = Option<T>;
-
-                impl Diagnostic {
-                    /// Creates a new resource from the specified representation.
-                    ///
-                    /// This function will create a new resource handle by moving `val` onto
-                    /// the heap and then passing that heap pointer to the component model to
-                    /// create a handle. The owned handle is then returned as `Diagnostic`.
-                    pub fn new<T: GuestDiagnostic>(val: T) -> Self {
-                        Self::type_guard::<T>();
-                        let val: _DiagnosticRep<T> = Some(val);
-                        let ptr: *mut _DiagnosticRep<T> = _rt::Box::into_raw(_rt::Box::new(val));
-                        unsafe { Self::from_handle(T::_resource_new(ptr.cast())) }
-                    }
-
-                    /// Gets access to the underlying `T` which represents this resource.
-                    pub fn get<T: GuestDiagnostic>(&self) -> &T {
-                        let ptr = unsafe { &*self.as_ptr::<T>() };
-                        ptr.as_ref().unwrap()
-                    }
-
-                    /// Gets mutable access to the underlying `T` which represents this
-                    /// resource.
-                    pub fn get_mut<T: GuestDiagnostic>(&mut self) -> &mut T {
-                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
-                        ptr.as_mut().unwrap()
-                    }
-
-                    /// Consumes this resource and returns the underlying `T`.
-                    pub fn into_inner<T: GuestDiagnostic>(self) -> T {
-                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
-                        ptr.take().unwrap()
-                    }
-
-                    #[doc(hidden)]
-                    pub unsafe fn from_handle(handle: u32) -> Self {
-                        Self {
-                            handle: _rt::Resource::from_handle(handle),
-                        }
-                    }
-
-                    #[doc(hidden)]
-                    pub fn take_handle(&self) -> u32 {
-                        _rt::Resource::take_handle(&self.handle)
-                    }
-
-                    #[doc(hidden)]
-                    pub fn handle(&self) -> u32 {
-                        _rt::Resource::handle(&self.handle)
-                    }
-
-                    // It's theoretically possible to implement the `GuestDiagnostic` trait twice
-                    // so guard against using it with two different types here.
-                    #[doc(hidden)]
-                    fn type_guard<T: 'static>() {
-                        use core::any::TypeId;
-                        static mut LAST_TYPE: Option<TypeId> = None;
-                        unsafe {
-                            assert!(!cfg!(target_feature = "threads"));
-                            let id = TypeId::of::<T>();
-                            match LAST_TYPE {
-                                Some(ty) => assert!(
-                                    ty == id,
-                                    "cannot use two types with this resource type"
-                                ),
-                                None => LAST_TYPE = Some(id),
-                            }
-                        }
-                    }
-
-                    #[doc(hidden)]
-                    pub unsafe fn dtor<T: 'static>(handle: *mut u8) {
-                        Self::type_guard::<T>();
-                        let _ = _rt::Box::from_raw(handle as *mut _DiagnosticRep<T>);
-                    }
-
-                    fn as_ptr<T: GuestDiagnostic>(&self) -> *mut _DiagnosticRep<T> {
-                        Diagnostic::type_guard::<T>();
-                        T::_resource_rep(self.handle()).cast()
-                    }
-                }
-
-                /// A borrowed version of [`Diagnostic`] which represents a borrowed value
-                /// with the lifetime `'a`.
-                #[derive(Debug)]
-                #[repr(transparent)]
-                pub struct DiagnosticBorrow<'a> {
-                    rep: *mut u8,
-                    _marker: core::marker::PhantomData<&'a Diagnostic>,
-                }
-
-                impl<'a> DiagnosticBorrow<'a> {
-                    #[doc(hidden)]
-                    pub unsafe fn lift(rep: usize) -> Self {
-                        Self {
-                            rep: rep as *mut u8,
-                            _marker: core::marker::PhantomData,
-                        }
-                    }
-
-                    /// Gets access to the underlying `T` in this resource.
-                    pub fn get<T: GuestDiagnostic>(&self) -> &T {
-                        let ptr = unsafe { &mut *self.as_ptr::<T>() };
-                        ptr.as_ref().unwrap()
-                    }
-
-                    // NB: mutable access is not allowed due to the component model allowing
-                    // multiple borrows of the same resource.
-
-                    fn as_ptr<T: 'static>(&self) -> *mut _DiagnosticRep<T> {
-                        Diagnostic::type_guard::<T>();
-                        self.rep.cast()
-                    }
-                }
-
-                unsafe impl _rt::WasmResource for Diagnostic {
-                    #[inline]
-                    unsafe fn drop(_handle: u32) {
-                        #[cfg(not(target_arch = "wasm32"))]
-                        unreachable!();
-
-                        #[cfg(target_arch = "wasm32")]
-                        {
-                            #[link(wasm_import_module = "[export]nomic:slang/diagnostic@1.0.0")]
-                            extern "C" {
-                                #[link_name = "[resource-drop]diagnostic"]
-                                fn drop(_: u32);
-                            }
-
-                            drop(_handle);
-                        }
-                    }
-                }
-
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn _export_method_diagnostic_severity_cabi<T: GuestDiagnostic>(
-                    arg0: *mut u8,
-                ) -> i32 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 = T::severity(DiagnosticBorrow::lift(arg0 as u32 as usize).get());
-                    result0.clone() as i32
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn _export_method_diagnostic_text_range_cabi<T: GuestDiagnostic>(
-                    arg0: *mut u8,
-                ) -> *mut u8 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 = T::text_range(DiagnosticBorrow::lift(arg0 as u32 as usize).get());
-                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    let super::super::super::super::exports::nomic::slang::text_index::TextRange {
-                        start: start2,
-                        end: end2,
-                    } = result0;
-                    let super::super::super::super::exports::nomic::slang::text_index::TextIndex {
-                        utf8: utf83,
-                        utf16: utf163,
-                        line: line3,
-                        column: column3,
-                    } = start2;
-                    *ptr1.add(0).cast::<i32>() = _rt::as_i32(utf83);
-                    *ptr1.add(4).cast::<i32>() = _rt::as_i32(utf163);
-                    *ptr1.add(8).cast::<i32>() = _rt::as_i32(line3);
-                    *ptr1.add(12).cast::<i32>() = _rt::as_i32(column3);
-                    let super::super::super::super::exports::nomic::slang::text_index::TextIndex {
-                        utf8: utf84,
-                        utf16: utf164,
-                        line: line4,
-                        column: column4,
-                    } = end2;
-                    *ptr1.add(16).cast::<i32>() = _rt::as_i32(utf84);
-                    *ptr1.add(20).cast::<i32>() = _rt::as_i32(utf164);
-                    *ptr1.add(24).cast::<i32>() = _rt::as_i32(line4);
-                    *ptr1.add(28).cast::<i32>() = _rt::as_i32(column4);
-                    ptr1
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn _export_method_diagnostic_message_cabi<T: GuestDiagnostic>(
-                    arg0: *mut u8,
-                ) -> *mut u8 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 = T::message(DiagnosticBorrow::lift(arg0 as u32 as usize).get());
-                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    let vec2 = (result0.into_bytes()).into_boxed_slice();
-                    let ptr2 = vec2.as_ptr().cast::<u8>();
-                    let len2 = vec2.len();
-                    ::core::mem::forget(vec2);
-                    *ptr1.add(4).cast::<usize>() = len2;
-                    *ptr1.add(0).cast::<*mut u8>() = ptr2.cast_mut();
-                    ptr1
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn __post_return_method_diagnostic_message<T: GuestDiagnostic>(
-                    arg0: *mut u8,
-                ) {
-                    let l0 = *arg0.add(0).cast::<*mut u8>();
-                    let l1 = *arg0.add(4).cast::<usize>();
-                    _rt::cabi_dealloc(l0, l1, 1);
-                }
-                pub trait Guest {
-                    type Diagnostic: GuestDiagnostic;
-                }
-                pub trait GuestDiagnostic: 'static {
-                    #[doc(hidden)]
-                    unsafe fn _resource_new(val: *mut u8) -> u32
-                    where
-                        Self: Sized,
-                    {
-                        #[cfg(not(target_arch = "wasm32"))]
-                        {
-                            let _ = val;
-                            unreachable!();
-                        }
-
-                        #[cfg(target_arch = "wasm32")]
-                        {
-                            #[link(wasm_import_module = "[export]nomic:slang/diagnostic@1.0.0")]
-                            extern "C" {
-                                #[link_name = "[resource-new]diagnostic"]
-                                fn new(_: *mut u8) -> u32;
-                            }
-                            new(val)
-                        }
-                    }
-
-                    #[doc(hidden)]
-                    fn _resource_rep(handle: u32) -> *mut u8
-                    where
-                        Self: Sized,
-                    {
-                        #[cfg(not(target_arch = "wasm32"))]
-                        {
-                            let _ = handle;
-                            unreachable!();
-                        }
-
-                        #[cfg(target_arch = "wasm32")]
-                        {
-                            #[link(wasm_import_module = "[export]nomic:slang/diagnostic@1.0.0")]
-                            extern "C" {
-                                #[link_name = "[resource-rep]diagnostic"]
-                                fn rep(_: u32) -> *mut u8;
-                            }
-                            unsafe { rep(handle) }
-                        }
-                    }
-
-                    fn severity(&self) -> Severity;
-                    fn text_range(&self) -> TextRange;
-                    fn message(&self) -> _rt::String;
-                }
                 #[doc(hidden)]
 
-                macro_rules! __export_nomic_slang_diagnostic_1_0_0_cabi{
-  ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
-
-    #[export_name = "nomic:slang/diagnostic@1.0.0#[method]diagnostic.severity"]
-    unsafe extern "C" fn export_method_diagnostic_severity(arg0: *mut u8,) -> i32 {
-      $($path_to_types)*::_export_method_diagnostic_severity_cabi::<<$ty as $($path_to_types)*::Guest>::Diagnostic>(arg0)
-    }
-    #[export_name = "nomic:slang/diagnostic@1.0.0#[method]diagnostic.text-range"]
-    unsafe extern "C" fn export_method_diagnostic_text_range(arg0: *mut u8,) -> *mut u8 {
-      $($path_to_types)*::_export_method_diagnostic_text_range_cabi::<<$ty as $($path_to_types)*::Guest>::Diagnostic>(arg0)
-    }
-    #[export_name = "nomic:slang/diagnostic@1.0.0#[method]diagnostic.message"]
-    unsafe extern "C" fn export_method_diagnostic_message(arg0: *mut u8,) -> *mut u8 {
-      $($path_to_types)*::_export_method_diagnostic_message_cabi::<<$ty as $($path_to_types)*::Guest>::Diagnostic>(arg0)
-    }
-    #[export_name = "cabi_post_nomic:slang/diagnostic@1.0.0#[method]diagnostic.message"]
-    unsafe extern "C" fn _post_return_method_diagnostic_message(arg0: *mut u8,) {
-      $($path_to_types)*::__post_return_method_diagnostic_message::<<$ty as $($path_to_types)*::Guest>::Diagnostic>(arg0)
-    }
-
-    const _: () = {
-      #[doc(hidden)]
-      #[export_name = "nomic:slang/diagnostic@1.0.0#[dtor]diagnostic"]
-      #[allow(non_snake_case)]
-      unsafe extern "C" fn dtor(rep: *mut u8) {
-        $($path_to_types)*::Diagnostic::dtor::<
-        <$ty as $($path_to_types)*::Guest>::Diagnostic
-        >(rep)
-      }
-    };
-
-  };);
-}
+                macro_rules! __export_nomic_slang_diagnostic_1_0_0_cabi {
+                    ($ty:ident with_types_in $($path_to_types:tt)*) => {
+                        const _: () = {};
+                    };
+                }
                 #[doc(hidden)]
                 pub(crate) use __export_nomic_slang_diagnostic_1_0_0_cabi;
-                #[repr(align(4))]
-                struct _RetArea([::core::mem::MaybeUninit<u8>; 32]);
-                static mut _RET_AREA: _RetArea = _RetArea([::core::mem::MaybeUninit::uninit(); 32]);
             }
 
             #[allow(dead_code, clippy::all)]
@@ -7342,8 +6941,8 @@ pub(crate) use __export_slang_impl as export;
 #[cfg(target_arch = "wasm32")]
 #[link_section = "component-type:wit-bindgen:0.26.0:slang:encoded world"]
 #[doc(hidden)]
-pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 15666] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xb6y\x01A\x02\x01A\x12\
+pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 15382] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\x9aw\x01A\x02\x01A\x12\
 \x01B\x06\x01m\xd7\x01\x0fabicoder-pragma\x13additive-expression\x0caddress-type\
 \x0eand-expression\x15arguments-declaration\x10array-expression\x0farray-type-na\
 me\x0carray-values\x0eassembly-flags\x1aassembly-flags-declaration\x12assembly-s\
@@ -7527,7 +7126,7 @@ lang/kinds@1.0.0\x05\0\x01B\x04\x01r\x04\x04utf8y\x05utf16y\x04liney\x06columny\
 \0\x0atext-index\x03\0\0\x01r\x02\x05start\x01\x03end\x01\x04\0\x0atext-range\x03\
 \0\x02\x04\x01\x1cnomic:slang/text-index@1.0.0\x05\x01\x02\x03\0\0\x10nontermina\
 l-kind\x02\x03\0\0\x0dterminal-kind\x02\x03\0\0\x0aedge-label\x02\x03\0\x01\x0at\
-ext-index\x02\x03\0\x01\x0atext-range\x01Bj\x02\x03\x02\x01\x02\x04\0\x10nonterm\
+ext-index\x02\x03\0\x01\x0atext-range\x01Bf\x02\x03\x02\x01\x02\x04\0\x10nonterm\
 inal-kind\x03\0\0\x02\x03\x02\x01\x03\x04\0\x0dterminal-kind\x03\0\x02\x02\x03\x02\
 \x01\x04\x04\0\x0aedge-label\x03\0\x04\x02\x03\x02\x01\x05\x04\0\x0atext-index\x03\
 \0\x06\x02\x03\x02\x01\x06\x04\0\x0atext-range\x03\0\x08\x04\0\x10nonterminal-no\
@@ -7540,60 +7139,54 @@ terator\x03\x01\x01h\x0a\x01@\x01\x04self\x19\0\x01\x04\0\x1d[method]nonterminal
 t-len\x01\x1b\x01p\x0f\x01@\x01\x04self\x19\0\x1c\x04\0![method]nonterminal-node\
 .children\x01\x1d\x01@\x02\x04self\x19\x0btext-offset\x07\0\x12\x04\0&[method]no\
 nterminal-node.create-cursor\x01\x1e\x01@\x01\x04self\x19\0s\x04\0\x20[method]no\
-nterminal-node.to-json\x01\x1f\x04\0\x20[method]nonterminal-node.unparse\x01\x1f\
-\x01h\x0b\x01@\x01\x04self\x20\0\x03\x04\0\x1a[method]terminal-node.kind\x01!\x01\
-@\x01\x04self\x20\0\x07\x04\0\x1e[method]terminal-node.text-len\x01\"\x01@\x01\x04\
-self\x20\0s\x04\0\x1a[method]terminal-node.text\x01#\x04\0\x1d[method]terminal-n\
-ode.to-json\x01#\x01@\x02\x04self\x20\x0btext-offset\x07\0\x12\x04\0#[method]ter\
-minal-node.create-cursor\x01$\x01h\x10\x01@\x01\x04self%\x01\0\x04\0\x14[method]\
-cursor.reset\x01&\x04\0\x17[method]cursor.complete\x01&\x01@\x01\x04self%\0\x7f\x04\
-\0\x1b[method]cursor.is-completed\x01'\x01@\x01\x04self%\0\x12\x04\0\x14[method]\
-cursor.clone\x01(\x04\0\x14[method]cursor.spawn\x01(\x01@\x01\x04self%\0\x0f\x04\
-\0\x13[method]cursor.node\x01)\x01k\x05\x01@\x01\x04self%\0*\x04\0\x14[method]cu\
-rsor.label\x01+\x01@\x01\x04self%\0\x07\x04\0\x1a[method]cursor.text-offset\x01,\
-\x01@\x01\x04self%\0\x09\x04\0\x19[method]cursor.text-range\x01-\x01@\x01\x04sel\
-f%\0y\x04\0\x14[method]cursor.depth\x01.\x01p\x0c\x01@\x01\x04self%\0/\x04\0\x18\
-[method]cursor.ancestors\x010\x04\0\x19[method]cursor.go-to-next\x01'\x04\0([met\
-hod]cursor.go-to-next-non-descendent\x01'\x04\0\x1d[method]cursor.go-to-previous\
-\x01'\x04\0\x1b[method]cursor.go-to-parent\x01'\x04\0\x20[method]cursor.go-to-fi\
-rst-child\x01'\x04\0\x1f[method]cursor.go-to-last-child\x01'\x01@\x02\x04self%\x0c\
-child-numbery\0\x7f\x04\0\x1e[method]cursor.go-to-nth-child\x011\x04\0![method]c\
-ursor.go-to-next-sibling\x01'\x04\0%[method]cursor.go-to-previous-sibling\x01'\x04\
-\0\"[method]cursor.go-to-next-terminal\x01'\x01@\x02\x04self%\x04kind\x03\0\x7f\x04\
-\0,[method]cursor.go-to-next-terminal-with-kind\x012\x01p\x03\x01@\x02\x04self%\x05\
-kinds3\0\x7f\x04\0-[method]cursor.go-to-next-terminal-with-kinds\x014\x04\0%[met\
-hod]cursor.go-to-next-nonterminal\x01'\x01@\x02\x04self%\x04kind\x01\0\x7f\x04\0\
-/[method]cursor.go-to-next-nonterminal-with-kind\x015\x01p\x01\x01@\x02\x04self%\
-\x05kinds6\0\x7f\x04\00[method]cursor.go-to-next-nonterminal-with-kinds\x017\x01\
-i\x11\x01p8\x01i\x18\x01@\x02\x04self%\x07queries9\0:\x04\0\x14[method]cursor.qu\
-ery\x01;\x01j\x018\0\x01@\x01\x04texts\0<\x04\0\x13[static]query.parse\x01=\x01h\
-\x18\x01k\x17\x01j\x01?\0\x01@\x01\x04self>\0\xc0\0\x04\0![method]query-match-it\
-erator.next\x01A\x04\x01\x15nomic:slang/cst@1.0.0\x05\x07\x01B\x0c\x02\x03\x02\x01\
-\x06\x04\0\x0atext-range\x03\0\0\x01m\x04\x05error\x07warning\x0binformation\x04\
-hint\x04\0\x08severity\x03\0\x02\x04\0\x0adiagnostic\x03\x01\x01h\x04\x01@\x01\x04\
-self\x05\0\x03\x04\0\x1b[method]diagnostic.severity\x01\x06\x01@\x01\x04self\x05\
-\0\x01\x04\0\x1d[method]diagnostic.text-range\x01\x07\x01@\x01\x04self\x05\0s\x04\
-\0\x1a[method]diagnostic.message\x01\x08\x04\x01\x1cnomic:slang/diagnostic@1.0.0\
-\x05\x08\x02\x03\0\x02\x04node\x02\x03\0\x02\x06cursor\x02\x03\0\x03\x08severity\
-\x01B-\x02\x03\x02\x01\x09\x04\0\x04node\x03\0\0\x02\x03\x02\x01\x0a\x04\0\x06cu\
-rsor\x03\0\x02\x02\x03\x02\x01\x0b\x04\0\x08severity\x03\0\x04\x02\x03\x02\x01\x02\
-\x04\0\x10nonterminal-kind\x03\0\x06\x02\x03\x02\x01\x06\x04\0\x0atext-range\x03\
-\0\x08\x04\0\x08language\x03\x01\x04\0\x0bparse-error\x03\x01\x04\0\x0cparse-out\
-put\x03\x01\x01i\x0a\x01j\x01\x0d\x01s\x01@\x01\x07versions\0\x0e\x04\0\x14[stat\
-ic]language.new\x01\x0f\x01h\x0a\x01@\x01\x04self\x10\0s\x04\0\x18[method]langua\
-ge.version\x01\x11\x01ps\x01@\x01\x04self\x10\0\x12\x04\0#[method]language.suppo\
-rted-versions\x01\x13\x01i\x0c\x01@\x03\x04self\x10\x04kind\x07\x05inputs\0\x14\x04\
-\0\x16[method]language.parse\x01\x15\x01h\x0b\x01@\x01\x04self\x16\0\x05\x04\0\x1c\
-[method]parse-error.severity\x01\x17\x01@\x01\x04self\x16\0\x09\x04\0\x1e[method\
-]parse-error.text-range\x01\x18\x01@\x01\x04self\x16\0s\x04\0\x1b[method]parse-e\
-rror.message\x01\x19\x01h\x0c\x01@\x01\x04self\x1a\0\x01\x04\0\x19[method]parse-\
-output.tree\x01\x1b\x01i\x0b\x01p\x1c\x01@\x01\x04self\x1a\0\x1d\x04\0\x1b[metho\
-d]parse-output.errors\x01\x1e\x01@\x01\x04self\x1a\0\x7f\x04\0\x1d[method]parse-\
-output.is-valid\x01\x1f\x01i\x03\x01@\x01\x04self\x1a\0\x20\x04\0'[method]parse-\
-output.create-tree-cursor\x01!\x04\x01\x1anomic:slang/language@1.0.0\x05\x0c\x04\
-\x01\x17nomic:slang/slang@1.0.0\x04\0\x0b\x0b\x01\0\x05slang\x03\0\0\0G\x09produ\
-cers\x01\x0cprocessed-by\x02\x0dwit-component\x070.209.1\x10wit-bindgen-rust\x06\
-0.26.0";
+nterminal-node.unparse\x01\x1f\x01h\x0b\x01@\x01\x04self\x20\0\x03\x04\0\x1a[met\
+hod]terminal-node.kind\x01!\x01@\x01\x04self\x20\0\x07\x04\0\x1e[method]terminal\
+-node.text-len\x01\"\x01@\x01\x04self\x20\0s\x04\0\x1a[method]terminal-node.text\
+\x01#\x01h\x10\x01@\x01\x04self$\x01\0\x04\0\x14[method]cursor.reset\x01%\x04\0\x17\
+[method]cursor.complete\x01%\x01@\x01\x04self$\0\x7f\x04\0\x1b[method]cursor.is-\
+completed\x01&\x01@\x01\x04self$\0\x12\x04\0\x14[method]cursor.clone\x01'\x04\0\x14\
+[method]cursor.spawn\x01'\x01@\x01\x04self$\0\x0f\x04\0\x13[method]cursor.node\x01\
+(\x01k\x05\x01@\x01\x04self$\0)\x04\0\x14[method]cursor.label\x01*\x01@\x01\x04s\
+elf$\0\x07\x04\0\x1a[method]cursor.text-offset\x01+\x01@\x01\x04self$\0\x09\x04\0\
+\x19[method]cursor.text-range\x01,\x01@\x01\x04self$\0y\x04\0\x14[method]cursor.\
+depth\x01-\x01p\x0c\x01@\x01\x04self$\0.\x04\0\x18[method]cursor.ancestors\x01/\x04\
+\0\x19[method]cursor.go-to-next\x01&\x04\0([method]cursor.go-to-next-non-descend\
+ent\x01&\x04\0\x1d[method]cursor.go-to-previous\x01&\x04\0\x1b[method]cursor.go-\
+to-parent\x01&\x04\0\x20[method]cursor.go-to-first-child\x01&\x04\0\x1f[method]c\
+ursor.go-to-last-child\x01&\x01@\x02\x04self$\x0cchild-numbery\0\x7f\x04\0\x1e[m\
+ethod]cursor.go-to-nth-child\x010\x04\0![method]cursor.go-to-next-sibling\x01&\x04\
+\0%[method]cursor.go-to-previous-sibling\x01&\x04\0\"[method]cursor.go-to-next-t\
+erminal\x01&\x01@\x02\x04self$\x04kind\x03\0\x7f\x04\0,[method]cursor.go-to-next\
+-terminal-with-kind\x011\x01p\x03\x01@\x02\x04self$\x05kinds2\0\x7f\x04\0-[metho\
+d]cursor.go-to-next-terminal-with-kinds\x013\x04\0%[method]cursor.go-to-next-non\
+terminal\x01&\x01@\x02\x04self$\x04kind\x01\0\x7f\x04\0/[method]cursor.go-to-nex\
+t-nonterminal-with-kind\x014\x01p\x01\x01@\x02\x04self$\x05kinds5\0\x7f\x04\00[m\
+ethod]cursor.go-to-next-nonterminal-with-kinds\x016\x01i\x11\x01p7\x01i\x18\x01@\
+\x02\x04self$\x07queries8\09\x04\0\x14[method]cursor.query\x01:\x01j\x017\0\x01@\
+\x01\x04texts\0;\x04\0\x13[static]query.parse\x01<\x01h\x18\x01k\x17\x01j\x01>\0\
+\x01@\x01\x04self=\0?\x04\0![method]query-match-iterator.next\x01@\x04\x01\x15no\
+mic:slang/cst@1.0.0\x05\x07\x01B\x04\x02\x03\x02\x01\x06\x04\0\x0atext-range\x03\
+\0\0\x01m\x04\x05error\x07warning\x0binformation\x04hint\x04\0\x08severity\x03\0\
+\x02\x04\x01\x1cnomic:slang/diagnostic@1.0.0\x05\x08\x02\x03\0\x02\x04node\x02\x03\
+\0\x02\x06cursor\x02\x03\0\x03\x08severity\x01B-\x02\x03\x02\x01\x09\x04\0\x04no\
+de\x03\0\0\x02\x03\x02\x01\x0a\x04\0\x06cursor\x03\0\x02\x02\x03\x02\x01\x0b\x04\
+\0\x08severity\x03\0\x04\x02\x03\x02\x01\x02\x04\0\x10nonterminal-kind\x03\0\x06\
+\x02\x03\x02\x01\x06\x04\0\x0atext-range\x03\0\x08\x04\0\x08language\x03\x01\x04\
+\0\x0bparse-error\x03\x01\x04\0\x0cparse-output\x03\x01\x01i\x0a\x01j\x01\x0d\x01\
+s\x01@\x01\x07versions\0\x0e\x04\0\x14[static]language.new\x01\x0f\x01h\x0a\x01@\
+\x01\x04self\x10\0s\x04\0\x18[method]language.version\x01\x11\x01ps\x01@\x01\x04\
+self\x10\0\x12\x04\0#[method]language.supported-versions\x01\x13\x01i\x0c\x01@\x03\
+\x04self\x10\x04kind\x07\x05inputs\0\x14\x04\0\x16[method]language.parse\x01\x15\
+\x01h\x0b\x01@\x01\x04self\x16\0\x05\x04\0\x1c[method]parse-error.severity\x01\x17\
+\x01@\x01\x04self\x16\0\x09\x04\0\x1e[method]parse-error.text-range\x01\x18\x01@\
+\x01\x04self\x16\0s\x04\0\x1b[method]parse-error.message\x01\x19\x01h\x0c\x01@\x01\
+\x04self\x1a\0\x01\x04\0\x19[method]parse-output.tree\x01\x1b\x01i\x0b\x01p\x1c\x01\
+@\x01\x04self\x1a\0\x1d\x04\0\x1b[method]parse-output.errors\x01\x1e\x01@\x01\x04\
+self\x1a\0\x7f\x04\0\x1d[method]parse-output.is-valid\x01\x1f\x01i\x03\x01@\x01\x04\
+self\x1a\0\x20\x04\0'[method]parse-output.create-tree-cursor\x01!\x04\x01\x1anom\
+ic:slang/language@1.0.0\x05\x0c\x04\x01\x17nomic:slang/slang@1.0.0\x04\0\x0b\x0b\
+\x01\0\x05slang\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\
+\x070.209.1\x10wit-bindgen-rust\x060.26.0";
 
 #[inline(never)]
 #[doc(hidden)]
