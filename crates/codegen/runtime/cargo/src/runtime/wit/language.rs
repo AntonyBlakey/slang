@@ -9,15 +9,18 @@ use super::{define_wrapper, ffi, rust};
 //================================================
 
 define_wrapper! { Language {
-    fn new(_version: String) -> Result<ffi::Language, String> {
-        todo!()
+    fn new(version: String) -> Result<ffi::Language, String> {
+        semver::Version::parse(&version)
+            .map_err(|_| format!("Invalid version: {version}"))
+            .and_then(|version| rust::Language::new(version).map_err(|e| e.to_string()))
+            .map(Into::into)
     }
 
     fn version(&self) -> String {
         self.0.version.to_string()
     }
 
-    fn supported_versions(&self) -> Vec<String> {
+    fn supported_versions() -> Vec<String> {
         rust::Language::SUPPORTED_VERSIONS
             .iter()
             .map(|v| v.to_string())
@@ -69,7 +72,7 @@ define_wrapper! { ParseOutput {
     }
 
     fn create_tree_cursor(&self) -> ffi::Cursor {
-        todo!()
+        self.0.create_tree_cursor().into()
     }
 } }
 

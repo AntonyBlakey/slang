@@ -16,8 +16,8 @@ pub mod ffi {
     pub use crate::wit::slang::exports::nomic::slang::{
         cst::{
             self, Cursor, GuestCursor, GuestNonterminalNode, GuestQuery, GuestQueryMatchIterator,
-            GuestTerminalNode, Node, NonterminalNode, Query, QueryMatch, QueryMatchIterator,
-            TerminalNode,
+            GuestTerminalNode, Node, NonterminalNode, Query, QueryError, QueryMatch,
+            QueryMatchIterator, TerminalNode,
         },
         diagnostic::Severity,
         kinds::{EdgeLabel, NonterminalKind, TerminalKind},
@@ -38,20 +38,26 @@ pub mod rust {
         language::Language,
         parse_error::ParseError,
         parse_output::ParseOutput,
-        query::{Query, QueryMatch, QueryMatchIterator},
+        query::{Query, QueryError, QueryMatch, QueryMatchIterator},
         text_index::{TextIndex, TextRange},
     };
 }
 
-macro_rules! define_wrapper_base {
-    ($name:ident, $rust:ty, $impl:tt) => {
+macro_rules! define_wrapper {
+    ($name:ident $impl:tt) => {
         paste::paste! {
             #[repr(transparent)]
-            pub struct [<$name Wrapper>] ($rust);
-            impl From<$rust> for ffi::$name {
+            pub struct [<$name Wrapper>] (rust::$name);
+            impl From<rust::$name> for ffi::$name {
                 #[inline]
-                fn from(value: $rust) -> Self {
+                fn from(value: rust::$name) -> Self {
                     ffi::$name::new( [<$name Wrapper>] (value))
+                }
+            }
+            impl<'a> From<&'a ffi::$name> for &'a rust::$name {
+                #[inline]
+                fn from(value: &'a ffi::$name) -> Self {
+                    &value.get::<[<$name Wrapper>]>().0
                 }
             }
             impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
@@ -59,21 +65,47 @@ macro_rules! define_wrapper_base {
     };
 }
 
-macro_rules! define_wrapper {
-    ($name:ident $impl:tt) => {
-        $crate::wit::define_wrapper_base!($name, rust::$name, $impl);
-    };
-}
-
 macro_rules! define_rc_wrapper {
     ($name:ident $impl:tt) => {
-        $crate::wit::define_wrapper_base!($name, std::rc::Rc<rust::$name>, $impl);
+        paste::paste! {
+            #[repr(transparent)]
+            pub struct [<$name Wrapper>] (std::rc::Rc<rust::$name>);
+            impl From<rust::$name> for ffi::$name {
+                #[inline]
+                fn from(value: rust::$name) -> Self {
+                    ffi::$name::new( [<$name Wrapper>] (std::rc::Rc::new(value)))
+                }
+            }
+            impl From<std::rc::Rc<rust::$name>> for ffi::$name {
+                #[inline]
+                fn from(value: std::rc::Rc<rust::$name>) -> Self {
+                    ffi::$name::new( [<$name Wrapper>] (value))
+                }
+            }
+            impl From<ffi::$name> for std::rc::Rc<rust::$name> {
+                #[inline]
+                fn from(value: ffi::$name) -> Self {
+                    value.get::<[<$name Wrapper>]>().0.clone()
+                }
+            }
+            impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
+        }
     };
 }
 
 macro_rules! define_refcell_wrapper {
     ($name:ident $impl:tt) => {
-        $crate::wit::define_wrapper_base!($name, std::cell::RefCell<rust::$name>, $impl);
+        paste::paste! {
+            #[repr(transparent)]
+            pub struct [<$name Wrapper>] (std::cell::RefCell<rust::$name>);
+            impl From<rust::$name> for ffi::$name {
+                #[inline]
+                fn from(value: rust::$name) -> Self {
+                    ffi::$name::new( [<$name Wrapper>] (std::cell::RefCell::new(value)))
+                }
+            }
+            impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
+        }
     };
 }
 
@@ -93,9 +125,7 @@ macro_rules! enum_to_enum {
 }
 
 // The trick: https://stackoverflow.com/questions/26731243/how-do-i-use-a-macro-across-module-files
-pub(crate) use {
-    define_rc_wrapper, define_refcell_wrapper, define_wrapper, define_wrapper_base, enum_to_enum,
-};
+pub(crate) use {define_rc_wrapper, define_refcell_wrapper, define_wrapper, enum_to_enum};
 
 #[allow(clippy::upper_case_acronyms)]
 pub struct API;

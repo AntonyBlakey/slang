@@ -6,9 +6,9 @@ interface language {
     use text-index.{text-range};
 
     resource language {
+        supported-versions: static func() -> list<string>;
         new: static func(version: string) -> result<language, string>;
         version: func() -> string;
-        supported-versions: func() -> list<string>;
         parse: func(kind: nonterminal-kind, input: string) -> parse-output;
     }
 

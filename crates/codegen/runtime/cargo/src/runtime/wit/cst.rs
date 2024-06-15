@@ -69,113 +69,121 @@ impl From<rust::Node> for ffi::Node {
 //
 //================================================
 
-define_wrapper! { Cursor {
+define_refcell_wrapper! { Cursor {
     fn reset(&self) {
-        todo!()
+        self.0.borrow_mut().reset();
     }
 
     fn complete(&self) {
-        todo!()
+        self.0.borrow_mut().complete();
     }
 
     fn is_completed(&self) -> bool {
-        todo!()
+        self.0.borrow().is_completed()
     }
 
     fn clone(&self) -> ffi::Cursor {
-        todo!()
+        self.0.borrow().clone().into()
     }
 
     fn spawn(&self) -> ffi::Cursor {
-        todo!()
+        self.0.borrow().spawn().into()
     }
 
     fn node(&self) -> ffi::Node {
-        todo!()
+        self.0.borrow().node().into()
     }
 
     fn label(&self) -> Option<ffi::EdgeLabel> {
-        todo!()
+        self.0.borrow().label().map(Into::into)
     }
 
     fn text_offset(&self) -> ffi::TextIndex {
-        todo!()
+        self.0.borrow().text_offset().into()
     }
 
     fn text_range(&self) -> ffi::TextRange {
-        todo!()
+        self.0.borrow().text_range().into()
     }
 
+    #[allow(clippy::cast_possible_truncation)]
     fn depth(&self) -> u32 {
-        todo!()
+        self.0.borrow().depth() as u32
     }
 
     fn ancestors(&self) -> Vec<ffi::NonterminalNode> {
-        todo!()
+        self.0.borrow().ancestors().map(Into::into).collect()
     }
 
     fn go_to_next(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_next()
     }
 
     fn go_to_next_non_descendent(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_next_non_descendent()
     }
 
     fn go_to_previous(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_previous()
     }
 
     fn go_to_parent(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_parent()
     }
 
     fn go_to_first_child(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_first_child()
     }
 
     fn go_to_last_child(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_last_child()
     }
 
-    fn go_to_nth_child(&self, _child_number: u32) -> bool {
-        todo!()
+    fn go_to_nth_child(&self, child_number: u32) -> bool {
+        self.0.borrow_mut().go_to_nth_child(child_number as usize)
     }
 
     fn go_to_next_sibling(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_next_sibling()
     }
 
     fn go_to_previous_sibling(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_previous_sibling()
     }
 
     fn go_to_next_terminal(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_next_terminal()
     }
 
-    fn go_to_next_terminal_with_kind(&self, _kind: ffi::TerminalKind) -> bool {
-        todo!()
+    fn go_to_next_terminal_with_kind(&self, kind: ffi::TerminalKind) -> bool {
+        self.0.borrow_mut().go_to_next_terminal_with_kind(kind.into())
     }
 
-    fn go_to_next_terminal_with_kinds(&self, _kinds: Vec<ffi::TerminalKind>) -> bool {
-        todo!()
+    fn go_to_next_terminal_with_kinds(&self, kinds: Vec<ffi::TerminalKind>) -> bool {
+        let kinds = kinds.into_iter().map(Into::into).collect::<Vec<_>>();
+        self.0.borrow_mut().go_to_next_terminal_with_kinds(&kinds)
     }
 
     fn go_to_next_nonterminal(&self) -> bool {
-        todo!()
+        self.0.borrow_mut().go_to_next_nonterminal()
     }
 
-    fn go_to_next_nonterminal_with_kind(&self, _kind: ffi::NonterminalKind) -> bool {
-        todo!()
+    fn go_to_next_nonterminal_with_kind(&self, kind: ffi::NonterminalKind) -> bool {
+        self.0.borrow_mut().go_to_next_nonterminal_with_kind(kind.into())
     }
 
-    fn go_to_next_nonterminal_with_kinds(&self, _kinds: Vec<ffi::NonterminalKind>) -> bool {
-        todo!()
+    fn go_to_next_nonterminal_with_kinds(&self, kinds: Vec<ffi::NonterminalKind>) -> bool {
+        let kinds = kinds.into_iter().map(Into::into).collect::<Vec<_>>();
+        self.0.borrow_mut().go_to_next_nonterminal_with_kinds(&kinds)
     }
 
-    fn query(&self, _queries: Vec<ffi::Query>) -> ffi::QueryMatchIterator {
-        todo!()
+    fn query(&self, queries: Vec<ffi::Query>) -> ffi::QueryMatchIterator {
+        let queries:Vec<rust::Query> = queries.iter().map(|q|{
+            let q: &rust::Query = q.into();
+            q.clone()
+        }).collect();
+
+        self.0.borrow().clone().query(queries).into()
     }
 } }
 
@@ -186,10 +194,27 @@ define_wrapper! { Cursor {
 //================================================
 
 define_wrapper! { Query {
-    fn parse(_text: String) -> Result<ffi::Query, ()> {
-        todo!()
+    fn parse(text: String) -> Result<ffi::Query, ffi::QueryError> {
+        rust::Query::parse(&text).map_err(Into::into).map(Into::into)
     }
 } }
+
+//================================================
+//
+// record query-error
+//
+//================================================
+
+impl From<rust::QueryError> for ffi::QueryError {
+    fn from(value: rust::QueryError) -> Self {
+        #[allow(clippy::cast_possible_truncation)]
+        Self {
+            message: value.message,
+            line: value.line as u32,
+            column: value.column as u32,
+        }
+    }
+}
 
 //================================================
 //

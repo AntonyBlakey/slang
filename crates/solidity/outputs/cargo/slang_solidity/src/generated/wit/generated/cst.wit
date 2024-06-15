@@ -25,7 +25,6 @@ interface cst {
     }
 
     resource cursor {
-
         reset: func();
         complete: func();
         is-completed: func() -> bool;
@@ -65,11 +64,16 @@ interface cst {
         go-to-next-nonterminal-with-kinds: func(kinds: list<nonterminal-kind>) -> bool;
 
         query: func(queries: list<query>) -> query-match-iterator;
-
     }
 
     resource query {
-        parse: static func(text: string) -> result<query>;
+        parse: static func(text: string) -> result<query, query-error>;
+    }
+
+    record query-error {
+        message: string,
+        line: u32,
+        column: u32,
     }
 
     record query-match {

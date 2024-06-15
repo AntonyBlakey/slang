@@ -820,6 +820,27 @@ pub mod exports {
                     }
                 }
 
+                #[derive(Clone)]
+                pub struct QueryError {
+                    pub message: _rt::String,
+                    pub line: u32,
+                    pub column: u32,
+                }
+                impl ::core::fmt::Debug for QueryError {
+                    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                        f.debug_struct("QueryError")
+                            .field("message", &self.message)
+                            .field("line", &self.line)
+                            .field("column", &self.column)
+                            .finish()
+                    }
+                }
+                impl ::core::fmt::Display for QueryError {
+                    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
+                        write!(f, "{:?}", self)
+                    }
+                }
+                impl std::error::Error for QueryError {}
                 pub struct QueryMatch {
                     pub query_number: u32,
                     pub captures: _rt::Vec<(_rt::String, _rt::Vec<Cursor>)>,
@@ -1671,11 +1692,37 @@ pub mod exports {
                             *ptr2.add(0).cast::<u8>() = (0i32) as u8;
                             *ptr2.add(4).cast::<i32>() = (e).take_handle() as i32;
                         }
-                        Err(_) => {
+                        Err(e) => {
                             *ptr2.add(0).cast::<u8>() = (1i32) as u8;
+                            let QueryError {
+                                message: message3,
+                                line: line3,
+                                column: column3,
+                            } = e;
+                            let vec4 = (message3.into_bytes()).into_boxed_slice();
+                            let ptr4 = vec4.as_ptr().cast::<u8>();
+                            let len4 = vec4.len();
+                            ::core::mem::forget(vec4);
+                            *ptr2.add(8).cast::<usize>() = len4;
+                            *ptr2.add(4).cast::<*mut u8>() = ptr4.cast_mut();
+                            *ptr2.add(12).cast::<i32>() = _rt::as_i32(line3);
+                            *ptr2.add(16).cast::<i32>() = _rt::as_i32(column3);
                         }
                     };
                     ptr2
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn __post_return_static_query_parse<T: GuestQuery>(arg0: *mut u8) {
+                    let l0 = i32::from(*arg0.add(0).cast::<u8>());
+                    match l0 {
+                        0 => (),
+                        _ => {
+                            let l1 = *arg0.add(4).cast::<*mut u8>();
+                            let l2 = *arg0.add(8).cast::<usize>();
+                            _rt::cabi_dealloc(l1, l2, 1);
+                        }
+                    }
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -2019,7 +2066,7 @@ pub mod exports {
                         }
                     }
 
-                    fn parse(text: _rt::String) -> Result<Query, ()>;
+                    fn parse(text: _rt::String) -> Result<Query, QueryError>;
                 }
                 pub trait GuestQueryMatchIterator: 'static {
                     #[doc(hidden)]
@@ -2232,6 +2279,10 @@ pub mod exports {
     #[export_name = "nomic:slang/cst@1.0.0#[static]query.parse"]
     unsafe extern "C" fn export_static_query_parse(arg0: *mut u8,arg1: usize,) -> *mut u8 {
       $($path_to_types)*::_export_static_query_parse_cabi::<<$ty as $($path_to_types)*::Guest>::Query>(arg0, arg1)
+    }
+    #[export_name = "cabi_post_nomic:slang/cst@1.0.0#[static]query.parse"]
+    unsafe extern "C" fn _post_return_static_query_parse(arg0: *mut u8,) {
+      $($path_to_types)*::__post_return_static_query_parse::<<$ty as $($path_to_types)*::Guest>::Query>(arg0)
     }
     #[export_name = "nomic:slang/cst@1.0.0#[method]query-match-iterator.next"]
     unsafe extern "C" fn export_method_query_match_iterator_next(arg0: *mut u8,) -> *mut u8 {
@@ -2808,6 +2859,62 @@ pub mod exports {
 
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
+                pub unsafe fn _export_static_language_supported_versions_cabi<T: GuestLanguage>(
+                ) -> *mut u8 {
+                    #[cfg(target_arch = "wasm32")]
+                    _rt::run_ctors_once();
+                    let result0 = T::supported_versions();
+                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
+                    let vec3 = result0;
+                    let len3 = vec3.len();
+                    let layout3 = _rt::alloc::Layout::from_size_align_unchecked(vec3.len() * 8, 4);
+                    let result3 = if layout3.size() != 0 {
+                        let ptr = _rt::alloc::alloc(layout3).cast::<u8>();
+                        if ptr.is_null() {
+                            _rt::alloc::handle_alloc_error(layout3);
+                        }
+                        ptr
+                    } else {
+                        {
+                            ::core::ptr::null_mut()
+                        }
+                    };
+                    for (i, e) in vec3.into_iter().enumerate() {
+                        let base = result3.add(i * 8);
+                        {
+                            let vec2 = (e.into_bytes()).into_boxed_slice();
+                            let ptr2 = vec2.as_ptr().cast::<u8>();
+                            let len2 = vec2.len();
+                            ::core::mem::forget(vec2);
+                            *base.add(4).cast::<usize>() = len2;
+                            *base.add(0).cast::<*mut u8>() = ptr2.cast_mut();
+                        }
+                    }
+                    *ptr1.add(4).cast::<usize>() = len3;
+                    *ptr1.add(0).cast::<*mut u8>() = result3;
+                    ptr1
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
+                pub unsafe fn __post_return_static_language_supported_versions<T: GuestLanguage>(
+                    arg0: *mut u8,
+                ) {
+                    let l2 = *arg0.add(0).cast::<*mut u8>();
+                    let l3 = *arg0.add(4).cast::<usize>();
+                    let base4 = l2;
+                    let len4 = l3;
+                    for i in 0..len4 {
+                        let base = base4.add(i * 8);
+                        {
+                            let l0 = *base.add(0).cast::<*mut u8>();
+                            let l1 = *base.add(4).cast::<usize>();
+                            _rt::cabi_dealloc(l0, l1, 1);
+                        }
+                    }
+                    _rt::cabi_dealloc(base4, len4 * 8, 4);
+                }
+                #[doc(hidden)]
+                #[allow(non_snake_case)]
                 pub unsafe fn _export_static_language_new_cabi<T: GuestLanguage>(
                     arg0: *mut u8,
                     arg1: usize,
@@ -2873,64 +2980,6 @@ pub mod exports {
                     let l0 = *arg0.add(0).cast::<*mut u8>();
                     let l1 = *arg0.add(4).cast::<usize>();
                     _rt::cabi_dealloc(l0, l1, 1);
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn _export_method_language_supported_versions_cabi<T: GuestLanguage>(
-                    arg0: *mut u8,
-                ) -> *mut u8 {
-                    #[cfg(target_arch = "wasm32")]
-                    _rt::run_ctors_once();
-                    let result0 =
-                        T::supported_versions(LanguageBorrow::lift(arg0 as u32 as usize).get());
-                    let ptr1 = _RET_AREA.0.as_mut_ptr().cast::<u8>();
-                    let vec3 = result0;
-                    let len3 = vec3.len();
-                    let layout3 = _rt::alloc::Layout::from_size_align_unchecked(vec3.len() * 8, 4);
-                    let result3 = if layout3.size() != 0 {
-                        let ptr = _rt::alloc::alloc(layout3).cast::<u8>();
-                        if ptr.is_null() {
-                            _rt::alloc::handle_alloc_error(layout3);
-                        }
-                        ptr
-                    } else {
-                        {
-                            ::core::ptr::null_mut()
-                        }
-                    };
-                    for (i, e) in vec3.into_iter().enumerate() {
-                        let base = result3.add(i * 8);
-                        {
-                            let vec2 = (e.into_bytes()).into_boxed_slice();
-                            let ptr2 = vec2.as_ptr().cast::<u8>();
-                            let len2 = vec2.len();
-                            ::core::mem::forget(vec2);
-                            *base.add(4).cast::<usize>() = len2;
-                            *base.add(0).cast::<*mut u8>() = ptr2.cast_mut();
-                        }
-                    }
-                    *ptr1.add(4).cast::<usize>() = len3;
-                    *ptr1.add(0).cast::<*mut u8>() = result3;
-                    ptr1
-                }
-                #[doc(hidden)]
-                #[allow(non_snake_case)]
-                pub unsafe fn __post_return_method_language_supported_versions<T: GuestLanguage>(
-                    arg0: *mut u8,
-                ) {
-                    let l2 = *arg0.add(0).cast::<*mut u8>();
-                    let l3 = *arg0.add(4).cast::<usize>();
-                    let base4 = l2;
-                    let len4 = l3;
-                    for i in 0..len4 {
-                        let base = base4.add(i * 8);
-                        {
-                            let l0 = *base.add(0).cast::<*mut u8>();
-                            let l1 = *base.add(4).cast::<usize>();
-                            _rt::cabi_dealloc(l0, l1, 1);
-                        }
-                    }
-                    _rt::cabi_dealloc(base4, len4 * 8, 4);
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -3160,9 +3209,9 @@ pub mod exports {
                         }
                     }
 
+                    fn supported_versions() -> _rt::Vec<_rt::String>;
                     fn new(version: _rt::String) -> Result<Language, _rt::String>;
                     fn version(&self) -> _rt::String;
-                    fn supported_versions(&self) -> _rt::Vec<_rt::String>;
                     fn parse(&self, kind: NonterminalKind, input: _rt::String) -> ParseOutput;
                 }
                 pub trait GuestParseError: 'static {
@@ -3270,6 +3319,14 @@ pub mod exports {
                 macro_rules! __export_nomic_slang_language_1_0_0_cabi{
   ($ty:ident with_types_in $($path_to_types:tt)*) => (const _: () = {
 
+    #[export_name = "nomic:slang/language@1.0.0#[static]language.supported-versions"]
+    unsafe extern "C" fn export_static_language_supported_versions() -> *mut u8 {
+      $($path_to_types)*::_export_static_language_supported_versions_cabi::<<$ty as $($path_to_types)*::Guest>::Language>()
+    }
+    #[export_name = "cabi_post_nomic:slang/language@1.0.0#[static]language.supported-versions"]
+    unsafe extern "C" fn _post_return_static_language_supported_versions(arg0: *mut u8,) {
+      $($path_to_types)*::__post_return_static_language_supported_versions::<<$ty as $($path_to_types)*::Guest>::Language>(arg0)
+    }
     #[export_name = "nomic:slang/language@1.0.0#[static]language.new"]
     unsafe extern "C" fn export_static_language_new(arg0: *mut u8,arg1: usize,) -> *mut u8 {
       $($path_to_types)*::_export_static_language_new_cabi::<<$ty as $($path_to_types)*::Guest>::Language>(arg0, arg1)
@@ -3285,14 +3342,6 @@ pub mod exports {
     #[export_name = "cabi_post_nomic:slang/language@1.0.0#[method]language.version"]
     unsafe extern "C" fn _post_return_method_language_version(arg0: *mut u8,) {
       $($path_to_types)*::__post_return_method_language_version::<<$ty as $($path_to_types)*::Guest>::Language>(arg0)
-    }
-    #[export_name = "nomic:slang/language@1.0.0#[method]language.supported-versions"]
-    unsafe extern "C" fn export_method_language_supported_versions(arg0: *mut u8,) -> *mut u8 {
-      $($path_to_types)*::_export_method_language_supported_versions_cabi::<<$ty as $($path_to_types)*::Guest>::Language>(arg0)
-    }
-    #[export_name = "cabi_post_nomic:slang/language@1.0.0#[method]language.supported-versions"]
-    unsafe extern "C" fn _post_return_method_language_supported_versions(arg0: *mut u8,) {
-      $($path_to_types)*::__post_return_method_language_supported_versions::<<$ty as $($path_to_types)*::Guest>::Language>(arg0)
     }
     #[export_name = "nomic:slang/language@1.0.0#[method]language.parse"]
     unsafe extern "C" fn export_method_language_parse(arg0: *mut u8,arg1: i32,arg2: *mut u8,arg3: usize,) -> i32 {
@@ -3605,8 +3654,8 @@ macro_rules! __export_slang_impl {
     #[cfg(target_arch = "wasm32")]
     #[link_section = "component-type:wit-bindgen:0.26.0:slang:imports and exports"]
     #[doc(hidden)]
-    pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 3451] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xff\x19\x01A\x02\x01\
+    pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 3490] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xa6\x1a\x01A\x02\x01\
 A\x12\x01B\x06\x01m\x03\x05stub1\x05stub2\x05stub3\x04\0\x10nonterminal-kind\x03\
 \0\0\x01m\x0b\x04item\x07variant\x09separator\x07operand\x0cleft-operand\x0drigh\
 t-operand\x0eleading-trivia\x0ftrailing-trivia\x05stub1\x05stub2\x05stub3\x04\0\x0a\
@@ -3615,67 +3664,68 @@ minal-kind\x03\0\x04\x04\x01\x17nomic:slang/kinds@1.0.0\x05\0\x01B\x04\x01r\x04\
 utf8y\x05utf16y\x04liney\x06columny\x04\0\x0atext-index\x03\0\0\x01r\x02\x05star\
 t\x01\x03end\x01\x04\0\x0atext-range\x03\0\x02\x04\x01\x1cnomic:slang/text-index\
 @1.0.0\x05\x01\x02\x03\0\0\x10nonterminal-kind\x02\x03\0\0\x0dterminal-kind\x02\x03\
-\0\0\x0aedge-label\x02\x03\0\x01\x0atext-index\x02\x03\0\x01\x0atext-range\x01Be\
+\0\0\x0aedge-label\x02\x03\0\x01\x0atext-index\x02\x03\0\x01\x0atext-range\x01Bg\
 \x02\x03\x02\x01\x02\x04\0\x10nonterminal-kind\x03\0\0\x02\x03\x02\x01\x03\x04\0\
 \x0dterminal-kind\x03\0\x02\x02\x03\x02\x01\x04\x04\0\x0aedge-label\x03\0\x04\x02\
 \x03\x02\x01\x05\x04\0\x0atext-index\x03\0\x06\x02\x03\x02\x01\x06\x04\0\x0atext\
 -range\x03\0\x08\x04\0\x10nonterminal-node\x03\x01\x04\0\x0dterminal-node\x03\x01\
 \x01i\x0a\x01i\x0b\x01q\x02\x0bnonterminal\x01\x0c\0\x08terminal\x01\x0d\0\x04\0\
-\x04node\x03\0\x0e\x04\0\x06cursor\x03\x01\x04\0\x05query\x03\x01\x01i\x10\x01p\x12\
-\x01o\x02s\x13\x01p\x14\x01r\x02\x0cquery-numbery\x08captures\x15\x04\0\x0bquery\
--match\x03\0\x16\x04\0\x14query-match-iterator\x03\x01\x01h\x0a\x01@\x01\x04self\
-\x19\0\x01\x04\0\x1d[method]nonterminal-node.kind\x01\x1a\x01@\x01\x04self\x19\0\
-\x07\x04\0![method]nonterminal-node.text-len\x01\x1b\x01p\x0f\x01@\x01\x04self\x19\
-\0\x1c\x04\0![method]nonterminal-node.children\x01\x1d\x01@\x02\x04self\x19\x0bt\
-ext-offset\x07\0\x12\x04\0&[method]nonterminal-node.create-cursor\x01\x1e\x01@\x01\
-\x04self\x19\0s\x04\0\x20[method]nonterminal-node.unparse\x01\x1f\x01h\x0b\x01@\x01\
-\x04self\x20\0\x03\x04\0\x1a[method]terminal-node.kind\x01!\x01@\x01\x04self\x20\
-\0\x07\x04\0\x1e[method]terminal-node.text-len\x01\"\x01@\x01\x04self\x20\0s\x04\
-\0\x1a[method]terminal-node.text\x01#\x01h\x10\x01@\x01\x04self$\x01\0\x04\0\x14\
-[method]cursor.reset\x01%\x04\0\x17[method]cursor.complete\x01%\x01@\x01\x04self\
-$\0\x7f\x04\0\x1b[method]cursor.is-completed\x01&\x01@\x01\x04self$\0\x12\x04\0\x14\
-[method]cursor.clone\x01'\x04\0\x14[method]cursor.spawn\x01'\x01@\x01\x04self$\0\
-\x0f\x04\0\x13[method]cursor.node\x01(\x01k\x05\x01@\x01\x04self$\0)\x04\0\x14[m\
-ethod]cursor.label\x01*\x01@\x01\x04self$\0\x07\x04\0\x1a[method]cursor.text-off\
-set\x01+\x01@\x01\x04self$\0\x09\x04\0\x19[method]cursor.text-range\x01,\x01@\x01\
-\x04self$\0y\x04\0\x14[method]cursor.depth\x01-\x01p\x0c\x01@\x01\x04self$\0.\x04\
-\0\x18[method]cursor.ancestors\x01/\x04\0\x19[method]cursor.go-to-next\x01&\x04\0\
-([method]cursor.go-to-next-non-descendent\x01&\x04\0\x1d[method]cursor.go-to-pre\
-vious\x01&\x04\0\x1b[method]cursor.go-to-parent\x01&\x04\0\x20[method]cursor.go-\
-to-first-child\x01&\x04\0\x1f[method]cursor.go-to-last-child\x01&\x01@\x02\x04se\
-lf$\x0cchild-numbery\0\x7f\x04\0\x1e[method]cursor.go-to-nth-child\x010\x04\0![m\
-ethod]cursor.go-to-next-sibling\x01&\x04\0%[method]cursor.go-to-previous-sibling\
-\x01&\x04\0\"[method]cursor.go-to-next-terminal\x01&\x01@\x02\x04self$\x04kind\x03\
-\0\x7f\x04\0,[method]cursor.go-to-next-terminal-with-kind\x011\x01p\x03\x01@\x02\
-\x04self$\x05kinds2\0\x7f\x04\0-[method]cursor.go-to-next-terminal-with-kinds\x01\
-3\x04\0%[method]cursor.go-to-next-nonterminal\x01&\x01@\x02\x04self$\x04kind\x01\
-\0\x7f\x04\0/[method]cursor.go-to-next-nonterminal-with-kind\x014\x01p\x01\x01@\x02\
-\x04self$\x05kinds5\0\x7f\x04\00[method]cursor.go-to-next-nonterminal-with-kinds\
-\x016\x01i\x11\x01p7\x01i\x18\x01@\x02\x04self$\x07queries8\09\x04\0\x14[method]\
-cursor.query\x01:\x01j\x017\0\x01@\x01\x04texts\0;\x04\0\x13[static]query.parse\x01\
-<\x01h\x18\x01k\x17\x01@\x01\x04self=\0>\x04\0![method]query-match-iterator.next\
-\x01?\x04\x01\x15nomic:slang/cst@1.0.0\x05\x07\x01B\x04\x02\x03\x02\x01\x06\x04\0\
-\x0atext-range\x03\0\0\x01m\x04\x05error\x07warning\x0binformation\x04hint\x04\0\
-\x08severity\x03\0\x02\x04\x01\x1cnomic:slang/diagnostic@1.0.0\x05\x08\x02\x03\0\
-\x02\x04node\x02\x03\0\x02\x06cursor\x02\x03\0\x03\x08severity\x01B-\x02\x03\x02\
-\x01\x09\x04\0\x04node\x03\0\0\x02\x03\x02\x01\x0a\x04\0\x06cursor\x03\0\x02\x02\
-\x03\x02\x01\x0b\x04\0\x08severity\x03\0\x04\x02\x03\x02\x01\x02\x04\0\x10nonter\
-minal-kind\x03\0\x06\x02\x03\x02\x01\x06\x04\0\x0atext-range\x03\0\x08\x04\0\x08\
-language\x03\x01\x04\0\x0bparse-error\x03\x01\x04\0\x0cparse-output\x03\x01\x01i\
-\x0a\x01j\x01\x0d\x01s\x01@\x01\x07versions\0\x0e\x04\0\x14[static]language.new\x01\
-\x0f\x01h\x0a\x01@\x01\x04self\x10\0s\x04\0\x18[method]language.version\x01\x11\x01\
-ps\x01@\x01\x04self\x10\0\x12\x04\0#[method]language.supported-versions\x01\x13\x01\
-i\x0c\x01@\x03\x04self\x10\x04kind\x07\x05inputs\0\x14\x04\0\x16[method]language\
-.parse\x01\x15\x01h\x0b\x01@\x01\x04self\x16\0\x05\x04\0\x1c[method]parse-error.\
-severity\x01\x17\x01@\x01\x04self\x16\0\x09\x04\0\x1e[method]parse-error.text-ra\
-nge\x01\x18\x01@\x01\x04self\x16\0s\x04\0\x1b[method]parse-error.message\x01\x19\
-\x01h\x0c\x01@\x01\x04self\x1a\0\x01\x04\0\x19[method]parse-output.tree\x01\x1b\x01\
-i\x0b\x01p\x1c\x01@\x01\x04self\x1a\0\x1d\x04\0\x1b[method]parse-output.errors\x01\
-\x1e\x01@\x01\x04self\x1a\0\x7f\x04\0\x1d[method]parse-output.is-valid\x01\x1f\x01\
-i\x03\x01@\x01\x04self\x1a\0\x20\x04\0'[method]parse-output.create-tree-cursor\x01\
-!\x04\x01\x1anomic:slang/language@1.0.0\x05\x0c\x04\x01\x17nomic:slang/slang@1.0\
-.0\x04\0\x0b\x0b\x01\0\x05slang\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0d\
-wit-component\x070.209.1\x10wit-bindgen-rust\x060.26.0";
+\x04node\x03\0\x0e\x04\0\x06cursor\x03\x01\x04\0\x05query\x03\x01\x01r\x03\x07me\
+ssages\x04liney\x06columny\x04\0\x0bquery-error\x03\0\x12\x01i\x10\x01p\x14\x01o\
+\x02s\x15\x01p\x16\x01r\x02\x0cquery-numbery\x08captures\x17\x04\0\x0bquery-matc\
+h\x03\0\x18\x04\0\x14query-match-iterator\x03\x01\x01h\x0a\x01@\x01\x04self\x1b\0\
+\x01\x04\0\x1d[method]nonterminal-node.kind\x01\x1c\x01@\x01\x04self\x1b\0\x07\x04\
+\0![method]nonterminal-node.text-len\x01\x1d\x01p\x0f\x01@\x01\x04self\x1b\0\x1e\
+\x04\0![method]nonterminal-node.children\x01\x1f\x01@\x02\x04self\x1b\x0btext-of\
+fset\x07\0\x14\x04\0&[method]nonterminal-node.create-cursor\x01\x20\x01@\x01\x04\
+self\x1b\0s\x04\0\x20[method]nonterminal-node.unparse\x01!\x01h\x0b\x01@\x01\x04\
+self\"\0\x03\x04\0\x1a[method]terminal-node.kind\x01#\x01@\x01\x04self\"\0\x07\x04\
+\0\x1e[method]terminal-node.text-len\x01$\x01@\x01\x04self\"\0s\x04\0\x1a[method\
+]terminal-node.text\x01%\x01h\x10\x01@\x01\x04self&\x01\0\x04\0\x14[method]curso\
+r.reset\x01'\x04\0\x17[method]cursor.complete\x01'\x01@\x01\x04self&\0\x7f\x04\0\
+\x1b[method]cursor.is-completed\x01(\x01@\x01\x04self&\0\x14\x04\0\x14[method]cu\
+rsor.clone\x01)\x04\0\x14[method]cursor.spawn\x01)\x01@\x01\x04self&\0\x0f\x04\0\
+\x13[method]cursor.node\x01*\x01k\x05\x01@\x01\x04self&\0+\x04\0\x14[method]curs\
+or.label\x01,\x01@\x01\x04self&\0\x07\x04\0\x1a[method]cursor.text-offset\x01-\x01\
+@\x01\x04self&\0\x09\x04\0\x19[method]cursor.text-range\x01.\x01@\x01\x04self&\0\
+y\x04\0\x14[method]cursor.depth\x01/\x01p\x0c\x01@\x01\x04self&\00\x04\0\x18[met\
+hod]cursor.ancestors\x011\x04\0\x19[method]cursor.go-to-next\x01(\x04\0([method]\
+cursor.go-to-next-non-descendent\x01(\x04\0\x1d[method]cursor.go-to-previous\x01\
+(\x04\0\x1b[method]cursor.go-to-parent\x01(\x04\0\x20[method]cursor.go-to-first-\
+child\x01(\x04\0\x1f[method]cursor.go-to-last-child\x01(\x01@\x02\x04self&\x0cch\
+ild-numbery\0\x7f\x04\0\x1e[method]cursor.go-to-nth-child\x012\x04\0![method]cur\
+sor.go-to-next-sibling\x01(\x04\0%[method]cursor.go-to-previous-sibling\x01(\x04\
+\0\"[method]cursor.go-to-next-terminal\x01(\x01@\x02\x04self&\x04kind\x03\0\x7f\x04\
+\0,[method]cursor.go-to-next-terminal-with-kind\x013\x01p\x03\x01@\x02\x04self&\x05\
+kinds4\0\x7f\x04\0-[method]cursor.go-to-next-terminal-with-kinds\x015\x04\0%[met\
+hod]cursor.go-to-next-nonterminal\x01(\x01@\x02\x04self&\x04kind\x01\0\x7f\x04\0\
+/[method]cursor.go-to-next-nonterminal-with-kind\x016\x01p\x01\x01@\x02\x04self&\
+\x05kinds7\0\x7f\x04\00[method]cursor.go-to-next-nonterminal-with-kinds\x018\x01\
+i\x11\x01p9\x01i\x1a\x01@\x02\x04self&\x07queries:\0;\x04\0\x14[method]cursor.qu\
+ery\x01<\x01j\x019\x01\x13\x01@\x01\x04texts\0=\x04\0\x13[static]query.parse\x01\
+>\x01h\x1a\x01k\x19\x01@\x01\x04self?\0\xc0\0\x04\0![method]query-match-iterator\
+.next\x01A\x04\x01\x15nomic:slang/cst@1.0.0\x05\x07\x01B\x04\x02\x03\x02\x01\x06\
+\x04\0\x0atext-range\x03\0\0\x01m\x04\x05error\x07warning\x0binformation\x04hint\
+\x04\0\x08severity\x03\0\x02\x04\x01\x1cnomic:slang/diagnostic@1.0.0\x05\x08\x02\
+\x03\0\x02\x04node\x02\x03\0\x02\x06cursor\x02\x03\0\x03\x08severity\x01B-\x02\x03\
+\x02\x01\x09\x04\0\x04node\x03\0\0\x02\x03\x02\x01\x0a\x04\0\x06cursor\x03\0\x02\
+\x02\x03\x02\x01\x0b\x04\0\x08severity\x03\0\x04\x02\x03\x02\x01\x02\x04\0\x10no\
+nterminal-kind\x03\0\x06\x02\x03\x02\x01\x06\x04\0\x0atext-range\x03\0\x08\x04\0\
+\x08language\x03\x01\x04\0\x0bparse-error\x03\x01\x04\0\x0cparse-output\x03\x01\x01\
+ps\x01@\0\0\x0d\x04\0#[static]language.supported-versions\x01\x0e\x01i\x0a\x01j\x01\
+\x0f\x01s\x01@\x01\x07versions\0\x10\x04\0\x14[static]language.new\x01\x11\x01h\x0a\
+\x01@\x01\x04self\x12\0s\x04\0\x18[method]language.version\x01\x13\x01i\x0c\x01@\
+\x03\x04self\x12\x04kind\x07\x05inputs\0\x14\x04\0\x16[method]language.parse\x01\
+\x15\x01h\x0b\x01@\x01\x04self\x16\0\x05\x04\0\x1c[method]parse-error.severity\x01\
+\x17\x01@\x01\x04self\x16\0\x09\x04\0\x1e[method]parse-error.text-range\x01\x18\x01\
+@\x01\x04self\x16\0s\x04\0\x1b[method]parse-error.message\x01\x19\x01h\x0c\x01@\x01\
+\x04self\x1a\0\x01\x04\0\x19[method]parse-output.tree\x01\x1b\x01i\x0b\x01p\x1c\x01\
+@\x01\x04self\x1a\0\x1d\x04\0\x1b[method]parse-output.errors\x01\x1e\x01@\x01\x04\
+self\x1a\0\x7f\x04\0\x1d[method]parse-output.is-valid\x01\x1f\x01i\x03\x01@\x01\x04\
+self\x1a\0\x20\x04\0'[method]parse-output.create-tree-cursor\x01!\x04\x01\x1anom\
+ic:slang/language@1.0.0\x05\x0c\x04\x01\x17nomic:slang/slang@1.0.0\x04\0\x0b\x0b\
+\x01\0\x05slang\x03\0\0\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\
+\x070.209.1\x10wit-bindgen-rust\x060.26.0";
   };
   )
 }
