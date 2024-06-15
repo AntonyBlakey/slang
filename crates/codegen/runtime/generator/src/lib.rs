@@ -59,6 +59,7 @@ impl OutputLanguage {
             .arg(dir.join("wit/generated/").to_str().unwrap())
             .flag("--rustfmt")
             .flag("--pub-export-macro")
+            .property("--default-bindings-module", "$crate::wit::slang")
             .property("--out-dir", dir.join("wit/generated/").to_str().unwrap())
             .run()?;
         Ok(())
