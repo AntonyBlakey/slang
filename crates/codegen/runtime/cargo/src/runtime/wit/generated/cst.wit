@@ -78,7 +78,7 @@ interface cst {
     }
 
     resource query-match-iterator {
-        next: func() -> result<option<query-match>>;
+        next: func() -> option<query-match>;
     }
 
 }

@@ -71,6 +71,12 @@ macro_rules! define_rc_wrapper {
     };
 }
 
+macro_rules! define_refcell_wrapper {
+    ($name:ident $impl:tt) => {
+        $crate::wit::define_wrapper_base!($name, std::cell::RefCell<rust::$name>, $impl);
+    };
+}
+
 macro_rules! enum_to_enum {
     ($name:ident) => {
         enum_to_enum!(ffi::$name, rust::$name);
@@ -87,10 +93,9 @@ macro_rules! enum_to_enum {
 }
 
 // The trick: https://stackoverflow.com/questions/26731243/how-do-i-use-a-macro-across-module-files
-pub(crate) use {define_rc_wrapper, define_wrapper, define_wrapper_base, enum_to_enum};
+pub(crate) use {
+    define_rc_wrapper, define_refcell_wrapper, define_wrapper, define_wrapper_base, enum_to_enum,
+};
 
-use slang::export;
-use slang::exports; // Needed for the macro. It is bad form that they don't fully qualify usage in the macro.
 #[allow(clippy::upper_case_acronyms)]
-struct API;
-export!(API);
+pub struct API;

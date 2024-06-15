@@ -1,4 +1,4 @@
-use super::{define_rc_wrapper, define_wrapper, ffi, rust};
+use super::{define_rc_wrapper, define_refcell_wrapper, define_wrapper, ffi, rust};
 
 //================================================
 //
@@ -197,9 +197,9 @@ define_wrapper! { Query {
 //
 //================================================
 
-define_wrapper! { QueryMatchIterator {
-    fn next(&self) -> Result<Option<ffi::QueryMatch>, ()> {
-        todo!()
+define_refcell_wrapper! { QueryMatchIterator {
+    fn next(&self) -> Option<ffi::QueryMatch> {
+        self.0.borrow_mut().next().map(Into::into)
     }
 } }
 

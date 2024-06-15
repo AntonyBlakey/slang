@@ -58,6 +58,7 @@ impl OutputLanguage {
             .arg("rust")
             .arg(dir.join("wit/generated/").to_str().unwrap())
             .flag("--rustfmt")
+            .flag("--pub-export-macro")
             .property("--out-dir", dir.join("wit/generated/").to_str().unwrap())
             .run()?;
         Ok(())
