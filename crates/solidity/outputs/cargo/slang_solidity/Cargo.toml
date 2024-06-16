@@ -31,7 +31,7 @@ name = "slang_solidity"
 path = "src/main.rs"
 
 [features]
-default = []
+default = ["cli"]
 cli = ["dep:anyhow", "dep:clap", "dep:serde_json", "__private_ariadne"]
 wit = ["dep:wit-bindgen"]
 # This is meant to be used by the CLI or internally only.
