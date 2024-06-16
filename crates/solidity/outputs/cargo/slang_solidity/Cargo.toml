@@ -29,7 +29,6 @@ categories = [
 [[bin]]
 name = "slang_solidity"
 path = "src/main.rs"
-required-features = ["cli"]
 
 [features]
 default = ["cli"]
