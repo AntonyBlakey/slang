@@ -241,7 +241,11 @@ impl From<rust::QueryMatch> for ffi::QueryMatch {
         Self {
             #[allow(clippy::cast_possible_truncation)]
             query_number: value.query_number as u32,
-            captures: vec![],
+            captures: value
+                .captures
+                .into_iter()
+                .map(|(k, v)| (k, v.into_iter().map(|c| c.into()).collect()))
+                .collect(),
         }
     }
 }
