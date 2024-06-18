@@ -1,4 +1,4 @@
-use super::{ffi, rust};
+use super::{ffi, rust, FromFFI, IntoFFI};
 
 //================================================
 //
@@ -6,32 +6,35 @@ use super::{ffi, rust};
 //
 //================================================
 
-impl From<ffi::TextIndex> for rust::TextIndex {
-    fn from(value: ffi::TextIndex) -> Self {
-        Self {
-            utf8: value.utf8 as usize,
-            utf16: value.utf16 as usize,
-            line: value.line as usize,
-            column: value.column as usize,
+impl IntoFFI<ffi::TextIndex> for rust::TextIndex {
+    #[inline]
+    fn _into_ffi(self) -> ffi::TextIndex {
+        #[allow(clippy::cast_possible_truncation)]
+        ffi::TextIndex {
+            utf8: self.utf8 as u32,
+            utf16: self.utf16 as u32,
+            line: self.line as u32,
+            column: self.column as u32,
         }
     }
 }
 
-impl From<&rust::TextIndex> for ffi::TextIndex {
-    #[allow(clippy::cast_possible_truncation)]
-    fn from(value: &rust::TextIndex) -> Self {
-        Self {
-            utf8: value.utf8 as u32,
-            utf16: value.utf16 as u32,
-            line: value.line as u32,
-            column: value.column as u32,
-        }
+impl IntoFFI<ffi::TextIndex> for &rust::TextIndex {
+    #[inline]
+    fn _into_ffi(self) -> ffi::TextIndex {
+        (*self)._into_ffi()
     }
 }
 
-impl From<rust::TextIndex> for ffi::TextIndex {
-    fn from(value: rust::TextIndex) -> Self {
-        (&value).into()
+impl FromFFI<rust::TextIndex> for ffi::TextIndex {
+    #[inline]
+    fn _from_ffi(self) -> rust::TextIndex {
+        rust::TextIndex {
+            utf8: self.utf8 as usize,
+            utf16: self.utf16 as usize,
+            line: self.line as usize,
+            column: self.column as usize,
+        }
     }
 }
 
@@ -41,26 +44,32 @@ impl From<rust::TextIndex> for ffi::TextIndex {
 //
 //================================================
 
-impl From<ffi::TextRange> for rust::TextRange {
-    fn from(value: ffi::TextRange) -> Self {
-        Self {
-            start: value.start.into(),
-            end: value.end.into(),
+impl IntoFFI<ffi::TextRange> for rust::TextRange {
+    #[inline]
+    fn _into_ffi(self) -> ffi::TextRange {
+        ffi::TextRange {
+            start: self.start._into_ffi(),
+            end: self.end._into_ffi(),
         }
     }
 }
 
-impl From<&rust::TextRange> for ffi::TextRange {
-    fn from(value: &rust::TextRange) -> Self {
-        Self {
-            start: value.start.into(),
-            end: value.end.into(),
+impl IntoFFI<ffi::TextRange> for &rust::TextRange {
+    #[inline]
+    fn _into_ffi(self) -> ffi::TextRange {
+        ffi::TextRange {
+            start: self.start._into_ffi(),
+            end: self.end._into_ffi(),
         }
     }
 }
 
-impl From<rust::TextRange> for ffi::TextRange {
-    fn from(value: rust::TextRange) -> Self {
-        (&value).into()
+impl FromFFI<rust::TextRange> for ffi::TextRange {
+    #[inline]
+    fn _from_ffi(self) -> rust::TextRange {
+        rust::TextRange {
+            start: self.start._from_ffi(),
+            end: self.end._from_ffi(),
+        }
     }
 }

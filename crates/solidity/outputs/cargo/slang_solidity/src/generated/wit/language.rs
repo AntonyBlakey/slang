@@ -1,8 +1,8 @@
 // This file is generated automatically by infrastructure scripts. Please don't edit by hand.
 
-use rust::Diagnostic as _;
+use super::{define_wrapper, ffi, rust, FromFFI, IntoFFI};
 
-use super::{define_wrapper, ffi, rust};
+use rust::Diagnostic as _;
 
 //================================================
 //
@@ -15,11 +15,11 @@ define_wrapper! { Language {
         semver::Version::parse(&version)
             .map_err(|_| format!("Invalid version: {version}"))
             .and_then(|version| rust::Language::new(version).map_err(|e| e.to_string()))
-            .map(Into::into)
+            .map(IntoFFI::_into_ffi)
     }
 
     fn version(&self) -> String {
-        self.0.version.to_string()
+        self._borrow_ffi().version.to_string()
     }
 
     fn supported_versions() -> Vec<String> {
@@ -30,7 +30,7 @@ define_wrapper! { Language {
     }
 
     fn parse(&self, kind: ffi::NonterminalKind, input: String) -> ffi::ParseOutput {
-        self.0.parse(kind.into(), &input).into()
+        self._borrow_ffi().parse(kind._from_ffi(), &input)._into_ffi()
     }
 } }
 
@@ -42,15 +42,15 @@ define_wrapper! { Language {
 
 define_wrapper! { ParseError {
     fn severity(&self) -> ffi::Severity {
-        self.0.severity().into()
+        self._borrow_ffi().severity()._into_ffi()
     }
 
     fn text_range(&self) -> ffi::TextRange {
-        self.0.text_range().into()
+        self._borrow_ffi().text_range()._into_ffi()
     }
 
     fn message(&self) -> String {
-        self.0.message()
+        self._borrow_ffi().message()
     }
 } }
 
@@ -62,19 +62,19 @@ define_wrapper! { ParseError {
 
 define_wrapper! { ParseOutput {
     fn tree(&self) -> ffi::Node {
-        self.0.tree().into()
+        self._borrow_ffi().tree()._into_ffi()
     }
 
     fn errors(&self) -> Vec<ffi::ParseError> {
-        self.0.errors().iter().map(|e| e.clone().into()).collect()
+        self._borrow_ffi().errors().iter().map(|e| e.clone()._into_ffi()).collect()
     }
 
     fn is_valid(&self) -> bool {
-        self.0.is_valid()
+        self._borrow_ffi().is_valid()
     }
 
     fn create_tree_cursor(&self) -> ffi::Cursor {
-        self.0.create_tree_cursor().into()
+        self._borrow_ffi().create_tree_cursor()._into_ffi()
     }
 } }
 

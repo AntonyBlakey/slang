@@ -2,8 +2,6 @@
 
 interface diagnostic {
 
-    use text-index.{text-range};
-
     enum severity {
         error,
         warning,

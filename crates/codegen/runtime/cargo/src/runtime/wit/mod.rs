@@ -13,15 +13,16 @@ pub mod slang;
 pub mod ffi {
     pub use crate::wit::slang::exports::nomic::slang::{
         cst::{
-            self, Cursor, GuestCursor, GuestNonterminalNode, GuestQuery, GuestQueryMatchIterator,
-            GuestTerminalNode, Node, NonterminalNode, Query, QueryError, QueryMatch,
-            QueryMatchIterator, TerminalNode,
+            self, Cursor, CursorBorrow, GuestCursor, GuestNonterminalNode, GuestQuery,
+            GuestQueryMatchIterator, GuestTerminalNode, Node, NonterminalNode,
+            NonterminalNodeBorrow, Query, QueryBorrow, QueryError, QueryMatch, QueryMatchIterator,
+            QueryMatchIteratorBorrow, TerminalNode, TerminalNodeBorrow,
         },
         diagnostic::Severity,
         kinds::{EdgeLabel, NonterminalKind, TerminalKind},
         language::{
-            self, GuestLanguage, GuestParseError, GuestParseOutput, Language, ParseError,
-            ParseOutput,
+            self, GuestLanguage, GuestParseError, GuestParseOutput, Language, LanguageBorrow,
+            ParseError, ParseErrorBorrow, ParseOutput, ParseOutputBorrow,
         },
         text_index::{TextIndex, TextRange},
     };
@@ -41,23 +42,58 @@ pub mod rust {
     };
 }
 
+pub trait IntoFFI<F> {
+    fn _into_ffi(self) -> F;
+}
+
+pub trait FromFFI<R> {
+    fn _from_ffi(self) -> R;
+}
+
 macro_rules! define_wrapper {
     ($name:ident $impl:tt) => {
         paste::paste! {
             #[repr(transparent)]
             pub struct [<$name Wrapper>] (rust::$name);
-            impl From<rust::$name> for ffi::$name {
+
+            impl $crate::wit::IntoFFI<ffi::$name> for rust::$name {
                 #[inline]
-                fn from(value: rust::$name) -> Self {
-                    ffi::$name::new( [<$name Wrapper>] (value))
+                fn _into_ffi(self) -> ffi::$name {
+                    ffi::$name::new([<$name Wrapper>](self))
                 }
             }
-            impl<'a> From<&'a ffi::$name> for &'a rust::$name {
+
+            impl $crate::wit::FromFFI<rust::$name> for ffi::$name {
                 #[inline]
-                fn from(value: &'a ffi::$name) -> Self {
-                    &value.get::<[<$name Wrapper>]>().0
+                fn _from_ffi(self) -> rust::$name {
+                    self.into_inner::<[<$name Wrapper>]>().0
                 }
             }
+
+            // As owned argument
+            impl ffi:: $name {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> &rust::$name {
+                    self.get::<[<$name Wrapper>]>()._borrow_ffi()
+                }
+            }
+
+            // As borrowed argument
+            impl<'a> ffi:: [<$name Borrow>] <'a> {
+                #[inline]
+                pub fn _borrow_ffi(&'a self) -> &'a rust::$name {
+                    self.get::<[<$name Wrapper>]>()._borrow_ffi()
+                }
+            }
+
+            // As self
+            impl [<$name Wrapper>] {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> &rust::$name {
+                    &self.0
+                }
+            }
+
             impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
         }
     };
@@ -68,24 +104,45 @@ macro_rules! define_rc_wrapper {
         paste::paste! {
             #[repr(transparent)]
             pub struct [<$name Wrapper>] (std::rc::Rc<rust::$name>);
-            impl From<rust::$name> for ffi::$name {
+
+            impl $crate::wit::IntoFFI<ffi::$name> for std::rc::Rc<rust::$name> {
                 #[inline]
-                fn from(value: rust::$name) -> Self {
-                    ffi::$name::new( [<$name Wrapper>] (std::rc::Rc::new(value)))
+                fn _into_ffi(self) -> ffi::$name {
+                    ffi::$name::new([<$name Wrapper>](self))
                 }
             }
-            impl From<std::rc::Rc<rust::$name>> for ffi::$name {
+
+            impl $crate::wit::FromFFI<std::rc::Rc<rust::$name>> for ffi::$name {
                 #[inline]
-                fn from(value: std::rc::Rc<rust::$name>) -> Self {
-                    ffi::$name::new( [<$name Wrapper>] (value))
+                fn _from_ffi(self) -> std::rc::Rc<rust::$name> {
+                    self.into_inner::<[<$name Wrapper>]>().0
                 }
             }
-            impl From<ffi::$name> for std::rc::Rc<rust::$name> {
+
+            // As owned argument
+            impl ffi:: $name {
                 #[inline]
-                fn from(value: ffi::$name) -> Self {
-                    value.get::<[<$name Wrapper>]>().0.clone()
+                pub fn _borrow_ffi(&self) -> &std::rc::Rc<rust::$name> {
+                    self.get::<[<$name Wrapper>]>()._borrow_ffi()
                 }
             }
+
+            // As borrowed argument
+            impl<'a> ffi:: [<$name Borrow>] <'a> {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> &std::rc::Rc<rust::$name> {
+                    self.get::<[<$name Wrapper>]>()._borrow_ffi()
+                }
+            }
+
+            // As self
+            impl [<$name Wrapper>] {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> &std::rc::Rc<rust::$name> {
+                    &self.0
+                }
+            }
+
             impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
         }
     };
@@ -96,12 +153,57 @@ macro_rules! define_refcell_wrapper {
         paste::paste! {
             #[repr(transparent)]
             pub struct [<$name Wrapper>] (std::cell::RefCell<rust::$name>);
-            impl From<rust::$name> for ffi::$name {
+
+            impl $crate::wit::IntoFFI<ffi::$name> for rust::$name {
                 #[inline]
-                fn from(value: rust::$name) -> Self {
-                    ffi::$name::new( [<$name Wrapper>] (std::cell::RefCell::new(value)))
+                fn _into_ffi(self) -> ffi::$name {
+                    ffi::$name::new([<$name Wrapper>](std::cell::RefCell::new(self)))
                 }
             }
+
+            impl $crate::wit::FromFFI<rust::$name> for ffi::$name {
+                #[inline]
+                fn _from_ffi(self) -> rust::$name {
+                    self.into_inner::<[<$name Wrapper>]>().0.into_inner()
+                }
+            }
+
+            // As owned argument
+            impl ffi:: $name {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> std::cell::Ref<'_, rust::$name> {
+                    self.get::<[<$name Wrapper>]>()._borrow_ffi()
+                }
+                #[inline]
+                pub fn _borrow_mut_ffi(&self) -> std::cell::RefMut<'_, rust::$name> {
+                    self.get::<[<$name Wrapper>]>()._borrow_mut_ffi()
+                }
+            }
+
+            // As borrowed argument
+            impl<'a> ffi:: [<$name Borrow>] <'a> {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> std::cell::Ref<'_, rust::$name> {
+                    self.get::<[<$name Wrapper>]>()._borrow_ffi()
+                }
+                #[inline]
+                pub fn _borrow_mut_ffi(&self) -> std::cell::RefMut<'_, rust::$name> {
+                    self.get::<[<$name Wrapper>]>()._borrow_mut_ffi()
+                }
+            }
+
+            // As self
+            impl [<$name Wrapper>] {
+                #[inline]
+                pub fn _borrow_ffi(&self) -> std::cell::Ref<'_, rust::$name> {
+                    self.0.borrow()
+                }
+                #[inline]
+                pub fn _borrow_mut_ffi(&self) -> std::cell::RefMut<'_, rust::$name> {
+                    self.0.borrow_mut()
+                }
+            }
+
             impl ffi:: [<Guest $name>] for [<$name Wrapper>] $impl
         }
     };
@@ -109,14 +211,17 @@ macro_rules! define_refcell_wrapper {
 
 macro_rules! enum_to_enum {
     ($name:ident) => {
-        enum_to_enum!(ffi::$name, rust::$name);
-        enum_to_enum!(rust::$name, ffi::$name);
-    };
-    ($from:ty, $to:ty) => {
-        impl From<$from> for $to {
+        impl $crate::wit::IntoFFI<ffi::$name> for rust::$name {
             #[inline]
-            fn from(value: $from) -> Self {
-                unsafe { core::mem::transmute(value) }
+            fn _into_ffi(self) -> ffi::$name {
+                unsafe { core::mem::transmute(self) }
+            }
+        }
+
+        impl $crate::wit::FromFFI<rust::$name> for ffi::$name {
+            #[inline]
+            fn _from_ffi(self) -> rust::$name {
+                unsafe { core::mem::transmute(self) }
             }
         }
     };

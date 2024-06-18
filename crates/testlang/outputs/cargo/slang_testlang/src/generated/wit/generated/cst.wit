@@ -63,7 +63,7 @@ interface cst {
         go-to-next-nonterminal-with-kind: func(kind: nonterminal-kind) -> bool;
         go-to-next-nonterminal-with-kinds: func(kinds: list<nonterminal-kind>) -> bool;
 
-        query: func(queries: list<query>) -> query-match-iterator;
+        query: func(queries: list<borrow<query>>) -> query-match-iterator;
     }
 
     resource query {
