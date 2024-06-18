@@ -77,15 +77,3 @@ define_wrapper! { ParseOutput {
         self._borrow_ffi().create_tree_cursor()._into_ffi()
     }
 } }
-
-//================================================
-//
-// interface language
-//
-//================================================
-
-impl ffi::language::Guest for super::API {
-    type Language = LanguageWrapper;
-    type ParseError = ParseErrorWrapper;
-    type ParseOutput = ParseOutputWrapper;
-}

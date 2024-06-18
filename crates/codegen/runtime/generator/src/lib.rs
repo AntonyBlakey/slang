@@ -52,7 +52,7 @@ impl OutputLanguage {
         templates.render_stubs(&model)
     }
 
-    pub fn generate_wit(&self, dir: &Path) -> Result<()> {
+    pub fn wit_bindgen(&self, dir: &Path) -> Result<()> {
         CargoWorkspace::install_binary("wit-bindgen-cli")?;
         Command::new("wit-bindgen")
             .arg("rust")

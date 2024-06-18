@@ -12,6 +12,6 @@ fn main() -> Result<()> {
     let output_dir = CargoWorkspace::locate_source_crate("slang_solidity")?.join("src/generated");
 
     OutputLanguage::Cargo.generate_runtime(&language, &output_dir)?;
-    OutputLanguage::Cargo.generate_wit(&output_dir)?;
+    OutputLanguage::Cargo.wit_bindgen(&output_dir)?;
     Ok(())
 }

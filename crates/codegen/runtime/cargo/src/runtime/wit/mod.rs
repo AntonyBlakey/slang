@@ -1,7 +1,9 @@
 pub mod cst;
+pub mod cursor;
 pub mod diagnostic;
 pub mod kinds;
 pub mod language;
+pub mod query;
 pub mod text_index;
 
 #[path = "generated/slang.rs"]
@@ -11,20 +13,13 @@ pub mod slang;
 // pub mod ast_selectors;
 
 pub mod ffi {
-    pub use crate::wit::slang::exports::nomic::slang::{
-        cst::{
-            self, Cursor, CursorBorrow, GuestCursor, GuestNonterminalNode, GuestQuery,
-            GuestQueryMatchIterator, GuestTerminalNode, Node, NonterminalNode,
-            NonterminalNodeBorrow, Query, QueryBorrow, QueryError, QueryMatch, QueryMatchIterator,
-            QueryMatchIteratorBorrow, TerminalNode, TerminalNodeBorrow,
-        },
-        diagnostic::Severity,
-        kinds::{EdgeLabel, NonterminalKind, TerminalKind},
-        language::{
-            self, GuestLanguage, GuestParseError, GuestParseOutput, Language, LanguageBorrow,
-            ParseError, ParseErrorBorrow, ParseOutput, ParseOutputBorrow,
-        },
-        text_index::{TextIndex, TextRange},
+    pub use crate::wit::slang::exports::nomic::slang::parser::{
+        Cursor, CursorBorrow, EdgeLabel, Guest, GuestCursor, GuestLanguage, GuestNonterminalNode,
+        GuestParseError, GuestParseOutput, GuestQuery, GuestQueryMatchIterator, GuestTerminalNode,
+        Language, LanguageBorrow, Node, NonterminalKind, NonterminalNode, NonterminalNodeBorrow,
+        ParseError, ParseErrorBorrow, ParseOutput, ParseOutputBorrow, Query, QueryBorrow,
+        QueryError, QueryMatch, QueryMatchIterator, QueryMatchIteratorBorrow, Severity,
+        TerminalKind, TerminalNode, TerminalNodeBorrow, TextIndex, TextRange,
     };
 }
 
@@ -232,3 +227,20 @@ pub(crate) use {define_rc_wrapper, define_refcell_wrapper, define_wrapper, enum_
 
 #[allow(clippy::upper_case_acronyms)]
 pub struct API;
+
+//================================================
+//
+// interface language
+//
+//================================================
+
+impl ffi::Guest for API {
+    type Language = language::LanguageWrapper;
+    type ParseError = language::ParseErrorWrapper;
+    type ParseOutput = language::ParseOutputWrapper;
+    type NonterminalNode = cst::NonterminalNodeWrapper;
+    type TerminalNode = cst::TerminalNodeWrapper;
+    type Cursor = cursor::CursorWrapper;
+    type Query = query::QueryWrapper;
+    type QueryMatchIterator = query::QueryMatchIteratorWrapper;
+}
