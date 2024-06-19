@@ -6,7 +6,7 @@ world slang {
 
 interface parser {
 
-    variant nonterminal-kind {
+    enum nonterminal-kind {
         {%- if rendering_in_stubs %}
             stub1,
             stub2,
@@ -18,7 +18,7 @@ interface parser {
         {%- endif %}
     }
 
-    variant edge-label {
+    enum edge-label {
         // Built-in:
         {%- for label in model.kinds.built_in_labels %}
             {{ label | wit_identifier }},
@@ -36,7 +36,7 @@ interface parser {
         {%- endif %}
     }
 
-    variant terminal-kind {
+    enum terminal-kind {
         // Built-in:
         skipped,
 
@@ -153,7 +153,7 @@ interface parser {
         next: func() -> option<query-match>;
     }
     
-    variant severity {
+    enum severity {
         error,
         warning,
         information,

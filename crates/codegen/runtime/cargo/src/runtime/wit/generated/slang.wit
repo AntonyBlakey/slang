@@ -8,13 +8,13 @@ world slang {
 
 interface parser {
 
-    variant nonterminal-kind {
+    enum nonterminal-kind {
             stub1,
             stub2,
             stub3,
     }
 
-    variant edge-label {
+    enum edge-label {
         // Built-in:
             %item,
             %variant,
@@ -31,7 +31,7 @@ interface parser {
             stub3,
     }
 
-    variant terminal-kind {
+    enum terminal-kind {
         // Built-in:
         skipped,
 
@@ -142,7 +142,7 @@ interface parser {
         next: func() -> option<query-match>;
     }
     
-    variant severity {
+    enum severity {
         error,
         warning,
         information,

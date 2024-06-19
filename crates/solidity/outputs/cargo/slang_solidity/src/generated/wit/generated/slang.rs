@@ -16,7 +16,8 @@ pub mod exports {
                 static __FORCE_SECTION_REF: fn() =
                     super::super::super::super::__link_custom_section_describing_imports;
                 use super::super::super::super::_rt;
-                #[derive(Clone, Copy)]
+                #[repr(u8)]
+                #[derive(Clone, Copy, Eq, PartialEq)]
                 pub enum NonterminalKind {
                     AbicoderPragma,
                     AdditiveExpression,
@@ -885,7 +886,238 @@ pub mod exports {
                         }
                     }
                 }
-                #[derive(Clone, Copy)]
+
+                impl NonterminalKind {
+                    #[doc(hidden)]
+                    pub unsafe fn _lift(val: u8) -> NonterminalKind {
+                        if !cfg!(debug_assertions) {
+                            return ::core::mem::transmute(val);
+                        }
+
+                        match val {
+                            0 => NonterminalKind::AbicoderPragma,
+                            1 => NonterminalKind::AdditiveExpression,
+                            2 => NonterminalKind::AddressType,
+                            3 => NonterminalKind::AndExpression,
+                            4 => NonterminalKind::ArgumentsDeclaration,
+                            5 => NonterminalKind::ArrayExpression,
+                            6 => NonterminalKind::ArrayTypeName,
+                            7 => NonterminalKind::ArrayValues,
+                            8 => NonterminalKind::AssemblyFlags,
+                            9 => NonterminalKind::AssemblyFlagsDeclaration,
+                            10 => NonterminalKind::AssemblyStatement,
+                            11 => NonterminalKind::AssignmentExpression,
+                            12 => NonterminalKind::BitwiseAndExpression,
+                            13 => NonterminalKind::BitwiseOrExpression,
+                            14 => NonterminalKind::BitwiseXorExpression,
+                            15 => NonterminalKind::Block,
+                            16 => NonterminalKind::BreakStatement,
+                            17 => NonterminalKind::CallOptions,
+                            18 => NonterminalKind::CallOptionsExpression,
+                            19 => NonterminalKind::CatchClause,
+                            20 => NonterminalKind::CatchClauseError,
+                            21 => NonterminalKind::CatchClauses,
+                            22 => NonterminalKind::ComparisonExpression,
+                            23 => NonterminalKind::ConditionalExpression,
+                            24 => NonterminalKind::ConstantDefinition,
+                            25 => NonterminalKind::ConstructorAttribute,
+                            26 => NonterminalKind::ConstructorAttributes,
+                            27 => NonterminalKind::ConstructorDefinition,
+                            28 => NonterminalKind::ContinueStatement,
+                            29 => NonterminalKind::ContractDefinition,
+                            30 => NonterminalKind::ContractMember,
+                            31 => NonterminalKind::ContractMembers,
+                            32 => NonterminalKind::DecimalNumberExpression,
+                            33 => NonterminalKind::DoWhileStatement,
+                            34 => NonterminalKind::ElementaryType,
+                            35 => NonterminalKind::ElseBranch,
+                            36 => NonterminalKind::EmitStatement,
+                            37 => NonterminalKind::EnumDefinition,
+                            38 => NonterminalKind::EnumMembers,
+                            39 => NonterminalKind::EqualityExpression,
+                            40 => NonterminalKind::ErrorDefinition,
+                            41 => NonterminalKind::ErrorParameter,
+                            42 => NonterminalKind::ErrorParameters,
+                            43 => NonterminalKind::ErrorParametersDeclaration,
+                            44 => NonterminalKind::EventDefinition,
+                            45 => NonterminalKind::EventParameter,
+                            46 => NonterminalKind::EventParameters,
+                            47 => NonterminalKind::EventParametersDeclaration,
+                            48 => NonterminalKind::ExperimentalFeature,
+                            49 => NonterminalKind::ExperimentalPragma,
+                            50 => NonterminalKind::ExponentiationExpression,
+                            51 => NonterminalKind::Expression,
+                            52 => NonterminalKind::ExpressionStatement,
+                            53 => NonterminalKind::FallbackFunctionAttribute,
+                            54 => NonterminalKind::FallbackFunctionAttributes,
+                            55 => NonterminalKind::FallbackFunctionDefinition,
+                            56 => NonterminalKind::ForStatement,
+                            57 => NonterminalKind::ForStatementCondition,
+                            58 => NonterminalKind::ForStatementInitialization,
+                            59 => NonterminalKind::FunctionAttribute,
+                            60 => NonterminalKind::FunctionAttributes,
+                            61 => NonterminalKind::FunctionBody,
+                            62 => NonterminalKind::FunctionCallExpression,
+                            63 => NonterminalKind::FunctionDefinition,
+                            64 => NonterminalKind::FunctionName,
+                            65 => NonterminalKind::FunctionType,
+                            66 => NonterminalKind::FunctionTypeAttribute,
+                            67 => NonterminalKind::FunctionTypeAttributes,
+                            68 => NonterminalKind::HexNumberExpression,
+                            69 => NonterminalKind::HexStringLiteral,
+                            70 => NonterminalKind::HexStringLiterals,
+                            71 => NonterminalKind::IdentifierPath,
+                            72 => NonterminalKind::IfStatement,
+                            73 => NonterminalKind::ImportAlias,
+                            74 => NonterminalKind::ImportClause,
+                            75 => NonterminalKind::ImportDeconstruction,
+                            76 => NonterminalKind::ImportDeconstructionSymbol,
+                            77 => NonterminalKind::ImportDeconstructionSymbols,
+                            78 => NonterminalKind::ImportDirective,
+                            79 => NonterminalKind::IndexAccessEnd,
+                            80 => NonterminalKind::IndexAccessExpression,
+                            81 => NonterminalKind::InheritanceSpecifier,
+                            82 => NonterminalKind::InheritanceType,
+                            83 => NonterminalKind::InheritanceTypes,
+                            84 => NonterminalKind::InterfaceDefinition,
+                            85 => NonterminalKind::InterfaceMembers,
+                            86 => NonterminalKind::LibraryDefinition,
+                            87 => NonterminalKind::LibraryMembers,
+                            88 => NonterminalKind::MappingKey,
+                            89 => NonterminalKind::MappingKeyType,
+                            90 => NonterminalKind::MappingType,
+                            91 => NonterminalKind::MappingValue,
+                            92 => NonterminalKind::MemberAccess,
+                            93 => NonterminalKind::MemberAccessExpression,
+                            94 => NonterminalKind::ModifierAttribute,
+                            95 => NonterminalKind::ModifierAttributes,
+                            96 => NonterminalKind::ModifierDefinition,
+                            97 => NonterminalKind::ModifierInvocation,
+                            98 => NonterminalKind::MultiplicativeExpression,
+                            99 => NonterminalKind::NamedArgument,
+                            100 => NonterminalKind::NamedArgumentGroup,
+                            101 => NonterminalKind::NamedArguments,
+                            102 => NonterminalKind::NamedArgumentsDeclaration,
+                            103 => NonterminalKind::NamedImport,
+                            104 => NonterminalKind::NewExpression,
+                            105 => NonterminalKind::NumberUnit,
+                            106 => NonterminalKind::OrExpression,
+                            107 => NonterminalKind::OverridePaths,
+                            108 => NonterminalKind::OverridePathsDeclaration,
+                            109 => NonterminalKind::OverrideSpecifier,
+                            110 => NonterminalKind::Parameter,
+                            111 => NonterminalKind::Parameters,
+                            112 => NonterminalKind::ParametersDeclaration,
+                            113 => NonterminalKind::PathImport,
+                            114 => NonterminalKind::PositionalArguments,
+                            115 => NonterminalKind::PositionalArgumentsDeclaration,
+                            116 => NonterminalKind::PostfixExpression,
+                            117 => NonterminalKind::Pragma,
+                            118 => NonterminalKind::PragmaDirective,
+                            119 => NonterminalKind::PrefixExpression,
+                            120 => NonterminalKind::ReceiveFunctionAttribute,
+                            121 => NonterminalKind::ReceiveFunctionAttributes,
+                            122 => NonterminalKind::ReceiveFunctionDefinition,
+                            123 => NonterminalKind::ReturnStatement,
+                            124 => NonterminalKind::ReturnsDeclaration,
+                            125 => NonterminalKind::RevertStatement,
+                            126 => NonterminalKind::ShiftExpression,
+                            127 => NonterminalKind::SourceUnit,
+                            128 => NonterminalKind::SourceUnitMember,
+                            129 => NonterminalKind::SourceUnitMembers,
+                            130 => NonterminalKind::StateVariableAttribute,
+                            131 => NonterminalKind::StateVariableAttributes,
+                            132 => NonterminalKind::StateVariableDefinition,
+                            133 => NonterminalKind::StateVariableDefinitionValue,
+                            134 => NonterminalKind::Statement,
+                            135 => NonterminalKind::Statements,
+                            136 => NonterminalKind::StorageLocation,
+                            137 => NonterminalKind::StringExpression,
+                            138 => NonterminalKind::StringLiteral,
+                            139 => NonterminalKind::StringLiterals,
+                            140 => NonterminalKind::StructDefinition,
+                            141 => NonterminalKind::StructMember,
+                            142 => NonterminalKind::StructMembers,
+                            143 => NonterminalKind::ThrowStatement,
+                            144 => NonterminalKind::TryStatement,
+                            145 => NonterminalKind::TupleDeconstructionElement,
+                            146 => NonterminalKind::TupleDeconstructionElements,
+                            147 => NonterminalKind::TupleDeconstructionStatement,
+                            148 => NonterminalKind::TupleExpression,
+                            149 => NonterminalKind::TupleMember,
+                            150 => NonterminalKind::TupleValue,
+                            151 => NonterminalKind::TupleValues,
+                            152 => NonterminalKind::TypeExpression,
+                            153 => NonterminalKind::TypeName,
+                            154 => NonterminalKind::TypedTupleMember,
+                            155 => NonterminalKind::UncheckedBlock,
+                            156 => NonterminalKind::UnicodeStringLiteral,
+                            157 => NonterminalKind::UnicodeStringLiterals,
+                            158 => NonterminalKind::UnnamedFunctionAttribute,
+                            159 => NonterminalKind::UnnamedFunctionAttributes,
+                            160 => NonterminalKind::UnnamedFunctionDefinition,
+                            161 => NonterminalKind::UntypedTupleMember,
+                            162 => NonterminalKind::UserDefinedValueTypeDefinition,
+                            163 => NonterminalKind::UsingAlias,
+                            164 => NonterminalKind::UsingClause,
+                            165 => NonterminalKind::UsingDeconstruction,
+                            166 => NonterminalKind::UsingDeconstructionSymbol,
+                            167 => NonterminalKind::UsingDeconstructionSymbols,
+                            168 => NonterminalKind::UsingDirective,
+                            169 => NonterminalKind::UsingOperator,
+                            170 => NonterminalKind::UsingTarget,
+                            171 => NonterminalKind::VariableDeclarationStatement,
+                            172 => NonterminalKind::VariableDeclarationType,
+                            173 => NonterminalKind::VariableDeclarationValue,
+                            174 => NonterminalKind::VersionComparator,
+                            175 => NonterminalKind::VersionExpression,
+                            176 => NonterminalKind::VersionExpressionSet,
+                            177 => NonterminalKind::VersionExpressionSets,
+                            178 => NonterminalKind::VersionPragma,
+                            179 => NonterminalKind::VersionRange,
+                            180 => NonterminalKind::VersionSpecifiers,
+                            181 => NonterminalKind::WhileStatement,
+                            182 => NonterminalKind::YulArguments,
+                            183 => NonterminalKind::YulAssignmentOperator,
+                            184 => NonterminalKind::YulBlock,
+                            185 => NonterminalKind::YulBreakStatement,
+                            186 => NonterminalKind::YulBuiltInFunction,
+                            187 => NonterminalKind::YulColonEqual,
+                            188 => NonterminalKind::YulContinueStatement,
+                            189 => NonterminalKind::YulDefaultCase,
+                            190 => NonterminalKind::YulExpression,
+                            191 => NonterminalKind::YulForStatement,
+                            192 => NonterminalKind::YulFunctionCallExpression,
+                            193 => NonterminalKind::YulFunctionDefinition,
+                            194 => NonterminalKind::YulIfStatement,
+                            195 => NonterminalKind::YulLabel,
+                            196 => NonterminalKind::YulLeaveStatement,
+                            197 => NonterminalKind::YulLiteral,
+                            198 => NonterminalKind::YulParameters,
+                            199 => NonterminalKind::YulParametersDeclaration,
+                            200 => NonterminalKind::YulPath,
+                            201 => NonterminalKind::YulPathComponent,
+                            202 => NonterminalKind::YulPaths,
+                            203 => NonterminalKind::YulReturnVariables,
+                            204 => NonterminalKind::YulReturnsDeclaration,
+                            205 => NonterminalKind::YulStackAssignmentStatement,
+                            206 => NonterminalKind::YulStatement,
+                            207 => NonterminalKind::YulStatements,
+                            208 => NonterminalKind::YulSwitchCase,
+                            209 => NonterminalKind::YulSwitchCases,
+                            210 => NonterminalKind::YulSwitchStatement,
+                            211 => NonterminalKind::YulValueCase,
+                            212 => NonterminalKind::YulVariableAssignmentStatement,
+                            213 => NonterminalKind::YulVariableDeclarationStatement,
+                            214 => NonterminalKind::YulVariableDeclarationValue,
+
+                            _ => panic!("invalid enum discriminant"),
+                        }
+                    }
+                }
+
+                #[repr(u8)]
+                #[derive(Clone, Copy, Eq, PartialEq)]
                 pub enum EdgeLabel {
                     /// Built-in:
                     Item,
@@ -1310,7 +1542,154 @@ pub mod exports {
                         }
                     }
                 }
-                #[derive(Clone, Copy)]
+
+                impl EdgeLabel {
+                    #[doc(hidden)]
+                    pub unsafe fn _lift(val: u8) -> EdgeLabel {
+                        if !cfg!(debug_assertions) {
+                            return ::core::mem::transmute(val);
+                        }
+
+                        match val {
+                            0 => EdgeLabel::Item,
+                            1 => EdgeLabel::Variant,
+                            2 => EdgeLabel::Separator,
+                            3 => EdgeLabel::Operand,
+                            4 => EdgeLabel::LeftOperand,
+                            5 => EdgeLabel::RightOperand,
+                            6 => EdgeLabel::LeadingTrivia,
+                            7 => EdgeLabel::TrailingTrivia,
+                            8 => EdgeLabel::AbicoderKeyword,
+                            9 => EdgeLabel::AbstractKeyword,
+                            10 => EdgeLabel::AddressKeyword,
+                            11 => EdgeLabel::Alias,
+                            12 => EdgeLabel::AnonymousKeyword,
+                            13 => EdgeLabel::Arguments,
+                            14 => EdgeLabel::AsKeyword,
+                            15 => EdgeLabel::AssemblyKeyword,
+                            16 => EdgeLabel::Assignment,
+                            17 => EdgeLabel::Asterisk,
+                            18 => EdgeLabel::Attributes,
+                            19 => EdgeLabel::Block,
+                            20 => EdgeLabel::Body,
+                            21 => EdgeLabel::BreakKeyword,
+                            22 => EdgeLabel::CaseKeyword,
+                            23 => EdgeLabel::Cases,
+                            24 => EdgeLabel::CatchClauses,
+                            25 => EdgeLabel::CatchKeyword,
+                            26 => EdgeLabel::Clause,
+                            27 => EdgeLabel::CloseBrace,
+                            28 => EdgeLabel::CloseBracket,
+                            29 => EdgeLabel::CloseParen,
+                            30 => EdgeLabel::Colon,
+                            31 => EdgeLabel::Condition,
+                            32 => EdgeLabel::ConstantKeyword,
+                            33 => EdgeLabel::ConstructorKeyword,
+                            34 => EdgeLabel::ContinueKeyword,
+                            35 => EdgeLabel::ContractKeyword,
+                            36 => EdgeLabel::DefaultKeyword,
+                            37 => EdgeLabel::DoKeyword,
+                            38 => EdgeLabel::Elements,
+                            39 => EdgeLabel::ElseBranch,
+                            40 => EdgeLabel::ElseKeyword,
+                            41 => EdgeLabel::EmitKeyword,
+                            42 => EdgeLabel::End,
+                            43 => EdgeLabel::EnumKeyword,
+                            44 => EdgeLabel::Equal,
+                            45 => EdgeLabel::EqualGreaterThan,
+                            46 => EdgeLabel::Error,
+                            47 => EdgeLabel::ErrorKeyword,
+                            48 => EdgeLabel::Event,
+                            49 => EdgeLabel::EventKeyword,
+                            50 => EdgeLabel::ExperimentalKeyword,
+                            51 => EdgeLabel::Expression,
+                            52 => EdgeLabel::FallbackKeyword,
+                            53 => EdgeLabel::FalseExpression,
+                            54 => EdgeLabel::Feature,
+                            55 => EdgeLabel::Flags,
+                            56 => EdgeLabel::ForKeyword,
+                            57 => EdgeLabel::FromKeyword,
+                            58 => EdgeLabel::FunctionKeyword,
+                            59 => EdgeLabel::GlobalKeyword,
+                            60 => EdgeLabel::Identifier,
+                            61 => EdgeLabel::IfKeyword,
+                            62 => EdgeLabel::ImportKeyword,
+                            63 => EdgeLabel::Index,
+                            64 => EdgeLabel::IndexedKeyword,
+                            65 => EdgeLabel::Inheritance,
+                            66 => EdgeLabel::Initialization,
+                            67 => EdgeLabel::InterfaceKeyword,
+                            68 => EdgeLabel::IsKeyword,
+                            69 => EdgeLabel::Items,
+                            70 => EdgeLabel::Iterator,
+                            71 => EdgeLabel::KeyType,
+                            72 => EdgeLabel::Label,
+                            73 => EdgeLabel::LeaveKeyword,
+                            74 => EdgeLabel::LetKeyword,
+                            75 => EdgeLabel::LibraryKeyword,
+                            76 => EdgeLabel::Literal,
+                            77 => EdgeLabel::MappingKeyword,
+                            78 => EdgeLabel::Member,
+                            79 => EdgeLabel::Members,
+                            80 => EdgeLabel::MinusGreaterThan,
+                            81 => EdgeLabel::ModifierKeyword,
+                            82 => EdgeLabel::Name,
+                            83 => EdgeLabel::Names,
+                            84 => EdgeLabel::NewKeyword,
+                            85 => EdgeLabel::OpenBrace,
+                            86 => EdgeLabel::OpenBracket,
+                            87 => EdgeLabel::OpenParen,
+                            88 => EdgeLabel::Operator,
+                            89 => EdgeLabel::Options,
+                            90 => EdgeLabel::Overridden,
+                            91 => EdgeLabel::OverrideKeyword,
+                            92 => EdgeLabel::Parameters,
+                            93 => EdgeLabel::Path,
+                            94 => EdgeLabel::Paths,
+                            95 => EdgeLabel::PayableKeyword,
+                            96 => EdgeLabel::Period,
+                            97 => EdgeLabel::Pragma,
+                            98 => EdgeLabel::PragmaKeyword,
+                            99 => EdgeLabel::QuestionMark,
+                            100 => EdgeLabel::ReceiveKeyword,
+                            101 => EdgeLabel::ReturnKeyword,
+                            102 => EdgeLabel::Returns,
+                            103 => EdgeLabel::ReturnsKeyword,
+                            104 => EdgeLabel::RevertKeyword,
+                            105 => EdgeLabel::Semicolon,
+                            106 => EdgeLabel::Sets,
+                            107 => EdgeLabel::SolidityKeyword,
+                            108 => EdgeLabel::Start,
+                            109 => EdgeLabel::Statements,
+                            110 => EdgeLabel::StorageLocation,
+                            111 => EdgeLabel::StructKeyword,
+                            112 => EdgeLabel::SwitchKeyword,
+                            113 => EdgeLabel::Symbols,
+                            114 => EdgeLabel::Target,
+                            115 => EdgeLabel::ThrowKeyword,
+                            116 => EdgeLabel::TrueExpression,
+                            117 => EdgeLabel::TryKeyword,
+                            118 => EdgeLabel::TypeKeyword,
+                            119 => EdgeLabel::TypeName,
+                            120 => EdgeLabel::Types,
+                            121 => EdgeLabel::UncheckedKeyword,
+                            122 => EdgeLabel::Unit,
+                            123 => EdgeLabel::UsingKeyword,
+                            124 => EdgeLabel::Value,
+                            125 => EdgeLabel::ValueType,
+                            126 => EdgeLabel::VarKeyword,
+                            127 => EdgeLabel::VariableType,
+                            128 => EdgeLabel::Variables,
+                            129 => EdgeLabel::Version,
+                            130 => EdgeLabel::WhileKeyword,
+
+                            _ => panic!("invalid enum discriminant"),
+                        }
+                    }
+                }
+
+                #[repr(u16)]
+                #[derive(Clone, Copy, Eq, PartialEq)]
                 pub enum TerminalKind {
                     /// Built-in:
                     Skipped,
@@ -2770,6 +3149,388 @@ pub mod exports {
                     }
                 }
 
+                impl TerminalKind {
+                    #[doc(hidden)]
+                    pub unsafe fn _lift(val: u16) -> TerminalKind {
+                        if !cfg!(debug_assertions) {
+                            return ::core::mem::transmute(val);
+                        }
+
+                        match val {
+                            0 => TerminalKind::Skipped,
+                            1 => TerminalKind::AbicoderKeyword,
+                            2 => TerminalKind::AbstractKeyword,
+                            3 => TerminalKind::AddressKeyword,
+                            4 => TerminalKind::AfterKeyword,
+                            5 => TerminalKind::AliasKeyword,
+                            6 => TerminalKind::Ampersand,
+                            7 => TerminalKind::AmpersandAmpersand,
+                            8 => TerminalKind::AmpersandEqual,
+                            9 => TerminalKind::AnonymousKeyword,
+                            10 => TerminalKind::ApplyKeyword,
+                            11 => TerminalKind::AsKeyword,
+                            12 => TerminalKind::AssemblyKeyword,
+                            13 => TerminalKind::Asterisk,
+                            14 => TerminalKind::AsteriskAsterisk,
+                            15 => TerminalKind::AsteriskEqual,
+                            16 => TerminalKind::AutoKeyword,
+                            17 => TerminalKind::Bang,
+                            18 => TerminalKind::BangEqual,
+                            19 => TerminalKind::Bar,
+                            20 => TerminalKind::BarBar,
+                            21 => TerminalKind::BarEqual,
+                            22 => TerminalKind::BoolKeyword,
+                            23 => TerminalKind::BreakKeyword,
+                            24 => TerminalKind::ByteKeyword,
+                            25 => TerminalKind::BytesKeyword,
+                            26 => TerminalKind::CallDataKeyword,
+                            27 => TerminalKind::Caret,
+                            28 => TerminalKind::CaretEqual,
+                            29 => TerminalKind::CaseKeyword,
+                            30 => TerminalKind::CatchKeyword,
+                            31 => TerminalKind::CloseBrace,
+                            32 => TerminalKind::CloseBracket,
+                            33 => TerminalKind::CloseParen,
+                            34 => TerminalKind::Colon,
+                            35 => TerminalKind::ColonEqual,
+                            36 => TerminalKind::Comma,
+                            37 => TerminalKind::ConstantKeyword,
+                            38 => TerminalKind::ConstructorKeyword,
+                            39 => TerminalKind::ContinueKeyword,
+                            40 => TerminalKind::ContractKeyword,
+                            41 => TerminalKind::CopyOfKeyword,
+                            42 => TerminalKind::DaysKeyword,
+                            43 => TerminalKind::DecimalLiteral,
+                            44 => TerminalKind::DefaultKeyword,
+                            45 => TerminalKind::DefineKeyword,
+                            46 => TerminalKind::DeleteKeyword,
+                            47 => TerminalKind::DoKeyword,
+                            48 => TerminalKind::DoubleQuotedHexStringLiteral,
+                            49 => TerminalKind::DoubleQuotedStringLiteral,
+                            50 => TerminalKind::DoubleQuotedUnicodeStringLiteral,
+                            51 => TerminalKind::DoubleQuotedVersionLiteral,
+                            52 => TerminalKind::ElseKeyword,
+                            53 => TerminalKind::EmitKeyword,
+                            54 => TerminalKind::EndOfLine,
+                            55 => TerminalKind::EnumKeyword,
+                            56 => TerminalKind::Equal,
+                            57 => TerminalKind::EqualEqual,
+                            58 => TerminalKind::EqualGreaterThan,
+                            59 => TerminalKind::ErrorKeyword,
+                            60 => TerminalKind::EtherKeyword,
+                            61 => TerminalKind::EventKeyword,
+                            62 => TerminalKind::ExperimentalKeyword,
+                            63 => TerminalKind::ExternalKeyword,
+                            64 => TerminalKind::FallbackKeyword,
+                            65 => TerminalKind::FalseKeyword,
+                            66 => TerminalKind::FinalKeyword,
+                            67 => TerminalKind::FinneyKeyword,
+                            68 => TerminalKind::FixedKeyword,
+                            69 => TerminalKind::ForKeyword,
+                            70 => TerminalKind::FromKeyword,
+                            71 => TerminalKind::FunctionKeyword,
+                            72 => TerminalKind::GlobalKeyword,
+                            73 => TerminalKind::GreaterThan,
+                            74 => TerminalKind::GreaterThanEqual,
+                            75 => TerminalKind::GreaterThanGreaterThan,
+                            76 => TerminalKind::GreaterThanGreaterThanEqual,
+                            77 => TerminalKind::GreaterThanGreaterThanGreaterThan,
+                            78 => TerminalKind::GreaterThanGreaterThanGreaterThanEqual,
+                            79 => TerminalKind::GweiKeyword,
+                            80 => TerminalKind::HexKeyword,
+                            81 => TerminalKind::HexLiteral,
+                            82 => TerminalKind::HoursKeyword,
+                            83 => TerminalKind::Identifier,
+                            84 => TerminalKind::IfKeyword,
+                            85 => TerminalKind::ImmutableKeyword,
+                            86 => TerminalKind::ImplementsKeyword,
+                            87 => TerminalKind::ImportKeyword,
+                            88 => TerminalKind::InKeyword,
+                            89 => TerminalKind::IndexedKeyword,
+                            90 => TerminalKind::InlineKeyword,
+                            91 => TerminalKind::IntKeyword,
+                            92 => TerminalKind::InterfaceKeyword,
+                            93 => TerminalKind::InternalKeyword,
+                            94 => TerminalKind::IsKeyword,
+                            95 => TerminalKind::LessThan,
+                            96 => TerminalKind::LessThanEqual,
+                            97 => TerminalKind::LessThanLessThan,
+                            98 => TerminalKind::LessThanLessThanEqual,
+                            99 => TerminalKind::LetKeyword,
+                            100 => TerminalKind::LibraryKeyword,
+                            101 => TerminalKind::MacroKeyword,
+                            102 => TerminalKind::MappingKeyword,
+                            103 => TerminalKind::MatchKeyword,
+                            104 => TerminalKind::MemoryKeyword,
+                            105 => TerminalKind::Minus,
+                            106 => TerminalKind::MinusEqual,
+                            107 => TerminalKind::MinusGreaterThan,
+                            108 => TerminalKind::MinusMinus,
+                            109 => TerminalKind::MinutesKeyword,
+                            110 => TerminalKind::ModifierKeyword,
+                            111 => TerminalKind::MultiLineComment,
+                            112 => TerminalKind::MultiLineNatSpecComment,
+                            113 => TerminalKind::MutableKeyword,
+                            114 => TerminalKind::NewKeyword,
+                            115 => TerminalKind::NullKeyword,
+                            116 => TerminalKind::OfKeyword,
+                            117 => TerminalKind::OpenBrace,
+                            118 => TerminalKind::OpenBracket,
+                            119 => TerminalKind::OpenParen,
+                            120 => TerminalKind::OverrideKeyword,
+                            121 => TerminalKind::PartialKeyword,
+                            122 => TerminalKind::PayableKeyword,
+                            123 => TerminalKind::Percent,
+                            124 => TerminalKind::PercentEqual,
+                            125 => TerminalKind::Period,
+                            126 => TerminalKind::Plus,
+                            127 => TerminalKind::PlusEqual,
+                            128 => TerminalKind::PlusPlus,
+                            129 => TerminalKind::PragmaKeyword,
+                            130 => TerminalKind::PrivateKeyword,
+                            131 => TerminalKind::PromiseKeyword,
+                            132 => TerminalKind::PublicKeyword,
+                            133 => TerminalKind::PureKeyword,
+                            134 => TerminalKind::QuestionMark,
+                            135 => TerminalKind::ReceiveKeyword,
+                            136 => TerminalKind::ReferenceKeyword,
+                            137 => TerminalKind::RelocatableKeyword,
+                            138 => TerminalKind::ReturnKeyword,
+                            139 => TerminalKind::ReturnsKeyword,
+                            140 => TerminalKind::RevertKeyword,
+                            141 => TerminalKind::SealedKeyword,
+                            142 => TerminalKind::SecondsKeyword,
+                            143 => TerminalKind::Semicolon,
+                            144 => TerminalKind::SingleLineComment,
+                            145 => TerminalKind::SingleLineNatSpecComment,
+                            146 => TerminalKind::SingleQuotedHexStringLiteral,
+                            147 => TerminalKind::SingleQuotedStringLiteral,
+                            148 => TerminalKind::SingleQuotedUnicodeStringLiteral,
+                            149 => TerminalKind::SingleQuotedVersionLiteral,
+                            150 => TerminalKind::SizeOfKeyword,
+                            151 => TerminalKind::Slash,
+                            152 => TerminalKind::SlashEqual,
+                            153 => TerminalKind::SolidityKeyword,
+                            154 => TerminalKind::StaticKeyword,
+                            155 => TerminalKind::StorageKeyword,
+                            156 => TerminalKind::StringKeyword,
+                            157 => TerminalKind::StructKeyword,
+                            158 => TerminalKind::SupportsKeyword,
+                            159 => TerminalKind::SwitchKeyword,
+                            160 => TerminalKind::SzaboKeyword,
+                            161 => TerminalKind::ThrowKeyword,
+                            162 => TerminalKind::Tilde,
+                            163 => TerminalKind::TrueKeyword,
+                            164 => TerminalKind::TryKeyword,
+                            165 => TerminalKind::TypeDefKeyword,
+                            166 => TerminalKind::TypeKeyword,
+                            167 => TerminalKind::TypeOfKeyword,
+                            168 => TerminalKind::UfixedKeyword,
+                            169 => TerminalKind::UintKeyword,
+                            170 => TerminalKind::UncheckedKeyword,
+                            171 => TerminalKind::UsingKeyword,
+                            172 => TerminalKind::VarKeyword,
+                            173 => TerminalKind::VersionSpecifier,
+                            174 => TerminalKind::ViewKeyword,
+                            175 => TerminalKind::VirtualKeyword,
+                            176 => TerminalKind::WeeksKeyword,
+                            177 => TerminalKind::WeiKeyword,
+                            178 => TerminalKind::WhileKeyword,
+                            179 => TerminalKind::Whitespace,
+                            180 => TerminalKind::YearsKeyword,
+                            181 => TerminalKind::YulAbstractKeyword,
+                            182 => TerminalKind::YulAddKeyword,
+                            183 => TerminalKind::YulAddModKeyword,
+                            184 => TerminalKind::YulAddressKeyword,
+                            185 => TerminalKind::YulAfterKeyword,
+                            186 => TerminalKind::YulAliasKeyword,
+                            187 => TerminalKind::YulAndKeyword,
+                            188 => TerminalKind::YulAnonymousKeyword,
+                            189 => TerminalKind::YulApplyKeyword,
+                            190 => TerminalKind::YulAsKeyword,
+                            191 => TerminalKind::YulAssemblyKeyword,
+                            192 => TerminalKind::YulAutoKeyword,
+                            193 => TerminalKind::YulBalanceKeyword,
+                            194 => TerminalKind::YulBaseFeeKeyword,
+                            195 => TerminalKind::YulBlobBaseFeeKeyword,
+                            196 => TerminalKind::YulBlobHashKeyword,
+                            197 => TerminalKind::YulBlockHashKeyword,
+                            198 => TerminalKind::YulBoolKeyword,
+                            199 => TerminalKind::YulBreakKeyword,
+                            200 => TerminalKind::YulByteKeyword,
+                            201 => TerminalKind::YulBytesKeyword,
+                            202 => TerminalKind::YulCallCodeKeyword,
+                            203 => TerminalKind::YulCallDataCopyKeyword,
+                            204 => TerminalKind::YulCallDataKeyword,
+                            205 => TerminalKind::YulCallDataLoadKeyword,
+                            206 => TerminalKind::YulCallDataSizeKeyword,
+                            207 => TerminalKind::YulCallKeyword,
+                            208 => TerminalKind::YulCallValueKeyword,
+                            209 => TerminalKind::YulCallerKeyword,
+                            210 => TerminalKind::YulCaseKeyword,
+                            211 => TerminalKind::YulCatchKeyword,
+                            212 => TerminalKind::YulChainIdKeyword,
+                            213 => TerminalKind::YulCoinBaseKeyword,
+                            214 => TerminalKind::YulConstantKeyword,
+                            215 => TerminalKind::YulConstructorKeyword,
+                            216 => TerminalKind::YulContinueKeyword,
+                            217 => TerminalKind::YulContractKeyword,
+                            218 => TerminalKind::YulCopyOfKeyword,
+                            219 => TerminalKind::YulCreate2Keyword,
+                            220 => TerminalKind::YulCreateKeyword,
+                            221 => TerminalKind::YulDaysKeyword,
+                            222 => TerminalKind::YulDecimalLiteral,
+                            223 => TerminalKind::YulDefaultKeyword,
+                            224 => TerminalKind::YulDefineKeyword,
+                            225 => TerminalKind::YulDelegateCallKeyword,
+                            226 => TerminalKind::YulDeleteKeyword,
+                            227 => TerminalKind::YulDifficultyKeyword,
+                            228 => TerminalKind::YulDivKeyword,
+                            229 => TerminalKind::YulDoKeyword,
+                            230 => TerminalKind::YulElseKeyword,
+                            231 => TerminalKind::YulEmitKeyword,
+                            232 => TerminalKind::YulEnumKeyword,
+                            233 => TerminalKind::YulEqKeyword,
+                            234 => TerminalKind::YulEtherKeyword,
+                            235 => TerminalKind::YulEventKeyword,
+                            236 => TerminalKind::YulExpKeyword,
+                            237 => TerminalKind::YulExtCodeCopyKeyword,
+                            238 => TerminalKind::YulExtCodeHashKeyword,
+                            239 => TerminalKind::YulExtCodeSizeKeyword,
+                            240 => TerminalKind::YulExternalKeyword,
+                            241 => TerminalKind::YulFallbackKeyword,
+                            242 => TerminalKind::YulFalseKeyword,
+                            243 => TerminalKind::YulFinalKeyword,
+                            244 => TerminalKind::YulFinneyKeyword,
+                            245 => TerminalKind::YulFixedKeyword,
+                            246 => TerminalKind::YulForKeyword,
+                            247 => TerminalKind::YulFunctionKeyword,
+                            248 => TerminalKind::YulGasKeyword,
+                            249 => TerminalKind::YulGasLimitKeyword,
+                            250 => TerminalKind::YulGasPriceKeyword,
+                            251 => TerminalKind::YulGtKeyword,
+                            252 => TerminalKind::YulGweiKeyword,
+                            253 => TerminalKind::YulHexKeyword,
+                            254 => TerminalKind::YulHexLiteral,
+                            255 => TerminalKind::YulHoursKeyword,
+                            256 => TerminalKind::YulIdentifier,
+                            257 => TerminalKind::YulIfKeyword,
+                            258 => TerminalKind::YulImmutableKeyword,
+                            259 => TerminalKind::YulImplementsKeyword,
+                            260 => TerminalKind::YulImportKeyword,
+                            261 => TerminalKind::YulInKeyword,
+                            262 => TerminalKind::YulIndexedKeyword,
+                            263 => TerminalKind::YulInlineKeyword,
+                            264 => TerminalKind::YulIntKeyword,
+                            265 => TerminalKind::YulInterfaceKeyword,
+                            266 => TerminalKind::YulInternalKeyword,
+                            267 => TerminalKind::YulInvalidKeyword,
+                            268 => TerminalKind::YulIsKeyword,
+                            269 => TerminalKind::YulIsZeroKeyword,
+                            270 => TerminalKind::YulKeccak256Keyword,
+                            271 => TerminalKind::YulLeaveKeyword,
+                            272 => TerminalKind::YulLetKeyword,
+                            273 => TerminalKind::YulLibraryKeyword,
+                            274 => TerminalKind::YulLog0Keyword,
+                            275 => TerminalKind::YulLog1Keyword,
+                            276 => TerminalKind::YulLog2Keyword,
+                            277 => TerminalKind::YulLog3Keyword,
+                            278 => TerminalKind::YulLog4Keyword,
+                            279 => TerminalKind::YulLtKeyword,
+                            280 => TerminalKind::YulMcopyKeyword,
+                            281 => TerminalKind::YulMloadKeyword,
+                            282 => TerminalKind::YulMsizeKeyword,
+                            283 => TerminalKind::YulMstore8Keyword,
+                            284 => TerminalKind::YulMstoreKeyword,
+                            285 => TerminalKind::YulMacroKeyword,
+                            286 => TerminalKind::YulMappingKeyword,
+                            287 => TerminalKind::YulMatchKeyword,
+                            288 => TerminalKind::YulMemoryKeyword,
+                            289 => TerminalKind::YulMinutesKeyword,
+                            290 => TerminalKind::YulModKeyword,
+                            291 => TerminalKind::YulModifierKeyword,
+                            292 => TerminalKind::YulMulKeyword,
+                            293 => TerminalKind::YulMulModKeyword,
+                            294 => TerminalKind::YulMutableKeyword,
+                            295 => TerminalKind::YulNewKeyword,
+                            296 => TerminalKind::YulNotKeyword,
+                            297 => TerminalKind::YulNullKeyword,
+                            298 => TerminalKind::YulNumberKeyword,
+                            299 => TerminalKind::YulOfKeyword,
+                            300 => TerminalKind::YulOrKeyword,
+                            301 => TerminalKind::YulOriginKeyword,
+                            302 => TerminalKind::YulOverrideKeyword,
+                            303 => TerminalKind::YulPartialKeyword,
+                            304 => TerminalKind::YulPayableKeyword,
+                            305 => TerminalKind::YulPopKeyword,
+                            306 => TerminalKind::YulPragmaKeyword,
+                            307 => TerminalKind::YulPrevRandaoKeyword,
+                            308 => TerminalKind::YulPrivateKeyword,
+                            309 => TerminalKind::YulPromiseKeyword,
+                            310 => TerminalKind::YulPublicKeyword,
+                            311 => TerminalKind::YulPureKeyword,
+                            312 => TerminalKind::YulReceiveKeyword,
+                            313 => TerminalKind::YulReferenceKeyword,
+                            314 => TerminalKind::YulRelocatableKeyword,
+                            315 => TerminalKind::YulReturnDataCopyKeyword,
+                            316 => TerminalKind::YulReturnDataSizeKeyword,
+                            317 => TerminalKind::YulReturnKeyword,
+                            318 => TerminalKind::YulReturnsKeyword,
+                            319 => TerminalKind::YulRevertKeyword,
+                            320 => TerminalKind::YulSdivKeyword,
+                            321 => TerminalKind::YulSloadKeyword,
+                            322 => TerminalKind::YulSmodKeyword,
+                            323 => TerminalKind::YulSstoreKeyword,
+                            324 => TerminalKind::YulSarKeyword,
+                            325 => TerminalKind::YulSealedKeyword,
+                            326 => TerminalKind::YulSecondsKeyword,
+                            327 => TerminalKind::YulSelfBalanceKeyword,
+                            328 => TerminalKind::YulSelfDestructKeyword,
+                            329 => TerminalKind::YulSgtKeyword,
+                            330 => TerminalKind::YulSha3Keyword,
+                            331 => TerminalKind::YulShlKeyword,
+                            332 => TerminalKind::YulShrKeyword,
+                            333 => TerminalKind::YulSignExtendKeyword,
+                            334 => TerminalKind::YulSizeOfKeyword,
+                            335 => TerminalKind::YulSltKeyword,
+                            336 => TerminalKind::YulStaticCallKeyword,
+                            337 => TerminalKind::YulStaticKeyword,
+                            338 => TerminalKind::YulStopKeyword,
+                            339 => TerminalKind::YulStorageKeyword,
+                            340 => TerminalKind::YulStringKeyword,
+                            341 => TerminalKind::YulStructKeyword,
+                            342 => TerminalKind::YulSubKeyword,
+                            343 => TerminalKind::YulSuicideKeyword,
+                            344 => TerminalKind::YulSupportsKeyword,
+                            345 => TerminalKind::YulSwitchKeyword,
+                            346 => TerminalKind::YulSzaboKeyword,
+                            347 => TerminalKind::YulTloadKeyword,
+                            348 => TerminalKind::YulTstoreKeyword,
+                            349 => TerminalKind::YulThrowKeyword,
+                            350 => TerminalKind::YulTimestampKeyword,
+                            351 => TerminalKind::YulTrueKeyword,
+                            352 => TerminalKind::YulTryKeyword,
+                            353 => TerminalKind::YulTypeDefKeyword,
+                            354 => TerminalKind::YulTypeKeyword,
+                            355 => TerminalKind::YulTypeOfKeyword,
+                            356 => TerminalKind::YulUfixedKeyword,
+                            357 => TerminalKind::YulUintKeyword,
+                            358 => TerminalKind::YulUncheckedKeyword,
+                            359 => TerminalKind::YulUsingKeyword,
+                            360 => TerminalKind::YulVarKeyword,
+                            361 => TerminalKind::YulViewKeyword,
+                            362 => TerminalKind::YulVirtualKeyword,
+                            363 => TerminalKind::YulWeeksKeyword,
+                            364 => TerminalKind::YulWeiKeyword,
+                            365 => TerminalKind::YulWhileKeyword,
+                            366 => TerminalKind::YulXorKeyword,
+                            367 => TerminalKind::YulYearsKeyword,
+
+                            _ => panic!("invalid enum discriminant"),
+                        }
+                    }
+                }
+
                 #[derive(Debug)]
                 #[repr(transparent)]
                 pub struct Language {
@@ -3941,7 +4702,8 @@ pub mod exports {
                     }
                 }
 
-                #[derive(Clone, Copy)]
+                #[repr(u8)]
+                #[derive(Clone, Copy, Eq, PartialEq)]
                 pub enum Severity {
                     Error,
                     Warning,
@@ -3960,6 +4722,25 @@ pub mod exports {
                         }
                     }
                 }
+
+                impl Severity {
+                    #[doc(hidden)]
+                    pub unsafe fn _lift(val: u8) -> Severity {
+                        if !cfg!(debug_assertions) {
+                            return ::core::mem::transmute(val);
+                        }
+
+                        match val {
+                            0 => Severity::Error,
+                            1 => Severity::Warning,
+                            2 => Severity::Information,
+                            3 => Severity::Hint,
+
+                            _ => panic!("invalid enum discriminant"),
+                        }
+                    }
+                }
+
                 #[repr(C)]
                 #[derive(Clone, Copy)]
                 pub struct TextIndex {
@@ -4126,234 +4907,14 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let v0 = match arg1 {
-                        0 => NonterminalKind::AbicoderPragma,
-                        1 => NonterminalKind::AdditiveExpression,
-                        2 => NonterminalKind::AddressType,
-                        3 => NonterminalKind::AndExpression,
-                        4 => NonterminalKind::ArgumentsDeclaration,
-                        5 => NonterminalKind::ArrayExpression,
-                        6 => NonterminalKind::ArrayTypeName,
-                        7 => NonterminalKind::ArrayValues,
-                        8 => NonterminalKind::AssemblyFlags,
-                        9 => NonterminalKind::AssemblyFlagsDeclaration,
-                        10 => NonterminalKind::AssemblyStatement,
-                        11 => NonterminalKind::AssignmentExpression,
-                        12 => NonterminalKind::BitwiseAndExpression,
-                        13 => NonterminalKind::BitwiseOrExpression,
-                        14 => NonterminalKind::BitwiseXorExpression,
-                        15 => NonterminalKind::Block,
-                        16 => NonterminalKind::BreakStatement,
-                        17 => NonterminalKind::CallOptions,
-                        18 => NonterminalKind::CallOptionsExpression,
-                        19 => NonterminalKind::CatchClause,
-                        20 => NonterminalKind::CatchClauseError,
-                        21 => NonterminalKind::CatchClauses,
-                        22 => NonterminalKind::ComparisonExpression,
-                        23 => NonterminalKind::ConditionalExpression,
-                        24 => NonterminalKind::ConstantDefinition,
-                        25 => NonterminalKind::ConstructorAttribute,
-                        26 => NonterminalKind::ConstructorAttributes,
-                        27 => NonterminalKind::ConstructorDefinition,
-                        28 => NonterminalKind::ContinueStatement,
-                        29 => NonterminalKind::ContractDefinition,
-                        30 => NonterminalKind::ContractMember,
-                        31 => NonterminalKind::ContractMembers,
-                        32 => NonterminalKind::DecimalNumberExpression,
-                        33 => NonterminalKind::DoWhileStatement,
-                        34 => NonterminalKind::ElementaryType,
-                        35 => NonterminalKind::ElseBranch,
-                        36 => NonterminalKind::EmitStatement,
-                        37 => NonterminalKind::EnumDefinition,
-                        38 => NonterminalKind::EnumMembers,
-                        39 => NonterminalKind::EqualityExpression,
-                        40 => NonterminalKind::ErrorDefinition,
-                        41 => NonterminalKind::ErrorParameter,
-                        42 => NonterminalKind::ErrorParameters,
-                        43 => NonterminalKind::ErrorParametersDeclaration,
-                        44 => NonterminalKind::EventDefinition,
-                        45 => NonterminalKind::EventParameter,
-                        46 => NonterminalKind::EventParameters,
-                        47 => NonterminalKind::EventParametersDeclaration,
-                        48 => NonterminalKind::ExperimentalFeature,
-                        49 => NonterminalKind::ExperimentalPragma,
-                        50 => NonterminalKind::ExponentiationExpression,
-                        51 => NonterminalKind::Expression,
-                        52 => NonterminalKind::ExpressionStatement,
-                        53 => NonterminalKind::FallbackFunctionAttribute,
-                        54 => NonterminalKind::FallbackFunctionAttributes,
-                        55 => NonterminalKind::FallbackFunctionDefinition,
-                        56 => NonterminalKind::ForStatement,
-                        57 => NonterminalKind::ForStatementCondition,
-                        58 => NonterminalKind::ForStatementInitialization,
-                        59 => NonterminalKind::FunctionAttribute,
-                        60 => NonterminalKind::FunctionAttributes,
-                        61 => NonterminalKind::FunctionBody,
-                        62 => NonterminalKind::FunctionCallExpression,
-                        63 => NonterminalKind::FunctionDefinition,
-                        64 => NonterminalKind::FunctionName,
-                        65 => NonterminalKind::FunctionType,
-                        66 => NonterminalKind::FunctionTypeAttribute,
-                        67 => NonterminalKind::FunctionTypeAttributes,
-                        68 => NonterminalKind::HexNumberExpression,
-                        69 => NonterminalKind::HexStringLiteral,
-                        70 => NonterminalKind::HexStringLiterals,
-                        71 => NonterminalKind::IdentifierPath,
-                        72 => NonterminalKind::IfStatement,
-                        73 => NonterminalKind::ImportAlias,
-                        74 => NonterminalKind::ImportClause,
-                        75 => NonterminalKind::ImportDeconstruction,
-                        76 => NonterminalKind::ImportDeconstructionSymbol,
-                        77 => NonterminalKind::ImportDeconstructionSymbols,
-                        78 => NonterminalKind::ImportDirective,
-                        79 => NonterminalKind::IndexAccessEnd,
-                        80 => NonterminalKind::IndexAccessExpression,
-                        81 => NonterminalKind::InheritanceSpecifier,
-                        82 => NonterminalKind::InheritanceType,
-                        83 => NonterminalKind::InheritanceTypes,
-                        84 => NonterminalKind::InterfaceDefinition,
-                        85 => NonterminalKind::InterfaceMembers,
-                        86 => NonterminalKind::LibraryDefinition,
-                        87 => NonterminalKind::LibraryMembers,
-                        88 => NonterminalKind::MappingKey,
-                        89 => NonterminalKind::MappingKeyType,
-                        90 => NonterminalKind::MappingType,
-                        91 => NonterminalKind::MappingValue,
-                        92 => NonterminalKind::MemberAccess,
-                        93 => NonterminalKind::MemberAccessExpression,
-                        94 => NonterminalKind::ModifierAttribute,
-                        95 => NonterminalKind::ModifierAttributes,
-                        96 => NonterminalKind::ModifierDefinition,
-                        97 => NonterminalKind::ModifierInvocation,
-                        98 => NonterminalKind::MultiplicativeExpression,
-                        99 => NonterminalKind::NamedArgument,
-                        100 => NonterminalKind::NamedArgumentGroup,
-                        101 => NonterminalKind::NamedArguments,
-                        102 => NonterminalKind::NamedArgumentsDeclaration,
-                        103 => NonterminalKind::NamedImport,
-                        104 => NonterminalKind::NewExpression,
-                        105 => NonterminalKind::NumberUnit,
-                        106 => NonterminalKind::OrExpression,
-                        107 => NonterminalKind::OverridePaths,
-                        108 => NonterminalKind::OverridePathsDeclaration,
-                        109 => NonterminalKind::OverrideSpecifier,
-                        110 => NonterminalKind::Parameter,
-                        111 => NonterminalKind::Parameters,
-                        112 => NonterminalKind::ParametersDeclaration,
-                        113 => NonterminalKind::PathImport,
-                        114 => NonterminalKind::PositionalArguments,
-                        115 => NonterminalKind::PositionalArgumentsDeclaration,
-                        116 => NonterminalKind::PostfixExpression,
-                        117 => NonterminalKind::Pragma,
-                        118 => NonterminalKind::PragmaDirective,
-                        119 => NonterminalKind::PrefixExpression,
-                        120 => NonterminalKind::ReceiveFunctionAttribute,
-                        121 => NonterminalKind::ReceiveFunctionAttributes,
-                        122 => NonterminalKind::ReceiveFunctionDefinition,
-                        123 => NonterminalKind::ReturnStatement,
-                        124 => NonterminalKind::ReturnsDeclaration,
-                        125 => NonterminalKind::RevertStatement,
-                        126 => NonterminalKind::ShiftExpression,
-                        127 => NonterminalKind::SourceUnit,
-                        128 => NonterminalKind::SourceUnitMember,
-                        129 => NonterminalKind::SourceUnitMembers,
-                        130 => NonterminalKind::StateVariableAttribute,
-                        131 => NonterminalKind::StateVariableAttributes,
-                        132 => NonterminalKind::StateVariableDefinition,
-                        133 => NonterminalKind::StateVariableDefinitionValue,
-                        134 => NonterminalKind::Statement,
-                        135 => NonterminalKind::Statements,
-                        136 => NonterminalKind::StorageLocation,
-                        137 => NonterminalKind::StringExpression,
-                        138 => NonterminalKind::StringLiteral,
-                        139 => NonterminalKind::StringLiterals,
-                        140 => NonterminalKind::StructDefinition,
-                        141 => NonterminalKind::StructMember,
-                        142 => NonterminalKind::StructMembers,
-                        143 => NonterminalKind::ThrowStatement,
-                        144 => NonterminalKind::TryStatement,
-                        145 => NonterminalKind::TupleDeconstructionElement,
-                        146 => NonterminalKind::TupleDeconstructionElements,
-                        147 => NonterminalKind::TupleDeconstructionStatement,
-                        148 => NonterminalKind::TupleExpression,
-                        149 => NonterminalKind::TupleMember,
-                        150 => NonterminalKind::TupleValue,
-                        151 => NonterminalKind::TupleValues,
-                        152 => NonterminalKind::TypeExpression,
-                        153 => NonterminalKind::TypeName,
-                        154 => NonterminalKind::TypedTupleMember,
-                        155 => NonterminalKind::UncheckedBlock,
-                        156 => NonterminalKind::UnicodeStringLiteral,
-                        157 => NonterminalKind::UnicodeStringLiterals,
-                        158 => NonterminalKind::UnnamedFunctionAttribute,
-                        159 => NonterminalKind::UnnamedFunctionAttributes,
-                        160 => NonterminalKind::UnnamedFunctionDefinition,
-                        161 => NonterminalKind::UntypedTupleMember,
-                        162 => NonterminalKind::UserDefinedValueTypeDefinition,
-                        163 => NonterminalKind::UsingAlias,
-                        164 => NonterminalKind::UsingClause,
-                        165 => NonterminalKind::UsingDeconstruction,
-                        166 => NonterminalKind::UsingDeconstructionSymbol,
-                        167 => NonterminalKind::UsingDeconstructionSymbols,
-                        168 => NonterminalKind::UsingDirective,
-                        169 => NonterminalKind::UsingOperator,
-                        170 => NonterminalKind::UsingTarget,
-                        171 => NonterminalKind::VariableDeclarationStatement,
-                        172 => NonterminalKind::VariableDeclarationType,
-                        173 => NonterminalKind::VariableDeclarationValue,
-                        174 => NonterminalKind::VersionComparator,
-                        175 => NonterminalKind::VersionExpression,
-                        176 => NonterminalKind::VersionExpressionSet,
-                        177 => NonterminalKind::VersionExpressionSets,
-                        178 => NonterminalKind::VersionPragma,
-                        179 => NonterminalKind::VersionRange,
-                        180 => NonterminalKind::VersionSpecifiers,
-                        181 => NonterminalKind::WhileStatement,
-                        182 => NonterminalKind::YulArguments,
-                        183 => NonterminalKind::YulAssignmentOperator,
-                        184 => NonterminalKind::YulBlock,
-                        185 => NonterminalKind::YulBreakStatement,
-                        186 => NonterminalKind::YulBuiltInFunction,
-                        187 => NonterminalKind::YulColonEqual,
-                        188 => NonterminalKind::YulContinueStatement,
-                        189 => NonterminalKind::YulDefaultCase,
-                        190 => NonterminalKind::YulExpression,
-                        191 => NonterminalKind::YulForStatement,
-                        192 => NonterminalKind::YulFunctionCallExpression,
-                        193 => NonterminalKind::YulFunctionDefinition,
-                        194 => NonterminalKind::YulIfStatement,
-                        195 => NonterminalKind::YulLabel,
-                        196 => NonterminalKind::YulLeaveStatement,
-                        197 => NonterminalKind::YulLiteral,
-                        198 => NonterminalKind::YulParameters,
-                        199 => NonterminalKind::YulParametersDeclaration,
-                        200 => NonterminalKind::YulPath,
-                        201 => NonterminalKind::YulPathComponent,
-                        202 => NonterminalKind::YulPaths,
-                        203 => NonterminalKind::YulReturnVariables,
-                        204 => NonterminalKind::YulReturnsDeclaration,
-                        205 => NonterminalKind::YulStackAssignmentStatement,
-                        206 => NonterminalKind::YulStatement,
-                        207 => NonterminalKind::YulStatements,
-                        208 => NonterminalKind::YulSwitchCase,
-                        209 => NonterminalKind::YulSwitchCases,
-                        210 => NonterminalKind::YulSwitchStatement,
-                        211 => NonterminalKind::YulValueCase,
-                        212 => NonterminalKind::YulVariableAssignmentStatement,
-                        213 => NonterminalKind::YulVariableDeclarationStatement,
-                        n => {
-                            debug_assert_eq!(n, 214, "invalid enum discriminant");
-                            NonterminalKind::YulVariableDeclarationValue
-                        }
-                    };
-                    let len1 = arg3;
-                    let bytes1 = _rt::Vec::from_raw_parts(arg2.cast(), len1, len1);
-                    let result2 = T::parse(
+                    let len0 = arg3;
+                    let bytes0 = _rt::Vec::from_raw_parts(arg2.cast(), len0, len0);
+                    let result1 = T::parse(
                         LanguageBorrow::lift(arg0 as u32 as usize).get(),
-                        v0,
-                        _rt::string_lift(bytes1),
+                        NonterminalKind::_lift(arg1 as u8),
+                        _rt::string_lift(bytes0),
                     );
-                    (result2).take_handle() as i32
+                    (result1).take_handle() as i32
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -4363,13 +4924,7 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
                     let result0 = T::severity(ParseErrorBorrow::lift(arg0 as u32 as usize).get());
-                    let result1 = match result0 {
-                        Severity::Error => 0i32,
-                        Severity::Warning => 1i32,
-                        Severity::Information => 2i32,
-                        Severity::Hint => 3i32,
-                    };
-                    result1
+                    result0.clone() as i32
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -4531,224 +5086,7 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
                     let result0 = T::kind(NonterminalNodeBorrow::lift(arg0 as u32 as usize).get());
-                    let result1 = match result0 {
-                        NonterminalKind::AbicoderPragma => 0i32,
-                        NonterminalKind::AdditiveExpression => 1i32,
-                        NonterminalKind::AddressType => 2i32,
-                        NonterminalKind::AndExpression => 3i32,
-                        NonterminalKind::ArgumentsDeclaration => 4i32,
-                        NonterminalKind::ArrayExpression => 5i32,
-                        NonterminalKind::ArrayTypeName => 6i32,
-                        NonterminalKind::ArrayValues => 7i32,
-                        NonterminalKind::AssemblyFlags => 8i32,
-                        NonterminalKind::AssemblyFlagsDeclaration => 9i32,
-                        NonterminalKind::AssemblyStatement => 10i32,
-                        NonterminalKind::AssignmentExpression => 11i32,
-                        NonterminalKind::BitwiseAndExpression => 12i32,
-                        NonterminalKind::BitwiseOrExpression => 13i32,
-                        NonterminalKind::BitwiseXorExpression => 14i32,
-                        NonterminalKind::Block => 15i32,
-                        NonterminalKind::BreakStatement => 16i32,
-                        NonterminalKind::CallOptions => 17i32,
-                        NonterminalKind::CallOptionsExpression => 18i32,
-                        NonterminalKind::CatchClause => 19i32,
-                        NonterminalKind::CatchClauseError => 20i32,
-                        NonterminalKind::CatchClauses => 21i32,
-                        NonterminalKind::ComparisonExpression => 22i32,
-                        NonterminalKind::ConditionalExpression => 23i32,
-                        NonterminalKind::ConstantDefinition => 24i32,
-                        NonterminalKind::ConstructorAttribute => 25i32,
-                        NonterminalKind::ConstructorAttributes => 26i32,
-                        NonterminalKind::ConstructorDefinition => 27i32,
-                        NonterminalKind::ContinueStatement => 28i32,
-                        NonterminalKind::ContractDefinition => 29i32,
-                        NonterminalKind::ContractMember => 30i32,
-                        NonterminalKind::ContractMembers => 31i32,
-                        NonterminalKind::DecimalNumberExpression => 32i32,
-                        NonterminalKind::DoWhileStatement => 33i32,
-                        NonterminalKind::ElementaryType => 34i32,
-                        NonterminalKind::ElseBranch => 35i32,
-                        NonterminalKind::EmitStatement => 36i32,
-                        NonterminalKind::EnumDefinition => 37i32,
-                        NonterminalKind::EnumMembers => 38i32,
-                        NonterminalKind::EqualityExpression => 39i32,
-                        NonterminalKind::ErrorDefinition => 40i32,
-                        NonterminalKind::ErrorParameter => 41i32,
-                        NonterminalKind::ErrorParameters => 42i32,
-                        NonterminalKind::ErrorParametersDeclaration => 43i32,
-                        NonterminalKind::EventDefinition => 44i32,
-                        NonterminalKind::EventParameter => 45i32,
-                        NonterminalKind::EventParameters => 46i32,
-                        NonterminalKind::EventParametersDeclaration => 47i32,
-                        NonterminalKind::ExperimentalFeature => 48i32,
-                        NonterminalKind::ExperimentalPragma => 49i32,
-                        NonterminalKind::ExponentiationExpression => 50i32,
-                        NonterminalKind::Expression => 51i32,
-                        NonterminalKind::ExpressionStatement => 52i32,
-                        NonterminalKind::FallbackFunctionAttribute => 53i32,
-                        NonterminalKind::FallbackFunctionAttributes => 54i32,
-                        NonterminalKind::FallbackFunctionDefinition => 55i32,
-                        NonterminalKind::ForStatement => 56i32,
-                        NonterminalKind::ForStatementCondition => 57i32,
-                        NonterminalKind::ForStatementInitialization => 58i32,
-                        NonterminalKind::FunctionAttribute => 59i32,
-                        NonterminalKind::FunctionAttributes => 60i32,
-                        NonterminalKind::FunctionBody => 61i32,
-                        NonterminalKind::FunctionCallExpression => 62i32,
-                        NonterminalKind::FunctionDefinition => 63i32,
-                        NonterminalKind::FunctionName => 64i32,
-                        NonterminalKind::FunctionType => 65i32,
-                        NonterminalKind::FunctionTypeAttribute => 66i32,
-                        NonterminalKind::FunctionTypeAttributes => 67i32,
-                        NonterminalKind::HexNumberExpression => 68i32,
-                        NonterminalKind::HexStringLiteral => 69i32,
-                        NonterminalKind::HexStringLiterals => 70i32,
-                        NonterminalKind::IdentifierPath => 71i32,
-                        NonterminalKind::IfStatement => 72i32,
-                        NonterminalKind::ImportAlias => 73i32,
-                        NonterminalKind::ImportClause => 74i32,
-                        NonterminalKind::ImportDeconstruction => 75i32,
-                        NonterminalKind::ImportDeconstructionSymbol => 76i32,
-                        NonterminalKind::ImportDeconstructionSymbols => 77i32,
-                        NonterminalKind::ImportDirective => 78i32,
-                        NonterminalKind::IndexAccessEnd => 79i32,
-                        NonterminalKind::IndexAccessExpression => 80i32,
-                        NonterminalKind::InheritanceSpecifier => 81i32,
-                        NonterminalKind::InheritanceType => 82i32,
-                        NonterminalKind::InheritanceTypes => 83i32,
-                        NonterminalKind::InterfaceDefinition => 84i32,
-                        NonterminalKind::InterfaceMembers => 85i32,
-                        NonterminalKind::LibraryDefinition => 86i32,
-                        NonterminalKind::LibraryMembers => 87i32,
-                        NonterminalKind::MappingKey => 88i32,
-                        NonterminalKind::MappingKeyType => 89i32,
-                        NonterminalKind::MappingType => 90i32,
-                        NonterminalKind::MappingValue => 91i32,
-                        NonterminalKind::MemberAccess => 92i32,
-                        NonterminalKind::MemberAccessExpression => 93i32,
-                        NonterminalKind::ModifierAttribute => 94i32,
-                        NonterminalKind::ModifierAttributes => 95i32,
-                        NonterminalKind::ModifierDefinition => 96i32,
-                        NonterminalKind::ModifierInvocation => 97i32,
-                        NonterminalKind::MultiplicativeExpression => 98i32,
-                        NonterminalKind::NamedArgument => 99i32,
-                        NonterminalKind::NamedArgumentGroup => 100i32,
-                        NonterminalKind::NamedArguments => 101i32,
-                        NonterminalKind::NamedArgumentsDeclaration => 102i32,
-                        NonterminalKind::NamedImport => 103i32,
-                        NonterminalKind::NewExpression => 104i32,
-                        NonterminalKind::NumberUnit => 105i32,
-                        NonterminalKind::OrExpression => 106i32,
-                        NonterminalKind::OverridePaths => 107i32,
-                        NonterminalKind::OverridePathsDeclaration => 108i32,
-                        NonterminalKind::OverrideSpecifier => 109i32,
-                        NonterminalKind::Parameter => 110i32,
-                        NonterminalKind::Parameters => 111i32,
-                        NonterminalKind::ParametersDeclaration => 112i32,
-                        NonterminalKind::PathImport => 113i32,
-                        NonterminalKind::PositionalArguments => 114i32,
-                        NonterminalKind::PositionalArgumentsDeclaration => 115i32,
-                        NonterminalKind::PostfixExpression => 116i32,
-                        NonterminalKind::Pragma => 117i32,
-                        NonterminalKind::PragmaDirective => 118i32,
-                        NonterminalKind::PrefixExpression => 119i32,
-                        NonterminalKind::ReceiveFunctionAttribute => 120i32,
-                        NonterminalKind::ReceiveFunctionAttributes => 121i32,
-                        NonterminalKind::ReceiveFunctionDefinition => 122i32,
-                        NonterminalKind::ReturnStatement => 123i32,
-                        NonterminalKind::ReturnsDeclaration => 124i32,
-                        NonterminalKind::RevertStatement => 125i32,
-                        NonterminalKind::ShiftExpression => 126i32,
-                        NonterminalKind::SourceUnit => 127i32,
-                        NonterminalKind::SourceUnitMember => 128i32,
-                        NonterminalKind::SourceUnitMembers => 129i32,
-                        NonterminalKind::StateVariableAttribute => 130i32,
-                        NonterminalKind::StateVariableAttributes => 131i32,
-                        NonterminalKind::StateVariableDefinition => 132i32,
-                        NonterminalKind::StateVariableDefinitionValue => 133i32,
-                        NonterminalKind::Statement => 134i32,
-                        NonterminalKind::Statements => 135i32,
-                        NonterminalKind::StorageLocation => 136i32,
-                        NonterminalKind::StringExpression => 137i32,
-                        NonterminalKind::StringLiteral => 138i32,
-                        NonterminalKind::StringLiterals => 139i32,
-                        NonterminalKind::StructDefinition => 140i32,
-                        NonterminalKind::StructMember => 141i32,
-                        NonterminalKind::StructMembers => 142i32,
-                        NonterminalKind::ThrowStatement => 143i32,
-                        NonterminalKind::TryStatement => 144i32,
-                        NonterminalKind::TupleDeconstructionElement => 145i32,
-                        NonterminalKind::TupleDeconstructionElements => 146i32,
-                        NonterminalKind::TupleDeconstructionStatement => 147i32,
-                        NonterminalKind::TupleExpression => 148i32,
-                        NonterminalKind::TupleMember => 149i32,
-                        NonterminalKind::TupleValue => 150i32,
-                        NonterminalKind::TupleValues => 151i32,
-                        NonterminalKind::TypeExpression => 152i32,
-                        NonterminalKind::TypeName => 153i32,
-                        NonterminalKind::TypedTupleMember => 154i32,
-                        NonterminalKind::UncheckedBlock => 155i32,
-                        NonterminalKind::UnicodeStringLiteral => 156i32,
-                        NonterminalKind::UnicodeStringLiterals => 157i32,
-                        NonterminalKind::UnnamedFunctionAttribute => 158i32,
-                        NonterminalKind::UnnamedFunctionAttributes => 159i32,
-                        NonterminalKind::UnnamedFunctionDefinition => 160i32,
-                        NonterminalKind::UntypedTupleMember => 161i32,
-                        NonterminalKind::UserDefinedValueTypeDefinition => 162i32,
-                        NonterminalKind::UsingAlias => 163i32,
-                        NonterminalKind::UsingClause => 164i32,
-                        NonterminalKind::UsingDeconstruction => 165i32,
-                        NonterminalKind::UsingDeconstructionSymbol => 166i32,
-                        NonterminalKind::UsingDeconstructionSymbols => 167i32,
-                        NonterminalKind::UsingDirective => 168i32,
-                        NonterminalKind::UsingOperator => 169i32,
-                        NonterminalKind::UsingTarget => 170i32,
-                        NonterminalKind::VariableDeclarationStatement => 171i32,
-                        NonterminalKind::VariableDeclarationType => 172i32,
-                        NonterminalKind::VariableDeclarationValue => 173i32,
-                        NonterminalKind::VersionComparator => 174i32,
-                        NonterminalKind::VersionExpression => 175i32,
-                        NonterminalKind::VersionExpressionSet => 176i32,
-                        NonterminalKind::VersionExpressionSets => 177i32,
-                        NonterminalKind::VersionPragma => 178i32,
-                        NonterminalKind::VersionRange => 179i32,
-                        NonterminalKind::VersionSpecifiers => 180i32,
-                        NonterminalKind::WhileStatement => 181i32,
-                        NonterminalKind::YulArguments => 182i32,
-                        NonterminalKind::YulAssignmentOperator => 183i32,
-                        NonterminalKind::YulBlock => 184i32,
-                        NonterminalKind::YulBreakStatement => 185i32,
-                        NonterminalKind::YulBuiltInFunction => 186i32,
-                        NonterminalKind::YulColonEqual => 187i32,
-                        NonterminalKind::YulContinueStatement => 188i32,
-                        NonterminalKind::YulDefaultCase => 189i32,
-                        NonterminalKind::YulExpression => 190i32,
-                        NonterminalKind::YulForStatement => 191i32,
-                        NonterminalKind::YulFunctionCallExpression => 192i32,
-                        NonterminalKind::YulFunctionDefinition => 193i32,
-                        NonterminalKind::YulIfStatement => 194i32,
-                        NonterminalKind::YulLabel => 195i32,
-                        NonterminalKind::YulLeaveStatement => 196i32,
-                        NonterminalKind::YulLiteral => 197i32,
-                        NonterminalKind::YulParameters => 198i32,
-                        NonterminalKind::YulParametersDeclaration => 199i32,
-                        NonterminalKind::YulPath => 200i32,
-                        NonterminalKind::YulPathComponent => 201i32,
-                        NonterminalKind::YulPaths => 202i32,
-                        NonterminalKind::YulReturnVariables => 203i32,
-                        NonterminalKind::YulReturnsDeclaration => 204i32,
-                        NonterminalKind::YulStackAssignmentStatement => 205i32,
-                        NonterminalKind::YulStatement => 206i32,
-                        NonterminalKind::YulStatements => 207i32,
-                        NonterminalKind::YulSwitchCase => 208i32,
-                        NonterminalKind::YulSwitchCases => 209i32,
-                        NonterminalKind::YulSwitchStatement => 210i32,
-                        NonterminalKind::YulValueCase => 211i32,
-                        NonterminalKind::YulVariableAssignmentStatement => 212i32,
-                        NonterminalKind::YulVariableDeclarationStatement => 213i32,
-                        NonterminalKind::YulVariableDeclarationValue => 214i32,
-                    };
-                    result1
+                    result0.clone() as i32
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -4895,377 +5233,7 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
                     let result0 = T::kind(TerminalNodeBorrow::lift(arg0 as u32 as usize).get());
-                    let result1 = match result0 {
-                        TerminalKind::Skipped => 0i32,
-                        TerminalKind::AbicoderKeyword => 1i32,
-                        TerminalKind::AbstractKeyword => 2i32,
-                        TerminalKind::AddressKeyword => 3i32,
-                        TerminalKind::AfterKeyword => 4i32,
-                        TerminalKind::AliasKeyword => 5i32,
-                        TerminalKind::Ampersand => 6i32,
-                        TerminalKind::AmpersandAmpersand => 7i32,
-                        TerminalKind::AmpersandEqual => 8i32,
-                        TerminalKind::AnonymousKeyword => 9i32,
-                        TerminalKind::ApplyKeyword => 10i32,
-                        TerminalKind::AsKeyword => 11i32,
-                        TerminalKind::AssemblyKeyword => 12i32,
-                        TerminalKind::Asterisk => 13i32,
-                        TerminalKind::AsteriskAsterisk => 14i32,
-                        TerminalKind::AsteriskEqual => 15i32,
-                        TerminalKind::AutoKeyword => 16i32,
-                        TerminalKind::Bang => 17i32,
-                        TerminalKind::BangEqual => 18i32,
-                        TerminalKind::Bar => 19i32,
-                        TerminalKind::BarBar => 20i32,
-                        TerminalKind::BarEqual => 21i32,
-                        TerminalKind::BoolKeyword => 22i32,
-                        TerminalKind::BreakKeyword => 23i32,
-                        TerminalKind::ByteKeyword => 24i32,
-                        TerminalKind::BytesKeyword => 25i32,
-                        TerminalKind::CallDataKeyword => 26i32,
-                        TerminalKind::Caret => 27i32,
-                        TerminalKind::CaretEqual => 28i32,
-                        TerminalKind::CaseKeyword => 29i32,
-                        TerminalKind::CatchKeyword => 30i32,
-                        TerminalKind::CloseBrace => 31i32,
-                        TerminalKind::CloseBracket => 32i32,
-                        TerminalKind::CloseParen => 33i32,
-                        TerminalKind::Colon => 34i32,
-                        TerminalKind::ColonEqual => 35i32,
-                        TerminalKind::Comma => 36i32,
-                        TerminalKind::ConstantKeyword => 37i32,
-                        TerminalKind::ConstructorKeyword => 38i32,
-                        TerminalKind::ContinueKeyword => 39i32,
-                        TerminalKind::ContractKeyword => 40i32,
-                        TerminalKind::CopyOfKeyword => 41i32,
-                        TerminalKind::DaysKeyword => 42i32,
-                        TerminalKind::DecimalLiteral => 43i32,
-                        TerminalKind::DefaultKeyword => 44i32,
-                        TerminalKind::DefineKeyword => 45i32,
-                        TerminalKind::DeleteKeyword => 46i32,
-                        TerminalKind::DoKeyword => 47i32,
-                        TerminalKind::DoubleQuotedHexStringLiteral => 48i32,
-                        TerminalKind::DoubleQuotedStringLiteral => 49i32,
-                        TerminalKind::DoubleQuotedUnicodeStringLiteral => 50i32,
-                        TerminalKind::DoubleQuotedVersionLiteral => 51i32,
-                        TerminalKind::ElseKeyword => 52i32,
-                        TerminalKind::EmitKeyword => 53i32,
-                        TerminalKind::EndOfLine => 54i32,
-                        TerminalKind::EnumKeyword => 55i32,
-                        TerminalKind::Equal => 56i32,
-                        TerminalKind::EqualEqual => 57i32,
-                        TerminalKind::EqualGreaterThan => 58i32,
-                        TerminalKind::ErrorKeyword => 59i32,
-                        TerminalKind::EtherKeyword => 60i32,
-                        TerminalKind::EventKeyword => 61i32,
-                        TerminalKind::ExperimentalKeyword => 62i32,
-                        TerminalKind::ExternalKeyword => 63i32,
-                        TerminalKind::FallbackKeyword => 64i32,
-                        TerminalKind::FalseKeyword => 65i32,
-                        TerminalKind::FinalKeyword => 66i32,
-                        TerminalKind::FinneyKeyword => 67i32,
-                        TerminalKind::FixedKeyword => 68i32,
-                        TerminalKind::ForKeyword => 69i32,
-                        TerminalKind::FromKeyword => 70i32,
-                        TerminalKind::FunctionKeyword => 71i32,
-                        TerminalKind::GlobalKeyword => 72i32,
-                        TerminalKind::GreaterThan => 73i32,
-                        TerminalKind::GreaterThanEqual => 74i32,
-                        TerminalKind::GreaterThanGreaterThan => 75i32,
-                        TerminalKind::GreaterThanGreaterThanEqual => 76i32,
-                        TerminalKind::GreaterThanGreaterThanGreaterThan => 77i32,
-                        TerminalKind::GreaterThanGreaterThanGreaterThanEqual => 78i32,
-                        TerminalKind::GweiKeyword => 79i32,
-                        TerminalKind::HexKeyword => 80i32,
-                        TerminalKind::HexLiteral => 81i32,
-                        TerminalKind::HoursKeyword => 82i32,
-                        TerminalKind::Identifier => 83i32,
-                        TerminalKind::IfKeyword => 84i32,
-                        TerminalKind::ImmutableKeyword => 85i32,
-                        TerminalKind::ImplementsKeyword => 86i32,
-                        TerminalKind::ImportKeyword => 87i32,
-                        TerminalKind::InKeyword => 88i32,
-                        TerminalKind::IndexedKeyword => 89i32,
-                        TerminalKind::InlineKeyword => 90i32,
-                        TerminalKind::IntKeyword => 91i32,
-                        TerminalKind::InterfaceKeyword => 92i32,
-                        TerminalKind::InternalKeyword => 93i32,
-                        TerminalKind::IsKeyword => 94i32,
-                        TerminalKind::LessThan => 95i32,
-                        TerminalKind::LessThanEqual => 96i32,
-                        TerminalKind::LessThanLessThan => 97i32,
-                        TerminalKind::LessThanLessThanEqual => 98i32,
-                        TerminalKind::LetKeyword => 99i32,
-                        TerminalKind::LibraryKeyword => 100i32,
-                        TerminalKind::MacroKeyword => 101i32,
-                        TerminalKind::MappingKeyword => 102i32,
-                        TerminalKind::MatchKeyword => 103i32,
-                        TerminalKind::MemoryKeyword => 104i32,
-                        TerminalKind::Minus => 105i32,
-                        TerminalKind::MinusEqual => 106i32,
-                        TerminalKind::MinusGreaterThan => 107i32,
-                        TerminalKind::MinusMinus => 108i32,
-                        TerminalKind::MinutesKeyword => 109i32,
-                        TerminalKind::ModifierKeyword => 110i32,
-                        TerminalKind::MultiLineComment => 111i32,
-                        TerminalKind::MultiLineNatSpecComment => 112i32,
-                        TerminalKind::MutableKeyword => 113i32,
-                        TerminalKind::NewKeyword => 114i32,
-                        TerminalKind::NullKeyword => 115i32,
-                        TerminalKind::OfKeyword => 116i32,
-                        TerminalKind::OpenBrace => 117i32,
-                        TerminalKind::OpenBracket => 118i32,
-                        TerminalKind::OpenParen => 119i32,
-                        TerminalKind::OverrideKeyword => 120i32,
-                        TerminalKind::PartialKeyword => 121i32,
-                        TerminalKind::PayableKeyword => 122i32,
-                        TerminalKind::Percent => 123i32,
-                        TerminalKind::PercentEqual => 124i32,
-                        TerminalKind::Period => 125i32,
-                        TerminalKind::Plus => 126i32,
-                        TerminalKind::PlusEqual => 127i32,
-                        TerminalKind::PlusPlus => 128i32,
-                        TerminalKind::PragmaKeyword => 129i32,
-                        TerminalKind::PrivateKeyword => 130i32,
-                        TerminalKind::PromiseKeyword => 131i32,
-                        TerminalKind::PublicKeyword => 132i32,
-                        TerminalKind::PureKeyword => 133i32,
-                        TerminalKind::QuestionMark => 134i32,
-                        TerminalKind::ReceiveKeyword => 135i32,
-                        TerminalKind::ReferenceKeyword => 136i32,
-                        TerminalKind::RelocatableKeyword => 137i32,
-                        TerminalKind::ReturnKeyword => 138i32,
-                        TerminalKind::ReturnsKeyword => 139i32,
-                        TerminalKind::RevertKeyword => 140i32,
-                        TerminalKind::SealedKeyword => 141i32,
-                        TerminalKind::SecondsKeyword => 142i32,
-                        TerminalKind::Semicolon => 143i32,
-                        TerminalKind::SingleLineComment => 144i32,
-                        TerminalKind::SingleLineNatSpecComment => 145i32,
-                        TerminalKind::SingleQuotedHexStringLiteral => 146i32,
-                        TerminalKind::SingleQuotedStringLiteral => 147i32,
-                        TerminalKind::SingleQuotedUnicodeStringLiteral => 148i32,
-                        TerminalKind::SingleQuotedVersionLiteral => 149i32,
-                        TerminalKind::SizeOfKeyword => 150i32,
-                        TerminalKind::Slash => 151i32,
-                        TerminalKind::SlashEqual => 152i32,
-                        TerminalKind::SolidityKeyword => 153i32,
-                        TerminalKind::StaticKeyword => 154i32,
-                        TerminalKind::StorageKeyword => 155i32,
-                        TerminalKind::StringKeyword => 156i32,
-                        TerminalKind::StructKeyword => 157i32,
-                        TerminalKind::SupportsKeyword => 158i32,
-                        TerminalKind::SwitchKeyword => 159i32,
-                        TerminalKind::SzaboKeyword => 160i32,
-                        TerminalKind::ThrowKeyword => 161i32,
-                        TerminalKind::Tilde => 162i32,
-                        TerminalKind::TrueKeyword => 163i32,
-                        TerminalKind::TryKeyword => 164i32,
-                        TerminalKind::TypeDefKeyword => 165i32,
-                        TerminalKind::TypeKeyword => 166i32,
-                        TerminalKind::TypeOfKeyword => 167i32,
-                        TerminalKind::UfixedKeyword => 168i32,
-                        TerminalKind::UintKeyword => 169i32,
-                        TerminalKind::UncheckedKeyword => 170i32,
-                        TerminalKind::UsingKeyword => 171i32,
-                        TerminalKind::VarKeyword => 172i32,
-                        TerminalKind::VersionSpecifier => 173i32,
-                        TerminalKind::ViewKeyword => 174i32,
-                        TerminalKind::VirtualKeyword => 175i32,
-                        TerminalKind::WeeksKeyword => 176i32,
-                        TerminalKind::WeiKeyword => 177i32,
-                        TerminalKind::WhileKeyword => 178i32,
-                        TerminalKind::Whitespace => 179i32,
-                        TerminalKind::YearsKeyword => 180i32,
-                        TerminalKind::YulAbstractKeyword => 181i32,
-                        TerminalKind::YulAddKeyword => 182i32,
-                        TerminalKind::YulAddModKeyword => 183i32,
-                        TerminalKind::YulAddressKeyword => 184i32,
-                        TerminalKind::YulAfterKeyword => 185i32,
-                        TerminalKind::YulAliasKeyword => 186i32,
-                        TerminalKind::YulAndKeyword => 187i32,
-                        TerminalKind::YulAnonymousKeyword => 188i32,
-                        TerminalKind::YulApplyKeyword => 189i32,
-                        TerminalKind::YulAsKeyword => 190i32,
-                        TerminalKind::YulAssemblyKeyword => 191i32,
-                        TerminalKind::YulAutoKeyword => 192i32,
-                        TerminalKind::YulBalanceKeyword => 193i32,
-                        TerminalKind::YulBaseFeeKeyword => 194i32,
-                        TerminalKind::YulBlobBaseFeeKeyword => 195i32,
-                        TerminalKind::YulBlobHashKeyword => 196i32,
-                        TerminalKind::YulBlockHashKeyword => 197i32,
-                        TerminalKind::YulBoolKeyword => 198i32,
-                        TerminalKind::YulBreakKeyword => 199i32,
-                        TerminalKind::YulByteKeyword => 200i32,
-                        TerminalKind::YulBytesKeyword => 201i32,
-                        TerminalKind::YulCallCodeKeyword => 202i32,
-                        TerminalKind::YulCallDataCopyKeyword => 203i32,
-                        TerminalKind::YulCallDataKeyword => 204i32,
-                        TerminalKind::YulCallDataLoadKeyword => 205i32,
-                        TerminalKind::YulCallDataSizeKeyword => 206i32,
-                        TerminalKind::YulCallKeyword => 207i32,
-                        TerminalKind::YulCallValueKeyword => 208i32,
-                        TerminalKind::YulCallerKeyword => 209i32,
-                        TerminalKind::YulCaseKeyword => 210i32,
-                        TerminalKind::YulCatchKeyword => 211i32,
-                        TerminalKind::YulChainIdKeyword => 212i32,
-                        TerminalKind::YulCoinBaseKeyword => 213i32,
-                        TerminalKind::YulConstantKeyword => 214i32,
-                        TerminalKind::YulConstructorKeyword => 215i32,
-                        TerminalKind::YulContinueKeyword => 216i32,
-                        TerminalKind::YulContractKeyword => 217i32,
-                        TerminalKind::YulCopyOfKeyword => 218i32,
-                        TerminalKind::YulCreate2Keyword => 219i32,
-                        TerminalKind::YulCreateKeyword => 220i32,
-                        TerminalKind::YulDaysKeyword => 221i32,
-                        TerminalKind::YulDecimalLiteral => 222i32,
-                        TerminalKind::YulDefaultKeyword => 223i32,
-                        TerminalKind::YulDefineKeyword => 224i32,
-                        TerminalKind::YulDelegateCallKeyword => 225i32,
-                        TerminalKind::YulDeleteKeyword => 226i32,
-                        TerminalKind::YulDifficultyKeyword => 227i32,
-                        TerminalKind::YulDivKeyword => 228i32,
-                        TerminalKind::YulDoKeyword => 229i32,
-                        TerminalKind::YulElseKeyword => 230i32,
-                        TerminalKind::YulEmitKeyword => 231i32,
-                        TerminalKind::YulEnumKeyword => 232i32,
-                        TerminalKind::YulEqKeyword => 233i32,
-                        TerminalKind::YulEtherKeyword => 234i32,
-                        TerminalKind::YulEventKeyword => 235i32,
-                        TerminalKind::YulExpKeyword => 236i32,
-                        TerminalKind::YulExtCodeCopyKeyword => 237i32,
-                        TerminalKind::YulExtCodeHashKeyword => 238i32,
-                        TerminalKind::YulExtCodeSizeKeyword => 239i32,
-                        TerminalKind::YulExternalKeyword => 240i32,
-                        TerminalKind::YulFallbackKeyword => 241i32,
-                        TerminalKind::YulFalseKeyword => 242i32,
-                        TerminalKind::YulFinalKeyword => 243i32,
-                        TerminalKind::YulFinneyKeyword => 244i32,
-                        TerminalKind::YulFixedKeyword => 245i32,
-                        TerminalKind::YulForKeyword => 246i32,
-                        TerminalKind::YulFunctionKeyword => 247i32,
-                        TerminalKind::YulGasKeyword => 248i32,
-                        TerminalKind::YulGasLimitKeyword => 249i32,
-                        TerminalKind::YulGasPriceKeyword => 250i32,
-                        TerminalKind::YulGtKeyword => 251i32,
-                        TerminalKind::YulGweiKeyword => 252i32,
-                        TerminalKind::YulHexKeyword => 253i32,
-                        TerminalKind::YulHexLiteral => 254i32,
-                        TerminalKind::YulHoursKeyword => 255i32,
-                        TerminalKind::YulIdentifier => 256i32,
-                        TerminalKind::YulIfKeyword => 257i32,
-                        TerminalKind::YulImmutableKeyword => 258i32,
-                        TerminalKind::YulImplementsKeyword => 259i32,
-                        TerminalKind::YulImportKeyword => 260i32,
-                        TerminalKind::YulInKeyword => 261i32,
-                        TerminalKind::YulIndexedKeyword => 262i32,
-                        TerminalKind::YulInlineKeyword => 263i32,
-                        TerminalKind::YulIntKeyword => 264i32,
-                        TerminalKind::YulInterfaceKeyword => 265i32,
-                        TerminalKind::YulInternalKeyword => 266i32,
-                        TerminalKind::YulInvalidKeyword => 267i32,
-                        TerminalKind::YulIsKeyword => 268i32,
-                        TerminalKind::YulIsZeroKeyword => 269i32,
-                        TerminalKind::YulKeccak256Keyword => 270i32,
-                        TerminalKind::YulLeaveKeyword => 271i32,
-                        TerminalKind::YulLetKeyword => 272i32,
-                        TerminalKind::YulLibraryKeyword => 273i32,
-                        TerminalKind::YulLog0Keyword => 274i32,
-                        TerminalKind::YulLog1Keyword => 275i32,
-                        TerminalKind::YulLog2Keyword => 276i32,
-                        TerminalKind::YulLog3Keyword => 277i32,
-                        TerminalKind::YulLog4Keyword => 278i32,
-                        TerminalKind::YulLtKeyword => 279i32,
-                        TerminalKind::YulMcopyKeyword => 280i32,
-                        TerminalKind::YulMloadKeyword => 281i32,
-                        TerminalKind::YulMsizeKeyword => 282i32,
-                        TerminalKind::YulMstore8Keyword => 283i32,
-                        TerminalKind::YulMstoreKeyword => 284i32,
-                        TerminalKind::YulMacroKeyword => 285i32,
-                        TerminalKind::YulMappingKeyword => 286i32,
-                        TerminalKind::YulMatchKeyword => 287i32,
-                        TerminalKind::YulMemoryKeyword => 288i32,
-                        TerminalKind::YulMinutesKeyword => 289i32,
-                        TerminalKind::YulModKeyword => 290i32,
-                        TerminalKind::YulModifierKeyword => 291i32,
-                        TerminalKind::YulMulKeyword => 292i32,
-                        TerminalKind::YulMulModKeyword => 293i32,
-                        TerminalKind::YulMutableKeyword => 294i32,
-                        TerminalKind::YulNewKeyword => 295i32,
-                        TerminalKind::YulNotKeyword => 296i32,
-                        TerminalKind::YulNullKeyword => 297i32,
-                        TerminalKind::YulNumberKeyword => 298i32,
-                        TerminalKind::YulOfKeyword => 299i32,
-                        TerminalKind::YulOrKeyword => 300i32,
-                        TerminalKind::YulOriginKeyword => 301i32,
-                        TerminalKind::YulOverrideKeyword => 302i32,
-                        TerminalKind::YulPartialKeyword => 303i32,
-                        TerminalKind::YulPayableKeyword => 304i32,
-                        TerminalKind::YulPopKeyword => 305i32,
-                        TerminalKind::YulPragmaKeyword => 306i32,
-                        TerminalKind::YulPrevRandaoKeyword => 307i32,
-                        TerminalKind::YulPrivateKeyword => 308i32,
-                        TerminalKind::YulPromiseKeyword => 309i32,
-                        TerminalKind::YulPublicKeyword => 310i32,
-                        TerminalKind::YulPureKeyword => 311i32,
-                        TerminalKind::YulReceiveKeyword => 312i32,
-                        TerminalKind::YulReferenceKeyword => 313i32,
-                        TerminalKind::YulRelocatableKeyword => 314i32,
-                        TerminalKind::YulReturnDataCopyKeyword => 315i32,
-                        TerminalKind::YulReturnDataSizeKeyword => 316i32,
-                        TerminalKind::YulReturnKeyword => 317i32,
-                        TerminalKind::YulReturnsKeyword => 318i32,
-                        TerminalKind::YulRevertKeyword => 319i32,
-                        TerminalKind::YulSdivKeyword => 320i32,
-                        TerminalKind::YulSloadKeyword => 321i32,
-                        TerminalKind::YulSmodKeyword => 322i32,
-                        TerminalKind::YulSstoreKeyword => 323i32,
-                        TerminalKind::YulSarKeyword => 324i32,
-                        TerminalKind::YulSealedKeyword => 325i32,
-                        TerminalKind::YulSecondsKeyword => 326i32,
-                        TerminalKind::YulSelfBalanceKeyword => 327i32,
-                        TerminalKind::YulSelfDestructKeyword => 328i32,
-                        TerminalKind::YulSgtKeyword => 329i32,
-                        TerminalKind::YulSha3Keyword => 330i32,
-                        TerminalKind::YulShlKeyword => 331i32,
-                        TerminalKind::YulShrKeyword => 332i32,
-                        TerminalKind::YulSignExtendKeyword => 333i32,
-                        TerminalKind::YulSizeOfKeyword => 334i32,
-                        TerminalKind::YulSltKeyword => 335i32,
-                        TerminalKind::YulStaticCallKeyword => 336i32,
-                        TerminalKind::YulStaticKeyword => 337i32,
-                        TerminalKind::YulStopKeyword => 338i32,
-                        TerminalKind::YulStorageKeyword => 339i32,
-                        TerminalKind::YulStringKeyword => 340i32,
-                        TerminalKind::YulStructKeyword => 341i32,
-                        TerminalKind::YulSubKeyword => 342i32,
-                        TerminalKind::YulSuicideKeyword => 343i32,
-                        TerminalKind::YulSupportsKeyword => 344i32,
-                        TerminalKind::YulSwitchKeyword => 345i32,
-                        TerminalKind::YulSzaboKeyword => 346i32,
-                        TerminalKind::YulTloadKeyword => 347i32,
-                        TerminalKind::YulTstoreKeyword => 348i32,
-                        TerminalKind::YulThrowKeyword => 349i32,
-                        TerminalKind::YulTimestampKeyword => 350i32,
-                        TerminalKind::YulTrueKeyword => 351i32,
-                        TerminalKind::YulTryKeyword => 352i32,
-                        TerminalKind::YulTypeDefKeyword => 353i32,
-                        TerminalKind::YulTypeKeyword => 354i32,
-                        TerminalKind::YulTypeOfKeyword => 355i32,
-                        TerminalKind::YulUfixedKeyword => 356i32,
-                        TerminalKind::YulUintKeyword => 357i32,
-                        TerminalKind::YulUncheckedKeyword => 358i32,
-                        TerminalKind::YulUsingKeyword => 359i32,
-                        TerminalKind::YulVarKeyword => 360i32,
-                        TerminalKind::YulViewKeyword => 361i32,
-                        TerminalKind::YulVirtualKeyword => 362i32,
-                        TerminalKind::YulWeeksKeyword => 363i32,
-                        TerminalKind::YulWeiKeyword => 364i32,
-                        TerminalKind::YulWhileKeyword => 365i32,
-                        TerminalKind::YulXorKeyword => 366i32,
-                        TerminalKind::YulYearsKeyword => 367i32,
-                    };
-                    result1
+                    result0.clone() as i32
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -5394,401 +5362,7 @@ pub mod exports {
                     match result0 {
                         Some(e) => {
                             *ptr1.add(0).cast::<u8>() = (1i32) as u8;
-                            match e {
-                                EdgeLabel::Item => {
-                                    *ptr1.add(1).cast::<u8>() = (0i32) as u8;
-                                }
-                                EdgeLabel::Variant => {
-                                    *ptr1.add(1).cast::<u8>() = (1i32) as u8;
-                                }
-                                EdgeLabel::Separator => {
-                                    *ptr1.add(1).cast::<u8>() = (2i32) as u8;
-                                }
-                                EdgeLabel::Operand => {
-                                    *ptr1.add(1).cast::<u8>() = (3i32) as u8;
-                                }
-                                EdgeLabel::LeftOperand => {
-                                    *ptr1.add(1).cast::<u8>() = (4i32) as u8;
-                                }
-                                EdgeLabel::RightOperand => {
-                                    *ptr1.add(1).cast::<u8>() = (5i32) as u8;
-                                }
-                                EdgeLabel::LeadingTrivia => {
-                                    *ptr1.add(1).cast::<u8>() = (6i32) as u8;
-                                }
-                                EdgeLabel::TrailingTrivia => {
-                                    *ptr1.add(1).cast::<u8>() = (7i32) as u8;
-                                }
-                                EdgeLabel::AbicoderKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (8i32) as u8;
-                                }
-                                EdgeLabel::AbstractKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (9i32) as u8;
-                                }
-                                EdgeLabel::AddressKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (10i32) as u8;
-                                }
-                                EdgeLabel::Alias => {
-                                    *ptr1.add(1).cast::<u8>() = (11i32) as u8;
-                                }
-                                EdgeLabel::AnonymousKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (12i32) as u8;
-                                }
-                                EdgeLabel::Arguments => {
-                                    *ptr1.add(1).cast::<u8>() = (13i32) as u8;
-                                }
-                                EdgeLabel::AsKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (14i32) as u8;
-                                }
-                                EdgeLabel::AssemblyKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (15i32) as u8;
-                                }
-                                EdgeLabel::Assignment => {
-                                    *ptr1.add(1).cast::<u8>() = (16i32) as u8;
-                                }
-                                EdgeLabel::Asterisk => {
-                                    *ptr1.add(1).cast::<u8>() = (17i32) as u8;
-                                }
-                                EdgeLabel::Attributes => {
-                                    *ptr1.add(1).cast::<u8>() = (18i32) as u8;
-                                }
-                                EdgeLabel::Block => {
-                                    *ptr1.add(1).cast::<u8>() = (19i32) as u8;
-                                }
-                                EdgeLabel::Body => {
-                                    *ptr1.add(1).cast::<u8>() = (20i32) as u8;
-                                }
-                                EdgeLabel::BreakKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (21i32) as u8;
-                                }
-                                EdgeLabel::CaseKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (22i32) as u8;
-                                }
-                                EdgeLabel::Cases => {
-                                    *ptr1.add(1).cast::<u8>() = (23i32) as u8;
-                                }
-                                EdgeLabel::CatchClauses => {
-                                    *ptr1.add(1).cast::<u8>() = (24i32) as u8;
-                                }
-                                EdgeLabel::CatchKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (25i32) as u8;
-                                }
-                                EdgeLabel::Clause => {
-                                    *ptr1.add(1).cast::<u8>() = (26i32) as u8;
-                                }
-                                EdgeLabel::CloseBrace => {
-                                    *ptr1.add(1).cast::<u8>() = (27i32) as u8;
-                                }
-                                EdgeLabel::CloseBracket => {
-                                    *ptr1.add(1).cast::<u8>() = (28i32) as u8;
-                                }
-                                EdgeLabel::CloseParen => {
-                                    *ptr1.add(1).cast::<u8>() = (29i32) as u8;
-                                }
-                                EdgeLabel::Colon => {
-                                    *ptr1.add(1).cast::<u8>() = (30i32) as u8;
-                                }
-                                EdgeLabel::Condition => {
-                                    *ptr1.add(1).cast::<u8>() = (31i32) as u8;
-                                }
-                                EdgeLabel::ConstantKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (32i32) as u8;
-                                }
-                                EdgeLabel::ConstructorKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (33i32) as u8;
-                                }
-                                EdgeLabel::ContinueKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (34i32) as u8;
-                                }
-                                EdgeLabel::ContractKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (35i32) as u8;
-                                }
-                                EdgeLabel::DefaultKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (36i32) as u8;
-                                }
-                                EdgeLabel::DoKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (37i32) as u8;
-                                }
-                                EdgeLabel::Elements => {
-                                    *ptr1.add(1).cast::<u8>() = (38i32) as u8;
-                                }
-                                EdgeLabel::ElseBranch => {
-                                    *ptr1.add(1).cast::<u8>() = (39i32) as u8;
-                                }
-                                EdgeLabel::ElseKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (40i32) as u8;
-                                }
-                                EdgeLabel::EmitKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (41i32) as u8;
-                                }
-                                EdgeLabel::End => {
-                                    *ptr1.add(1).cast::<u8>() = (42i32) as u8;
-                                }
-                                EdgeLabel::EnumKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (43i32) as u8;
-                                }
-                                EdgeLabel::Equal => {
-                                    *ptr1.add(1).cast::<u8>() = (44i32) as u8;
-                                }
-                                EdgeLabel::EqualGreaterThan => {
-                                    *ptr1.add(1).cast::<u8>() = (45i32) as u8;
-                                }
-                                EdgeLabel::Error => {
-                                    *ptr1.add(1).cast::<u8>() = (46i32) as u8;
-                                }
-                                EdgeLabel::ErrorKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (47i32) as u8;
-                                }
-                                EdgeLabel::Event => {
-                                    *ptr1.add(1).cast::<u8>() = (48i32) as u8;
-                                }
-                                EdgeLabel::EventKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (49i32) as u8;
-                                }
-                                EdgeLabel::ExperimentalKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (50i32) as u8;
-                                }
-                                EdgeLabel::Expression => {
-                                    *ptr1.add(1).cast::<u8>() = (51i32) as u8;
-                                }
-                                EdgeLabel::FallbackKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (52i32) as u8;
-                                }
-                                EdgeLabel::FalseExpression => {
-                                    *ptr1.add(1).cast::<u8>() = (53i32) as u8;
-                                }
-                                EdgeLabel::Feature => {
-                                    *ptr1.add(1).cast::<u8>() = (54i32) as u8;
-                                }
-                                EdgeLabel::Flags => {
-                                    *ptr1.add(1).cast::<u8>() = (55i32) as u8;
-                                }
-                                EdgeLabel::ForKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (56i32) as u8;
-                                }
-                                EdgeLabel::FromKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (57i32) as u8;
-                                }
-                                EdgeLabel::FunctionKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (58i32) as u8;
-                                }
-                                EdgeLabel::GlobalKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (59i32) as u8;
-                                }
-                                EdgeLabel::Identifier => {
-                                    *ptr1.add(1).cast::<u8>() = (60i32) as u8;
-                                }
-                                EdgeLabel::IfKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (61i32) as u8;
-                                }
-                                EdgeLabel::ImportKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (62i32) as u8;
-                                }
-                                EdgeLabel::Index => {
-                                    *ptr1.add(1).cast::<u8>() = (63i32) as u8;
-                                }
-                                EdgeLabel::IndexedKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (64i32) as u8;
-                                }
-                                EdgeLabel::Inheritance => {
-                                    *ptr1.add(1).cast::<u8>() = (65i32) as u8;
-                                }
-                                EdgeLabel::Initialization => {
-                                    *ptr1.add(1).cast::<u8>() = (66i32) as u8;
-                                }
-                                EdgeLabel::InterfaceKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (67i32) as u8;
-                                }
-                                EdgeLabel::IsKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (68i32) as u8;
-                                }
-                                EdgeLabel::Items => {
-                                    *ptr1.add(1).cast::<u8>() = (69i32) as u8;
-                                }
-                                EdgeLabel::Iterator => {
-                                    *ptr1.add(1).cast::<u8>() = (70i32) as u8;
-                                }
-                                EdgeLabel::KeyType => {
-                                    *ptr1.add(1).cast::<u8>() = (71i32) as u8;
-                                }
-                                EdgeLabel::Label => {
-                                    *ptr1.add(1).cast::<u8>() = (72i32) as u8;
-                                }
-                                EdgeLabel::LeaveKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (73i32) as u8;
-                                }
-                                EdgeLabel::LetKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (74i32) as u8;
-                                }
-                                EdgeLabel::LibraryKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (75i32) as u8;
-                                }
-                                EdgeLabel::Literal => {
-                                    *ptr1.add(1).cast::<u8>() = (76i32) as u8;
-                                }
-                                EdgeLabel::MappingKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (77i32) as u8;
-                                }
-                                EdgeLabel::Member => {
-                                    *ptr1.add(1).cast::<u8>() = (78i32) as u8;
-                                }
-                                EdgeLabel::Members => {
-                                    *ptr1.add(1).cast::<u8>() = (79i32) as u8;
-                                }
-                                EdgeLabel::MinusGreaterThan => {
-                                    *ptr1.add(1).cast::<u8>() = (80i32) as u8;
-                                }
-                                EdgeLabel::ModifierKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (81i32) as u8;
-                                }
-                                EdgeLabel::Name => {
-                                    *ptr1.add(1).cast::<u8>() = (82i32) as u8;
-                                }
-                                EdgeLabel::Names => {
-                                    *ptr1.add(1).cast::<u8>() = (83i32) as u8;
-                                }
-                                EdgeLabel::NewKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (84i32) as u8;
-                                }
-                                EdgeLabel::OpenBrace => {
-                                    *ptr1.add(1).cast::<u8>() = (85i32) as u8;
-                                }
-                                EdgeLabel::OpenBracket => {
-                                    *ptr1.add(1).cast::<u8>() = (86i32) as u8;
-                                }
-                                EdgeLabel::OpenParen => {
-                                    *ptr1.add(1).cast::<u8>() = (87i32) as u8;
-                                }
-                                EdgeLabel::Operator => {
-                                    *ptr1.add(1).cast::<u8>() = (88i32) as u8;
-                                }
-                                EdgeLabel::Options => {
-                                    *ptr1.add(1).cast::<u8>() = (89i32) as u8;
-                                }
-                                EdgeLabel::Overridden => {
-                                    *ptr1.add(1).cast::<u8>() = (90i32) as u8;
-                                }
-                                EdgeLabel::OverrideKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (91i32) as u8;
-                                }
-                                EdgeLabel::Parameters => {
-                                    *ptr1.add(1).cast::<u8>() = (92i32) as u8;
-                                }
-                                EdgeLabel::Path => {
-                                    *ptr1.add(1).cast::<u8>() = (93i32) as u8;
-                                }
-                                EdgeLabel::Paths => {
-                                    *ptr1.add(1).cast::<u8>() = (94i32) as u8;
-                                }
-                                EdgeLabel::PayableKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (95i32) as u8;
-                                }
-                                EdgeLabel::Period => {
-                                    *ptr1.add(1).cast::<u8>() = (96i32) as u8;
-                                }
-                                EdgeLabel::Pragma => {
-                                    *ptr1.add(1).cast::<u8>() = (97i32) as u8;
-                                }
-                                EdgeLabel::PragmaKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (98i32) as u8;
-                                }
-                                EdgeLabel::QuestionMark => {
-                                    *ptr1.add(1).cast::<u8>() = (99i32) as u8;
-                                }
-                                EdgeLabel::ReceiveKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (100i32) as u8;
-                                }
-                                EdgeLabel::ReturnKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (101i32) as u8;
-                                }
-                                EdgeLabel::Returns => {
-                                    *ptr1.add(1).cast::<u8>() = (102i32) as u8;
-                                }
-                                EdgeLabel::ReturnsKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (103i32) as u8;
-                                }
-                                EdgeLabel::RevertKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (104i32) as u8;
-                                }
-                                EdgeLabel::Semicolon => {
-                                    *ptr1.add(1).cast::<u8>() = (105i32) as u8;
-                                }
-                                EdgeLabel::Sets => {
-                                    *ptr1.add(1).cast::<u8>() = (106i32) as u8;
-                                }
-                                EdgeLabel::SolidityKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (107i32) as u8;
-                                }
-                                EdgeLabel::Start => {
-                                    *ptr1.add(1).cast::<u8>() = (108i32) as u8;
-                                }
-                                EdgeLabel::Statements => {
-                                    *ptr1.add(1).cast::<u8>() = (109i32) as u8;
-                                }
-                                EdgeLabel::StorageLocation => {
-                                    *ptr1.add(1).cast::<u8>() = (110i32) as u8;
-                                }
-                                EdgeLabel::StructKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (111i32) as u8;
-                                }
-                                EdgeLabel::SwitchKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (112i32) as u8;
-                                }
-                                EdgeLabel::Symbols => {
-                                    *ptr1.add(1).cast::<u8>() = (113i32) as u8;
-                                }
-                                EdgeLabel::Target => {
-                                    *ptr1.add(1).cast::<u8>() = (114i32) as u8;
-                                }
-                                EdgeLabel::ThrowKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (115i32) as u8;
-                                }
-                                EdgeLabel::TrueExpression => {
-                                    *ptr1.add(1).cast::<u8>() = (116i32) as u8;
-                                }
-                                EdgeLabel::TryKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (117i32) as u8;
-                                }
-                                EdgeLabel::TypeKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (118i32) as u8;
-                                }
-                                EdgeLabel::TypeName => {
-                                    *ptr1.add(1).cast::<u8>() = (119i32) as u8;
-                                }
-                                EdgeLabel::Types => {
-                                    *ptr1.add(1).cast::<u8>() = (120i32) as u8;
-                                }
-                                EdgeLabel::UncheckedKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (121i32) as u8;
-                                }
-                                EdgeLabel::Unit => {
-                                    *ptr1.add(1).cast::<u8>() = (122i32) as u8;
-                                }
-                                EdgeLabel::UsingKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (123i32) as u8;
-                                }
-                                EdgeLabel::Value => {
-                                    *ptr1.add(1).cast::<u8>() = (124i32) as u8;
-                                }
-                                EdgeLabel::ValueType => {
-                                    *ptr1.add(1).cast::<u8>() = (125i32) as u8;
-                                }
-                                EdgeLabel::VarKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (126i32) as u8;
-                                }
-                                EdgeLabel::VariableType => {
-                                    *ptr1.add(1).cast::<u8>() = (127i32) as u8;
-                                }
-                                EdgeLabel::Variables => {
-                                    *ptr1.add(1).cast::<u8>() = (128i32) as u8;
-                                }
-                                EdgeLabel::Version => {
-                                    *ptr1.add(1).cast::<u8>() = (129i32) as u8;
-                                }
-                                EdgeLabel::WhileKeyword => {
-                                    *ptr1.add(1).cast::<u8>() = (130i32) as u8;
-                                }
-                            }
+                            *ptr1.add(1).cast::<u8>() = (e.clone() as i32) as u8;
                         }
                         None => {
                             *ptr1.add(0).cast::<u8>() = (0i32) as u8;
@@ -6057,384 +5631,11 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let v0 = match arg1 {
-                        0 => TerminalKind::Skipped,
-                        1 => TerminalKind::AbicoderKeyword,
-                        2 => TerminalKind::AbstractKeyword,
-                        3 => TerminalKind::AddressKeyword,
-                        4 => TerminalKind::AfterKeyword,
-                        5 => TerminalKind::AliasKeyword,
-                        6 => TerminalKind::Ampersand,
-                        7 => TerminalKind::AmpersandAmpersand,
-                        8 => TerminalKind::AmpersandEqual,
-                        9 => TerminalKind::AnonymousKeyword,
-                        10 => TerminalKind::ApplyKeyword,
-                        11 => TerminalKind::AsKeyword,
-                        12 => TerminalKind::AssemblyKeyword,
-                        13 => TerminalKind::Asterisk,
-                        14 => TerminalKind::AsteriskAsterisk,
-                        15 => TerminalKind::AsteriskEqual,
-                        16 => TerminalKind::AutoKeyword,
-                        17 => TerminalKind::Bang,
-                        18 => TerminalKind::BangEqual,
-                        19 => TerminalKind::Bar,
-                        20 => TerminalKind::BarBar,
-                        21 => TerminalKind::BarEqual,
-                        22 => TerminalKind::BoolKeyword,
-                        23 => TerminalKind::BreakKeyword,
-                        24 => TerminalKind::ByteKeyword,
-                        25 => TerminalKind::BytesKeyword,
-                        26 => TerminalKind::CallDataKeyword,
-                        27 => TerminalKind::Caret,
-                        28 => TerminalKind::CaretEqual,
-                        29 => TerminalKind::CaseKeyword,
-                        30 => TerminalKind::CatchKeyword,
-                        31 => TerminalKind::CloseBrace,
-                        32 => TerminalKind::CloseBracket,
-                        33 => TerminalKind::CloseParen,
-                        34 => TerminalKind::Colon,
-                        35 => TerminalKind::ColonEqual,
-                        36 => TerminalKind::Comma,
-                        37 => TerminalKind::ConstantKeyword,
-                        38 => TerminalKind::ConstructorKeyword,
-                        39 => TerminalKind::ContinueKeyword,
-                        40 => TerminalKind::ContractKeyword,
-                        41 => TerminalKind::CopyOfKeyword,
-                        42 => TerminalKind::DaysKeyword,
-                        43 => TerminalKind::DecimalLiteral,
-                        44 => TerminalKind::DefaultKeyword,
-                        45 => TerminalKind::DefineKeyword,
-                        46 => TerminalKind::DeleteKeyword,
-                        47 => TerminalKind::DoKeyword,
-                        48 => TerminalKind::DoubleQuotedHexStringLiteral,
-                        49 => TerminalKind::DoubleQuotedStringLiteral,
-                        50 => TerminalKind::DoubleQuotedUnicodeStringLiteral,
-                        51 => TerminalKind::DoubleQuotedVersionLiteral,
-                        52 => TerminalKind::ElseKeyword,
-                        53 => TerminalKind::EmitKeyword,
-                        54 => TerminalKind::EndOfLine,
-                        55 => TerminalKind::EnumKeyword,
-                        56 => TerminalKind::Equal,
-                        57 => TerminalKind::EqualEqual,
-                        58 => TerminalKind::EqualGreaterThan,
-                        59 => TerminalKind::ErrorKeyword,
-                        60 => TerminalKind::EtherKeyword,
-                        61 => TerminalKind::EventKeyword,
-                        62 => TerminalKind::ExperimentalKeyword,
-                        63 => TerminalKind::ExternalKeyword,
-                        64 => TerminalKind::FallbackKeyword,
-                        65 => TerminalKind::FalseKeyword,
-                        66 => TerminalKind::FinalKeyword,
-                        67 => TerminalKind::FinneyKeyword,
-                        68 => TerminalKind::FixedKeyword,
-                        69 => TerminalKind::ForKeyword,
-                        70 => TerminalKind::FromKeyword,
-                        71 => TerminalKind::FunctionKeyword,
-                        72 => TerminalKind::GlobalKeyword,
-                        73 => TerminalKind::GreaterThan,
-                        74 => TerminalKind::GreaterThanEqual,
-                        75 => TerminalKind::GreaterThanGreaterThan,
-                        76 => TerminalKind::GreaterThanGreaterThanEqual,
-                        77 => TerminalKind::GreaterThanGreaterThanGreaterThan,
-                        78 => TerminalKind::GreaterThanGreaterThanGreaterThanEqual,
-                        79 => TerminalKind::GweiKeyword,
-                        80 => TerminalKind::HexKeyword,
-                        81 => TerminalKind::HexLiteral,
-                        82 => TerminalKind::HoursKeyword,
-                        83 => TerminalKind::Identifier,
-                        84 => TerminalKind::IfKeyword,
-                        85 => TerminalKind::ImmutableKeyword,
-                        86 => TerminalKind::ImplementsKeyword,
-                        87 => TerminalKind::ImportKeyword,
-                        88 => TerminalKind::InKeyword,
-                        89 => TerminalKind::IndexedKeyword,
-                        90 => TerminalKind::InlineKeyword,
-                        91 => TerminalKind::IntKeyword,
-                        92 => TerminalKind::InterfaceKeyword,
-                        93 => TerminalKind::InternalKeyword,
-                        94 => TerminalKind::IsKeyword,
-                        95 => TerminalKind::LessThan,
-                        96 => TerminalKind::LessThanEqual,
-                        97 => TerminalKind::LessThanLessThan,
-                        98 => TerminalKind::LessThanLessThanEqual,
-                        99 => TerminalKind::LetKeyword,
-                        100 => TerminalKind::LibraryKeyword,
-                        101 => TerminalKind::MacroKeyword,
-                        102 => TerminalKind::MappingKeyword,
-                        103 => TerminalKind::MatchKeyword,
-                        104 => TerminalKind::MemoryKeyword,
-                        105 => TerminalKind::Minus,
-                        106 => TerminalKind::MinusEqual,
-                        107 => TerminalKind::MinusGreaterThan,
-                        108 => TerminalKind::MinusMinus,
-                        109 => TerminalKind::MinutesKeyword,
-                        110 => TerminalKind::ModifierKeyword,
-                        111 => TerminalKind::MultiLineComment,
-                        112 => TerminalKind::MultiLineNatSpecComment,
-                        113 => TerminalKind::MutableKeyword,
-                        114 => TerminalKind::NewKeyword,
-                        115 => TerminalKind::NullKeyword,
-                        116 => TerminalKind::OfKeyword,
-                        117 => TerminalKind::OpenBrace,
-                        118 => TerminalKind::OpenBracket,
-                        119 => TerminalKind::OpenParen,
-                        120 => TerminalKind::OverrideKeyword,
-                        121 => TerminalKind::PartialKeyword,
-                        122 => TerminalKind::PayableKeyword,
-                        123 => TerminalKind::Percent,
-                        124 => TerminalKind::PercentEqual,
-                        125 => TerminalKind::Period,
-                        126 => TerminalKind::Plus,
-                        127 => TerminalKind::PlusEqual,
-                        128 => TerminalKind::PlusPlus,
-                        129 => TerminalKind::PragmaKeyword,
-                        130 => TerminalKind::PrivateKeyword,
-                        131 => TerminalKind::PromiseKeyword,
-                        132 => TerminalKind::PublicKeyword,
-                        133 => TerminalKind::PureKeyword,
-                        134 => TerminalKind::QuestionMark,
-                        135 => TerminalKind::ReceiveKeyword,
-                        136 => TerminalKind::ReferenceKeyword,
-                        137 => TerminalKind::RelocatableKeyword,
-                        138 => TerminalKind::ReturnKeyword,
-                        139 => TerminalKind::ReturnsKeyword,
-                        140 => TerminalKind::RevertKeyword,
-                        141 => TerminalKind::SealedKeyword,
-                        142 => TerminalKind::SecondsKeyword,
-                        143 => TerminalKind::Semicolon,
-                        144 => TerminalKind::SingleLineComment,
-                        145 => TerminalKind::SingleLineNatSpecComment,
-                        146 => TerminalKind::SingleQuotedHexStringLiteral,
-                        147 => TerminalKind::SingleQuotedStringLiteral,
-                        148 => TerminalKind::SingleQuotedUnicodeStringLiteral,
-                        149 => TerminalKind::SingleQuotedVersionLiteral,
-                        150 => TerminalKind::SizeOfKeyword,
-                        151 => TerminalKind::Slash,
-                        152 => TerminalKind::SlashEqual,
-                        153 => TerminalKind::SolidityKeyword,
-                        154 => TerminalKind::StaticKeyword,
-                        155 => TerminalKind::StorageKeyword,
-                        156 => TerminalKind::StringKeyword,
-                        157 => TerminalKind::StructKeyword,
-                        158 => TerminalKind::SupportsKeyword,
-                        159 => TerminalKind::SwitchKeyword,
-                        160 => TerminalKind::SzaboKeyword,
-                        161 => TerminalKind::ThrowKeyword,
-                        162 => TerminalKind::Tilde,
-                        163 => TerminalKind::TrueKeyword,
-                        164 => TerminalKind::TryKeyword,
-                        165 => TerminalKind::TypeDefKeyword,
-                        166 => TerminalKind::TypeKeyword,
-                        167 => TerminalKind::TypeOfKeyword,
-                        168 => TerminalKind::UfixedKeyword,
-                        169 => TerminalKind::UintKeyword,
-                        170 => TerminalKind::UncheckedKeyword,
-                        171 => TerminalKind::UsingKeyword,
-                        172 => TerminalKind::VarKeyword,
-                        173 => TerminalKind::VersionSpecifier,
-                        174 => TerminalKind::ViewKeyword,
-                        175 => TerminalKind::VirtualKeyword,
-                        176 => TerminalKind::WeeksKeyword,
-                        177 => TerminalKind::WeiKeyword,
-                        178 => TerminalKind::WhileKeyword,
-                        179 => TerminalKind::Whitespace,
-                        180 => TerminalKind::YearsKeyword,
-                        181 => TerminalKind::YulAbstractKeyword,
-                        182 => TerminalKind::YulAddKeyword,
-                        183 => TerminalKind::YulAddModKeyword,
-                        184 => TerminalKind::YulAddressKeyword,
-                        185 => TerminalKind::YulAfterKeyword,
-                        186 => TerminalKind::YulAliasKeyword,
-                        187 => TerminalKind::YulAndKeyword,
-                        188 => TerminalKind::YulAnonymousKeyword,
-                        189 => TerminalKind::YulApplyKeyword,
-                        190 => TerminalKind::YulAsKeyword,
-                        191 => TerminalKind::YulAssemblyKeyword,
-                        192 => TerminalKind::YulAutoKeyword,
-                        193 => TerminalKind::YulBalanceKeyword,
-                        194 => TerminalKind::YulBaseFeeKeyword,
-                        195 => TerminalKind::YulBlobBaseFeeKeyword,
-                        196 => TerminalKind::YulBlobHashKeyword,
-                        197 => TerminalKind::YulBlockHashKeyword,
-                        198 => TerminalKind::YulBoolKeyword,
-                        199 => TerminalKind::YulBreakKeyword,
-                        200 => TerminalKind::YulByteKeyword,
-                        201 => TerminalKind::YulBytesKeyword,
-                        202 => TerminalKind::YulCallCodeKeyword,
-                        203 => TerminalKind::YulCallDataCopyKeyword,
-                        204 => TerminalKind::YulCallDataKeyword,
-                        205 => TerminalKind::YulCallDataLoadKeyword,
-                        206 => TerminalKind::YulCallDataSizeKeyword,
-                        207 => TerminalKind::YulCallKeyword,
-                        208 => TerminalKind::YulCallValueKeyword,
-                        209 => TerminalKind::YulCallerKeyword,
-                        210 => TerminalKind::YulCaseKeyword,
-                        211 => TerminalKind::YulCatchKeyword,
-                        212 => TerminalKind::YulChainIdKeyword,
-                        213 => TerminalKind::YulCoinBaseKeyword,
-                        214 => TerminalKind::YulConstantKeyword,
-                        215 => TerminalKind::YulConstructorKeyword,
-                        216 => TerminalKind::YulContinueKeyword,
-                        217 => TerminalKind::YulContractKeyword,
-                        218 => TerminalKind::YulCopyOfKeyword,
-                        219 => TerminalKind::YulCreate2Keyword,
-                        220 => TerminalKind::YulCreateKeyword,
-                        221 => TerminalKind::YulDaysKeyword,
-                        222 => TerminalKind::YulDecimalLiteral,
-                        223 => TerminalKind::YulDefaultKeyword,
-                        224 => TerminalKind::YulDefineKeyword,
-                        225 => TerminalKind::YulDelegateCallKeyword,
-                        226 => TerminalKind::YulDeleteKeyword,
-                        227 => TerminalKind::YulDifficultyKeyword,
-                        228 => TerminalKind::YulDivKeyword,
-                        229 => TerminalKind::YulDoKeyword,
-                        230 => TerminalKind::YulElseKeyword,
-                        231 => TerminalKind::YulEmitKeyword,
-                        232 => TerminalKind::YulEnumKeyword,
-                        233 => TerminalKind::YulEqKeyword,
-                        234 => TerminalKind::YulEtherKeyword,
-                        235 => TerminalKind::YulEventKeyword,
-                        236 => TerminalKind::YulExpKeyword,
-                        237 => TerminalKind::YulExtCodeCopyKeyword,
-                        238 => TerminalKind::YulExtCodeHashKeyword,
-                        239 => TerminalKind::YulExtCodeSizeKeyword,
-                        240 => TerminalKind::YulExternalKeyword,
-                        241 => TerminalKind::YulFallbackKeyword,
-                        242 => TerminalKind::YulFalseKeyword,
-                        243 => TerminalKind::YulFinalKeyword,
-                        244 => TerminalKind::YulFinneyKeyword,
-                        245 => TerminalKind::YulFixedKeyword,
-                        246 => TerminalKind::YulForKeyword,
-                        247 => TerminalKind::YulFunctionKeyword,
-                        248 => TerminalKind::YulGasKeyword,
-                        249 => TerminalKind::YulGasLimitKeyword,
-                        250 => TerminalKind::YulGasPriceKeyword,
-                        251 => TerminalKind::YulGtKeyword,
-                        252 => TerminalKind::YulGweiKeyword,
-                        253 => TerminalKind::YulHexKeyword,
-                        254 => TerminalKind::YulHexLiteral,
-                        255 => TerminalKind::YulHoursKeyword,
-                        256 => TerminalKind::YulIdentifier,
-                        257 => TerminalKind::YulIfKeyword,
-                        258 => TerminalKind::YulImmutableKeyword,
-                        259 => TerminalKind::YulImplementsKeyword,
-                        260 => TerminalKind::YulImportKeyword,
-                        261 => TerminalKind::YulInKeyword,
-                        262 => TerminalKind::YulIndexedKeyword,
-                        263 => TerminalKind::YulInlineKeyword,
-                        264 => TerminalKind::YulIntKeyword,
-                        265 => TerminalKind::YulInterfaceKeyword,
-                        266 => TerminalKind::YulInternalKeyword,
-                        267 => TerminalKind::YulInvalidKeyword,
-                        268 => TerminalKind::YulIsKeyword,
-                        269 => TerminalKind::YulIsZeroKeyword,
-                        270 => TerminalKind::YulKeccak256Keyword,
-                        271 => TerminalKind::YulLeaveKeyword,
-                        272 => TerminalKind::YulLetKeyword,
-                        273 => TerminalKind::YulLibraryKeyword,
-                        274 => TerminalKind::YulLog0Keyword,
-                        275 => TerminalKind::YulLog1Keyword,
-                        276 => TerminalKind::YulLog2Keyword,
-                        277 => TerminalKind::YulLog3Keyword,
-                        278 => TerminalKind::YulLog4Keyword,
-                        279 => TerminalKind::YulLtKeyword,
-                        280 => TerminalKind::YulMcopyKeyword,
-                        281 => TerminalKind::YulMloadKeyword,
-                        282 => TerminalKind::YulMsizeKeyword,
-                        283 => TerminalKind::YulMstore8Keyword,
-                        284 => TerminalKind::YulMstoreKeyword,
-                        285 => TerminalKind::YulMacroKeyword,
-                        286 => TerminalKind::YulMappingKeyword,
-                        287 => TerminalKind::YulMatchKeyword,
-                        288 => TerminalKind::YulMemoryKeyword,
-                        289 => TerminalKind::YulMinutesKeyword,
-                        290 => TerminalKind::YulModKeyword,
-                        291 => TerminalKind::YulModifierKeyword,
-                        292 => TerminalKind::YulMulKeyword,
-                        293 => TerminalKind::YulMulModKeyword,
-                        294 => TerminalKind::YulMutableKeyword,
-                        295 => TerminalKind::YulNewKeyword,
-                        296 => TerminalKind::YulNotKeyword,
-                        297 => TerminalKind::YulNullKeyword,
-                        298 => TerminalKind::YulNumberKeyword,
-                        299 => TerminalKind::YulOfKeyword,
-                        300 => TerminalKind::YulOrKeyword,
-                        301 => TerminalKind::YulOriginKeyword,
-                        302 => TerminalKind::YulOverrideKeyword,
-                        303 => TerminalKind::YulPartialKeyword,
-                        304 => TerminalKind::YulPayableKeyword,
-                        305 => TerminalKind::YulPopKeyword,
-                        306 => TerminalKind::YulPragmaKeyword,
-                        307 => TerminalKind::YulPrevRandaoKeyword,
-                        308 => TerminalKind::YulPrivateKeyword,
-                        309 => TerminalKind::YulPromiseKeyword,
-                        310 => TerminalKind::YulPublicKeyword,
-                        311 => TerminalKind::YulPureKeyword,
-                        312 => TerminalKind::YulReceiveKeyword,
-                        313 => TerminalKind::YulReferenceKeyword,
-                        314 => TerminalKind::YulRelocatableKeyword,
-                        315 => TerminalKind::YulReturnDataCopyKeyword,
-                        316 => TerminalKind::YulReturnDataSizeKeyword,
-                        317 => TerminalKind::YulReturnKeyword,
-                        318 => TerminalKind::YulReturnsKeyword,
-                        319 => TerminalKind::YulRevertKeyword,
-                        320 => TerminalKind::YulSdivKeyword,
-                        321 => TerminalKind::YulSloadKeyword,
-                        322 => TerminalKind::YulSmodKeyword,
-                        323 => TerminalKind::YulSstoreKeyword,
-                        324 => TerminalKind::YulSarKeyword,
-                        325 => TerminalKind::YulSealedKeyword,
-                        326 => TerminalKind::YulSecondsKeyword,
-                        327 => TerminalKind::YulSelfBalanceKeyword,
-                        328 => TerminalKind::YulSelfDestructKeyword,
-                        329 => TerminalKind::YulSgtKeyword,
-                        330 => TerminalKind::YulSha3Keyword,
-                        331 => TerminalKind::YulShlKeyword,
-                        332 => TerminalKind::YulShrKeyword,
-                        333 => TerminalKind::YulSignExtendKeyword,
-                        334 => TerminalKind::YulSizeOfKeyword,
-                        335 => TerminalKind::YulSltKeyword,
-                        336 => TerminalKind::YulStaticCallKeyword,
-                        337 => TerminalKind::YulStaticKeyword,
-                        338 => TerminalKind::YulStopKeyword,
-                        339 => TerminalKind::YulStorageKeyword,
-                        340 => TerminalKind::YulStringKeyword,
-                        341 => TerminalKind::YulStructKeyword,
-                        342 => TerminalKind::YulSubKeyword,
-                        343 => TerminalKind::YulSuicideKeyword,
-                        344 => TerminalKind::YulSupportsKeyword,
-                        345 => TerminalKind::YulSwitchKeyword,
-                        346 => TerminalKind::YulSzaboKeyword,
-                        347 => TerminalKind::YulTloadKeyword,
-                        348 => TerminalKind::YulTstoreKeyword,
-                        349 => TerminalKind::YulThrowKeyword,
-                        350 => TerminalKind::YulTimestampKeyword,
-                        351 => TerminalKind::YulTrueKeyword,
-                        352 => TerminalKind::YulTryKeyword,
-                        353 => TerminalKind::YulTypeDefKeyword,
-                        354 => TerminalKind::YulTypeKeyword,
-                        355 => TerminalKind::YulTypeOfKeyword,
-                        356 => TerminalKind::YulUfixedKeyword,
-                        357 => TerminalKind::YulUintKeyword,
-                        358 => TerminalKind::YulUncheckedKeyword,
-                        359 => TerminalKind::YulUsingKeyword,
-                        360 => TerminalKind::YulVarKeyword,
-                        361 => TerminalKind::YulViewKeyword,
-                        362 => TerminalKind::YulVirtualKeyword,
-                        363 => TerminalKind::YulWeeksKeyword,
-                        364 => TerminalKind::YulWeiKeyword,
-                        365 => TerminalKind::YulWhileKeyword,
-                        366 => TerminalKind::YulXorKeyword,
-                        n => {
-                            debug_assert_eq!(n, 367, "invalid enum discriminant");
-                            TerminalKind::YulYearsKeyword
-                        }
-                    };
-                    let result1 = T::go_to_next_terminal_with_kind(
+                    let result0 = T::go_to_next_terminal_with_kind(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        v0,
+                        TerminalKind::_lift(arg1 as u16),
                     );
-                    match result1 {
+                    match result0 {
                         true => 1,
                         false => 0,
                     }
@@ -6450,397 +5651,24 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let base2 = arg1;
-                    let len2 = arg2;
-                    let mut result2 = _rt::Vec::with_capacity(len2);
-                    for i in 0..len2 {
-                        let base = base2.add(i * 2);
-                        let e2 = {
+                    let base1 = arg1;
+                    let len1 = arg2;
+                    let mut result1 = _rt::Vec::with_capacity(len1);
+                    for i in 0..len1 {
+                        let base = base1.add(i * 2);
+                        let e1 = {
                             let l0 = i32::from(*base.add(0).cast::<u16>());
-                            let v1 = match l0 {
-                                0 => TerminalKind::Skipped,
-                                1 => TerminalKind::AbicoderKeyword,
-                                2 => TerminalKind::AbstractKeyword,
-                                3 => TerminalKind::AddressKeyword,
-                                4 => TerminalKind::AfterKeyword,
-                                5 => TerminalKind::AliasKeyword,
-                                6 => TerminalKind::Ampersand,
-                                7 => TerminalKind::AmpersandAmpersand,
-                                8 => TerminalKind::AmpersandEqual,
-                                9 => TerminalKind::AnonymousKeyword,
-                                10 => TerminalKind::ApplyKeyword,
-                                11 => TerminalKind::AsKeyword,
-                                12 => TerminalKind::AssemblyKeyword,
-                                13 => TerminalKind::Asterisk,
-                                14 => TerminalKind::AsteriskAsterisk,
-                                15 => TerminalKind::AsteriskEqual,
-                                16 => TerminalKind::AutoKeyword,
-                                17 => TerminalKind::Bang,
-                                18 => TerminalKind::BangEqual,
-                                19 => TerminalKind::Bar,
-                                20 => TerminalKind::BarBar,
-                                21 => TerminalKind::BarEqual,
-                                22 => TerminalKind::BoolKeyword,
-                                23 => TerminalKind::BreakKeyword,
-                                24 => TerminalKind::ByteKeyword,
-                                25 => TerminalKind::BytesKeyword,
-                                26 => TerminalKind::CallDataKeyword,
-                                27 => TerminalKind::Caret,
-                                28 => TerminalKind::CaretEqual,
-                                29 => TerminalKind::CaseKeyword,
-                                30 => TerminalKind::CatchKeyword,
-                                31 => TerminalKind::CloseBrace,
-                                32 => TerminalKind::CloseBracket,
-                                33 => TerminalKind::CloseParen,
-                                34 => TerminalKind::Colon,
-                                35 => TerminalKind::ColonEqual,
-                                36 => TerminalKind::Comma,
-                                37 => TerminalKind::ConstantKeyword,
-                                38 => TerminalKind::ConstructorKeyword,
-                                39 => TerminalKind::ContinueKeyword,
-                                40 => TerminalKind::ContractKeyword,
-                                41 => TerminalKind::CopyOfKeyword,
-                                42 => TerminalKind::DaysKeyword,
-                                43 => TerminalKind::DecimalLiteral,
-                                44 => TerminalKind::DefaultKeyword,
-                                45 => TerminalKind::DefineKeyword,
-                                46 => TerminalKind::DeleteKeyword,
-                                47 => TerminalKind::DoKeyword,
-                                48 => TerminalKind::DoubleQuotedHexStringLiteral,
-                                49 => TerminalKind::DoubleQuotedStringLiteral,
-                                50 => TerminalKind::DoubleQuotedUnicodeStringLiteral,
-                                51 => TerminalKind::DoubleQuotedVersionLiteral,
-                                52 => TerminalKind::ElseKeyword,
-                                53 => TerminalKind::EmitKeyword,
-                                54 => TerminalKind::EndOfLine,
-                                55 => TerminalKind::EnumKeyword,
-                                56 => TerminalKind::Equal,
-                                57 => TerminalKind::EqualEqual,
-                                58 => TerminalKind::EqualGreaterThan,
-                                59 => TerminalKind::ErrorKeyword,
-                                60 => TerminalKind::EtherKeyword,
-                                61 => TerminalKind::EventKeyword,
-                                62 => TerminalKind::ExperimentalKeyword,
-                                63 => TerminalKind::ExternalKeyword,
-                                64 => TerminalKind::FallbackKeyword,
-                                65 => TerminalKind::FalseKeyword,
-                                66 => TerminalKind::FinalKeyword,
-                                67 => TerminalKind::FinneyKeyword,
-                                68 => TerminalKind::FixedKeyword,
-                                69 => TerminalKind::ForKeyword,
-                                70 => TerminalKind::FromKeyword,
-                                71 => TerminalKind::FunctionKeyword,
-                                72 => TerminalKind::GlobalKeyword,
-                                73 => TerminalKind::GreaterThan,
-                                74 => TerminalKind::GreaterThanEqual,
-                                75 => TerminalKind::GreaterThanGreaterThan,
-                                76 => TerminalKind::GreaterThanGreaterThanEqual,
-                                77 => TerminalKind::GreaterThanGreaterThanGreaterThan,
-                                78 => TerminalKind::GreaterThanGreaterThanGreaterThanEqual,
-                                79 => TerminalKind::GweiKeyword,
-                                80 => TerminalKind::HexKeyword,
-                                81 => TerminalKind::HexLiteral,
-                                82 => TerminalKind::HoursKeyword,
-                                83 => TerminalKind::Identifier,
-                                84 => TerminalKind::IfKeyword,
-                                85 => TerminalKind::ImmutableKeyword,
-                                86 => TerminalKind::ImplementsKeyword,
-                                87 => TerminalKind::ImportKeyword,
-                                88 => TerminalKind::InKeyword,
-                                89 => TerminalKind::IndexedKeyword,
-                                90 => TerminalKind::InlineKeyword,
-                                91 => TerminalKind::IntKeyword,
-                                92 => TerminalKind::InterfaceKeyword,
-                                93 => TerminalKind::InternalKeyword,
-                                94 => TerminalKind::IsKeyword,
-                                95 => TerminalKind::LessThan,
-                                96 => TerminalKind::LessThanEqual,
-                                97 => TerminalKind::LessThanLessThan,
-                                98 => TerminalKind::LessThanLessThanEqual,
-                                99 => TerminalKind::LetKeyword,
-                                100 => TerminalKind::LibraryKeyword,
-                                101 => TerminalKind::MacroKeyword,
-                                102 => TerminalKind::MappingKeyword,
-                                103 => TerminalKind::MatchKeyword,
-                                104 => TerminalKind::MemoryKeyword,
-                                105 => TerminalKind::Minus,
-                                106 => TerminalKind::MinusEqual,
-                                107 => TerminalKind::MinusGreaterThan,
-                                108 => TerminalKind::MinusMinus,
-                                109 => TerminalKind::MinutesKeyword,
-                                110 => TerminalKind::ModifierKeyword,
-                                111 => TerminalKind::MultiLineComment,
-                                112 => TerminalKind::MultiLineNatSpecComment,
-                                113 => TerminalKind::MutableKeyword,
-                                114 => TerminalKind::NewKeyword,
-                                115 => TerminalKind::NullKeyword,
-                                116 => TerminalKind::OfKeyword,
-                                117 => TerminalKind::OpenBrace,
-                                118 => TerminalKind::OpenBracket,
-                                119 => TerminalKind::OpenParen,
-                                120 => TerminalKind::OverrideKeyword,
-                                121 => TerminalKind::PartialKeyword,
-                                122 => TerminalKind::PayableKeyword,
-                                123 => TerminalKind::Percent,
-                                124 => TerminalKind::PercentEqual,
-                                125 => TerminalKind::Period,
-                                126 => TerminalKind::Plus,
-                                127 => TerminalKind::PlusEqual,
-                                128 => TerminalKind::PlusPlus,
-                                129 => TerminalKind::PragmaKeyword,
-                                130 => TerminalKind::PrivateKeyword,
-                                131 => TerminalKind::PromiseKeyword,
-                                132 => TerminalKind::PublicKeyword,
-                                133 => TerminalKind::PureKeyword,
-                                134 => TerminalKind::QuestionMark,
-                                135 => TerminalKind::ReceiveKeyword,
-                                136 => TerminalKind::ReferenceKeyword,
-                                137 => TerminalKind::RelocatableKeyword,
-                                138 => TerminalKind::ReturnKeyword,
-                                139 => TerminalKind::ReturnsKeyword,
-                                140 => TerminalKind::RevertKeyword,
-                                141 => TerminalKind::SealedKeyword,
-                                142 => TerminalKind::SecondsKeyword,
-                                143 => TerminalKind::Semicolon,
-                                144 => TerminalKind::SingleLineComment,
-                                145 => TerminalKind::SingleLineNatSpecComment,
-                                146 => TerminalKind::SingleQuotedHexStringLiteral,
-                                147 => TerminalKind::SingleQuotedStringLiteral,
-                                148 => TerminalKind::SingleQuotedUnicodeStringLiteral,
-                                149 => TerminalKind::SingleQuotedVersionLiteral,
-                                150 => TerminalKind::SizeOfKeyword,
-                                151 => TerminalKind::Slash,
-                                152 => TerminalKind::SlashEqual,
-                                153 => TerminalKind::SolidityKeyword,
-                                154 => TerminalKind::StaticKeyword,
-                                155 => TerminalKind::StorageKeyword,
-                                156 => TerminalKind::StringKeyword,
-                                157 => TerminalKind::StructKeyword,
-                                158 => TerminalKind::SupportsKeyword,
-                                159 => TerminalKind::SwitchKeyword,
-                                160 => TerminalKind::SzaboKeyword,
-                                161 => TerminalKind::ThrowKeyword,
-                                162 => TerminalKind::Tilde,
-                                163 => TerminalKind::TrueKeyword,
-                                164 => TerminalKind::TryKeyword,
-                                165 => TerminalKind::TypeDefKeyword,
-                                166 => TerminalKind::TypeKeyword,
-                                167 => TerminalKind::TypeOfKeyword,
-                                168 => TerminalKind::UfixedKeyword,
-                                169 => TerminalKind::UintKeyword,
-                                170 => TerminalKind::UncheckedKeyword,
-                                171 => TerminalKind::UsingKeyword,
-                                172 => TerminalKind::VarKeyword,
-                                173 => TerminalKind::VersionSpecifier,
-                                174 => TerminalKind::ViewKeyword,
-                                175 => TerminalKind::VirtualKeyword,
-                                176 => TerminalKind::WeeksKeyword,
-                                177 => TerminalKind::WeiKeyword,
-                                178 => TerminalKind::WhileKeyword,
-                                179 => TerminalKind::Whitespace,
-                                180 => TerminalKind::YearsKeyword,
-                                181 => TerminalKind::YulAbstractKeyword,
-                                182 => TerminalKind::YulAddKeyword,
-                                183 => TerminalKind::YulAddModKeyword,
-                                184 => TerminalKind::YulAddressKeyword,
-                                185 => TerminalKind::YulAfterKeyword,
-                                186 => TerminalKind::YulAliasKeyword,
-                                187 => TerminalKind::YulAndKeyword,
-                                188 => TerminalKind::YulAnonymousKeyword,
-                                189 => TerminalKind::YulApplyKeyword,
-                                190 => TerminalKind::YulAsKeyword,
-                                191 => TerminalKind::YulAssemblyKeyword,
-                                192 => TerminalKind::YulAutoKeyword,
-                                193 => TerminalKind::YulBalanceKeyword,
-                                194 => TerminalKind::YulBaseFeeKeyword,
-                                195 => TerminalKind::YulBlobBaseFeeKeyword,
-                                196 => TerminalKind::YulBlobHashKeyword,
-                                197 => TerminalKind::YulBlockHashKeyword,
-                                198 => TerminalKind::YulBoolKeyword,
-                                199 => TerminalKind::YulBreakKeyword,
-                                200 => TerminalKind::YulByteKeyword,
-                                201 => TerminalKind::YulBytesKeyword,
-                                202 => TerminalKind::YulCallCodeKeyword,
-                                203 => TerminalKind::YulCallDataCopyKeyword,
-                                204 => TerminalKind::YulCallDataKeyword,
-                                205 => TerminalKind::YulCallDataLoadKeyword,
-                                206 => TerminalKind::YulCallDataSizeKeyword,
-                                207 => TerminalKind::YulCallKeyword,
-                                208 => TerminalKind::YulCallValueKeyword,
-                                209 => TerminalKind::YulCallerKeyword,
-                                210 => TerminalKind::YulCaseKeyword,
-                                211 => TerminalKind::YulCatchKeyword,
-                                212 => TerminalKind::YulChainIdKeyword,
-                                213 => TerminalKind::YulCoinBaseKeyword,
-                                214 => TerminalKind::YulConstantKeyword,
-                                215 => TerminalKind::YulConstructorKeyword,
-                                216 => TerminalKind::YulContinueKeyword,
-                                217 => TerminalKind::YulContractKeyword,
-                                218 => TerminalKind::YulCopyOfKeyword,
-                                219 => TerminalKind::YulCreate2Keyword,
-                                220 => TerminalKind::YulCreateKeyword,
-                                221 => TerminalKind::YulDaysKeyword,
-                                222 => TerminalKind::YulDecimalLiteral,
-                                223 => TerminalKind::YulDefaultKeyword,
-                                224 => TerminalKind::YulDefineKeyword,
-                                225 => TerminalKind::YulDelegateCallKeyword,
-                                226 => TerminalKind::YulDeleteKeyword,
-                                227 => TerminalKind::YulDifficultyKeyword,
-                                228 => TerminalKind::YulDivKeyword,
-                                229 => TerminalKind::YulDoKeyword,
-                                230 => TerminalKind::YulElseKeyword,
-                                231 => TerminalKind::YulEmitKeyword,
-                                232 => TerminalKind::YulEnumKeyword,
-                                233 => TerminalKind::YulEqKeyword,
-                                234 => TerminalKind::YulEtherKeyword,
-                                235 => TerminalKind::YulEventKeyword,
-                                236 => TerminalKind::YulExpKeyword,
-                                237 => TerminalKind::YulExtCodeCopyKeyword,
-                                238 => TerminalKind::YulExtCodeHashKeyword,
-                                239 => TerminalKind::YulExtCodeSizeKeyword,
-                                240 => TerminalKind::YulExternalKeyword,
-                                241 => TerminalKind::YulFallbackKeyword,
-                                242 => TerminalKind::YulFalseKeyword,
-                                243 => TerminalKind::YulFinalKeyword,
-                                244 => TerminalKind::YulFinneyKeyword,
-                                245 => TerminalKind::YulFixedKeyword,
-                                246 => TerminalKind::YulForKeyword,
-                                247 => TerminalKind::YulFunctionKeyword,
-                                248 => TerminalKind::YulGasKeyword,
-                                249 => TerminalKind::YulGasLimitKeyword,
-                                250 => TerminalKind::YulGasPriceKeyword,
-                                251 => TerminalKind::YulGtKeyword,
-                                252 => TerminalKind::YulGweiKeyword,
-                                253 => TerminalKind::YulHexKeyword,
-                                254 => TerminalKind::YulHexLiteral,
-                                255 => TerminalKind::YulHoursKeyword,
-                                256 => TerminalKind::YulIdentifier,
-                                257 => TerminalKind::YulIfKeyword,
-                                258 => TerminalKind::YulImmutableKeyword,
-                                259 => TerminalKind::YulImplementsKeyword,
-                                260 => TerminalKind::YulImportKeyword,
-                                261 => TerminalKind::YulInKeyword,
-                                262 => TerminalKind::YulIndexedKeyword,
-                                263 => TerminalKind::YulInlineKeyword,
-                                264 => TerminalKind::YulIntKeyword,
-                                265 => TerminalKind::YulInterfaceKeyword,
-                                266 => TerminalKind::YulInternalKeyword,
-                                267 => TerminalKind::YulInvalidKeyword,
-                                268 => TerminalKind::YulIsKeyword,
-                                269 => TerminalKind::YulIsZeroKeyword,
-                                270 => TerminalKind::YulKeccak256Keyword,
-                                271 => TerminalKind::YulLeaveKeyword,
-                                272 => TerminalKind::YulLetKeyword,
-                                273 => TerminalKind::YulLibraryKeyword,
-                                274 => TerminalKind::YulLog0Keyword,
-                                275 => TerminalKind::YulLog1Keyword,
-                                276 => TerminalKind::YulLog2Keyword,
-                                277 => TerminalKind::YulLog3Keyword,
-                                278 => TerminalKind::YulLog4Keyword,
-                                279 => TerminalKind::YulLtKeyword,
-                                280 => TerminalKind::YulMcopyKeyword,
-                                281 => TerminalKind::YulMloadKeyword,
-                                282 => TerminalKind::YulMsizeKeyword,
-                                283 => TerminalKind::YulMstore8Keyword,
-                                284 => TerminalKind::YulMstoreKeyword,
-                                285 => TerminalKind::YulMacroKeyword,
-                                286 => TerminalKind::YulMappingKeyword,
-                                287 => TerminalKind::YulMatchKeyword,
-                                288 => TerminalKind::YulMemoryKeyword,
-                                289 => TerminalKind::YulMinutesKeyword,
-                                290 => TerminalKind::YulModKeyword,
-                                291 => TerminalKind::YulModifierKeyword,
-                                292 => TerminalKind::YulMulKeyword,
-                                293 => TerminalKind::YulMulModKeyword,
-                                294 => TerminalKind::YulMutableKeyword,
-                                295 => TerminalKind::YulNewKeyword,
-                                296 => TerminalKind::YulNotKeyword,
-                                297 => TerminalKind::YulNullKeyword,
-                                298 => TerminalKind::YulNumberKeyword,
-                                299 => TerminalKind::YulOfKeyword,
-                                300 => TerminalKind::YulOrKeyword,
-                                301 => TerminalKind::YulOriginKeyword,
-                                302 => TerminalKind::YulOverrideKeyword,
-                                303 => TerminalKind::YulPartialKeyword,
-                                304 => TerminalKind::YulPayableKeyword,
-                                305 => TerminalKind::YulPopKeyword,
-                                306 => TerminalKind::YulPragmaKeyword,
-                                307 => TerminalKind::YulPrevRandaoKeyword,
-                                308 => TerminalKind::YulPrivateKeyword,
-                                309 => TerminalKind::YulPromiseKeyword,
-                                310 => TerminalKind::YulPublicKeyword,
-                                311 => TerminalKind::YulPureKeyword,
-                                312 => TerminalKind::YulReceiveKeyword,
-                                313 => TerminalKind::YulReferenceKeyword,
-                                314 => TerminalKind::YulRelocatableKeyword,
-                                315 => TerminalKind::YulReturnDataCopyKeyword,
-                                316 => TerminalKind::YulReturnDataSizeKeyword,
-                                317 => TerminalKind::YulReturnKeyword,
-                                318 => TerminalKind::YulReturnsKeyword,
-                                319 => TerminalKind::YulRevertKeyword,
-                                320 => TerminalKind::YulSdivKeyword,
-                                321 => TerminalKind::YulSloadKeyword,
-                                322 => TerminalKind::YulSmodKeyword,
-                                323 => TerminalKind::YulSstoreKeyword,
-                                324 => TerminalKind::YulSarKeyword,
-                                325 => TerminalKind::YulSealedKeyword,
-                                326 => TerminalKind::YulSecondsKeyword,
-                                327 => TerminalKind::YulSelfBalanceKeyword,
-                                328 => TerminalKind::YulSelfDestructKeyword,
-                                329 => TerminalKind::YulSgtKeyword,
-                                330 => TerminalKind::YulSha3Keyword,
-                                331 => TerminalKind::YulShlKeyword,
-                                332 => TerminalKind::YulShrKeyword,
-                                333 => TerminalKind::YulSignExtendKeyword,
-                                334 => TerminalKind::YulSizeOfKeyword,
-                                335 => TerminalKind::YulSltKeyword,
-                                336 => TerminalKind::YulStaticCallKeyword,
-                                337 => TerminalKind::YulStaticKeyword,
-                                338 => TerminalKind::YulStopKeyword,
-                                339 => TerminalKind::YulStorageKeyword,
-                                340 => TerminalKind::YulStringKeyword,
-                                341 => TerminalKind::YulStructKeyword,
-                                342 => TerminalKind::YulSubKeyword,
-                                343 => TerminalKind::YulSuicideKeyword,
-                                344 => TerminalKind::YulSupportsKeyword,
-                                345 => TerminalKind::YulSwitchKeyword,
-                                346 => TerminalKind::YulSzaboKeyword,
-                                347 => TerminalKind::YulTloadKeyword,
-                                348 => TerminalKind::YulTstoreKeyword,
-                                349 => TerminalKind::YulThrowKeyword,
-                                350 => TerminalKind::YulTimestampKeyword,
-                                351 => TerminalKind::YulTrueKeyword,
-                                352 => TerminalKind::YulTryKeyword,
-                                353 => TerminalKind::YulTypeDefKeyword,
-                                354 => TerminalKind::YulTypeKeyword,
-                                355 => TerminalKind::YulTypeOfKeyword,
-                                356 => TerminalKind::YulUfixedKeyword,
-                                357 => TerminalKind::YulUintKeyword,
-                                358 => TerminalKind::YulUncheckedKeyword,
-                                359 => TerminalKind::YulUsingKeyword,
-                                360 => TerminalKind::YulVarKeyword,
-                                361 => TerminalKind::YulViewKeyword,
-                                362 => TerminalKind::YulVirtualKeyword,
-                                363 => TerminalKind::YulWeeksKeyword,
-                                364 => TerminalKind::YulWeiKeyword,
-                                365 => TerminalKind::YulWhileKeyword,
-                                366 => TerminalKind::YulXorKeyword,
-                                n => {
-                                    debug_assert_eq!(n, 367, "invalid enum discriminant");
-                                    TerminalKind::YulYearsKeyword
-                                }
-                            };
 
-                            v1
+                            TerminalKind::_lift(l0 as u16)
                         };
-                        result2.push(e2);
+                        result1.push(e1);
                     }
-                    _rt::cabi_dealloc(base2, len2 * 2, 2);
-                    let result3 = T::go_to_next_terminal_with_kinds(
+                    _rt::cabi_dealloc(base1, len1 * 2, 2);
+                    let result2 = T::go_to_next_terminal_with_kinds(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        result2,
+                        result1,
                     );
-                    match result3 {
+                    match result2 {
                         true => 1,
                         false => 0,
                     }
@@ -6869,231 +5697,11 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let v0 = match arg1 {
-                        0 => NonterminalKind::AbicoderPragma,
-                        1 => NonterminalKind::AdditiveExpression,
-                        2 => NonterminalKind::AddressType,
-                        3 => NonterminalKind::AndExpression,
-                        4 => NonterminalKind::ArgumentsDeclaration,
-                        5 => NonterminalKind::ArrayExpression,
-                        6 => NonterminalKind::ArrayTypeName,
-                        7 => NonterminalKind::ArrayValues,
-                        8 => NonterminalKind::AssemblyFlags,
-                        9 => NonterminalKind::AssemblyFlagsDeclaration,
-                        10 => NonterminalKind::AssemblyStatement,
-                        11 => NonterminalKind::AssignmentExpression,
-                        12 => NonterminalKind::BitwiseAndExpression,
-                        13 => NonterminalKind::BitwiseOrExpression,
-                        14 => NonterminalKind::BitwiseXorExpression,
-                        15 => NonterminalKind::Block,
-                        16 => NonterminalKind::BreakStatement,
-                        17 => NonterminalKind::CallOptions,
-                        18 => NonterminalKind::CallOptionsExpression,
-                        19 => NonterminalKind::CatchClause,
-                        20 => NonterminalKind::CatchClauseError,
-                        21 => NonterminalKind::CatchClauses,
-                        22 => NonterminalKind::ComparisonExpression,
-                        23 => NonterminalKind::ConditionalExpression,
-                        24 => NonterminalKind::ConstantDefinition,
-                        25 => NonterminalKind::ConstructorAttribute,
-                        26 => NonterminalKind::ConstructorAttributes,
-                        27 => NonterminalKind::ConstructorDefinition,
-                        28 => NonterminalKind::ContinueStatement,
-                        29 => NonterminalKind::ContractDefinition,
-                        30 => NonterminalKind::ContractMember,
-                        31 => NonterminalKind::ContractMembers,
-                        32 => NonterminalKind::DecimalNumberExpression,
-                        33 => NonterminalKind::DoWhileStatement,
-                        34 => NonterminalKind::ElementaryType,
-                        35 => NonterminalKind::ElseBranch,
-                        36 => NonterminalKind::EmitStatement,
-                        37 => NonterminalKind::EnumDefinition,
-                        38 => NonterminalKind::EnumMembers,
-                        39 => NonterminalKind::EqualityExpression,
-                        40 => NonterminalKind::ErrorDefinition,
-                        41 => NonterminalKind::ErrorParameter,
-                        42 => NonterminalKind::ErrorParameters,
-                        43 => NonterminalKind::ErrorParametersDeclaration,
-                        44 => NonterminalKind::EventDefinition,
-                        45 => NonterminalKind::EventParameter,
-                        46 => NonterminalKind::EventParameters,
-                        47 => NonterminalKind::EventParametersDeclaration,
-                        48 => NonterminalKind::ExperimentalFeature,
-                        49 => NonterminalKind::ExperimentalPragma,
-                        50 => NonterminalKind::ExponentiationExpression,
-                        51 => NonterminalKind::Expression,
-                        52 => NonterminalKind::ExpressionStatement,
-                        53 => NonterminalKind::FallbackFunctionAttribute,
-                        54 => NonterminalKind::FallbackFunctionAttributes,
-                        55 => NonterminalKind::FallbackFunctionDefinition,
-                        56 => NonterminalKind::ForStatement,
-                        57 => NonterminalKind::ForStatementCondition,
-                        58 => NonterminalKind::ForStatementInitialization,
-                        59 => NonterminalKind::FunctionAttribute,
-                        60 => NonterminalKind::FunctionAttributes,
-                        61 => NonterminalKind::FunctionBody,
-                        62 => NonterminalKind::FunctionCallExpression,
-                        63 => NonterminalKind::FunctionDefinition,
-                        64 => NonterminalKind::FunctionName,
-                        65 => NonterminalKind::FunctionType,
-                        66 => NonterminalKind::FunctionTypeAttribute,
-                        67 => NonterminalKind::FunctionTypeAttributes,
-                        68 => NonterminalKind::HexNumberExpression,
-                        69 => NonterminalKind::HexStringLiteral,
-                        70 => NonterminalKind::HexStringLiterals,
-                        71 => NonterminalKind::IdentifierPath,
-                        72 => NonterminalKind::IfStatement,
-                        73 => NonterminalKind::ImportAlias,
-                        74 => NonterminalKind::ImportClause,
-                        75 => NonterminalKind::ImportDeconstruction,
-                        76 => NonterminalKind::ImportDeconstructionSymbol,
-                        77 => NonterminalKind::ImportDeconstructionSymbols,
-                        78 => NonterminalKind::ImportDirective,
-                        79 => NonterminalKind::IndexAccessEnd,
-                        80 => NonterminalKind::IndexAccessExpression,
-                        81 => NonterminalKind::InheritanceSpecifier,
-                        82 => NonterminalKind::InheritanceType,
-                        83 => NonterminalKind::InheritanceTypes,
-                        84 => NonterminalKind::InterfaceDefinition,
-                        85 => NonterminalKind::InterfaceMembers,
-                        86 => NonterminalKind::LibraryDefinition,
-                        87 => NonterminalKind::LibraryMembers,
-                        88 => NonterminalKind::MappingKey,
-                        89 => NonterminalKind::MappingKeyType,
-                        90 => NonterminalKind::MappingType,
-                        91 => NonterminalKind::MappingValue,
-                        92 => NonterminalKind::MemberAccess,
-                        93 => NonterminalKind::MemberAccessExpression,
-                        94 => NonterminalKind::ModifierAttribute,
-                        95 => NonterminalKind::ModifierAttributes,
-                        96 => NonterminalKind::ModifierDefinition,
-                        97 => NonterminalKind::ModifierInvocation,
-                        98 => NonterminalKind::MultiplicativeExpression,
-                        99 => NonterminalKind::NamedArgument,
-                        100 => NonterminalKind::NamedArgumentGroup,
-                        101 => NonterminalKind::NamedArguments,
-                        102 => NonterminalKind::NamedArgumentsDeclaration,
-                        103 => NonterminalKind::NamedImport,
-                        104 => NonterminalKind::NewExpression,
-                        105 => NonterminalKind::NumberUnit,
-                        106 => NonterminalKind::OrExpression,
-                        107 => NonterminalKind::OverridePaths,
-                        108 => NonterminalKind::OverridePathsDeclaration,
-                        109 => NonterminalKind::OverrideSpecifier,
-                        110 => NonterminalKind::Parameter,
-                        111 => NonterminalKind::Parameters,
-                        112 => NonterminalKind::ParametersDeclaration,
-                        113 => NonterminalKind::PathImport,
-                        114 => NonterminalKind::PositionalArguments,
-                        115 => NonterminalKind::PositionalArgumentsDeclaration,
-                        116 => NonterminalKind::PostfixExpression,
-                        117 => NonterminalKind::Pragma,
-                        118 => NonterminalKind::PragmaDirective,
-                        119 => NonterminalKind::PrefixExpression,
-                        120 => NonterminalKind::ReceiveFunctionAttribute,
-                        121 => NonterminalKind::ReceiveFunctionAttributes,
-                        122 => NonterminalKind::ReceiveFunctionDefinition,
-                        123 => NonterminalKind::ReturnStatement,
-                        124 => NonterminalKind::ReturnsDeclaration,
-                        125 => NonterminalKind::RevertStatement,
-                        126 => NonterminalKind::ShiftExpression,
-                        127 => NonterminalKind::SourceUnit,
-                        128 => NonterminalKind::SourceUnitMember,
-                        129 => NonterminalKind::SourceUnitMembers,
-                        130 => NonterminalKind::StateVariableAttribute,
-                        131 => NonterminalKind::StateVariableAttributes,
-                        132 => NonterminalKind::StateVariableDefinition,
-                        133 => NonterminalKind::StateVariableDefinitionValue,
-                        134 => NonterminalKind::Statement,
-                        135 => NonterminalKind::Statements,
-                        136 => NonterminalKind::StorageLocation,
-                        137 => NonterminalKind::StringExpression,
-                        138 => NonterminalKind::StringLiteral,
-                        139 => NonterminalKind::StringLiterals,
-                        140 => NonterminalKind::StructDefinition,
-                        141 => NonterminalKind::StructMember,
-                        142 => NonterminalKind::StructMembers,
-                        143 => NonterminalKind::ThrowStatement,
-                        144 => NonterminalKind::TryStatement,
-                        145 => NonterminalKind::TupleDeconstructionElement,
-                        146 => NonterminalKind::TupleDeconstructionElements,
-                        147 => NonterminalKind::TupleDeconstructionStatement,
-                        148 => NonterminalKind::TupleExpression,
-                        149 => NonterminalKind::TupleMember,
-                        150 => NonterminalKind::TupleValue,
-                        151 => NonterminalKind::TupleValues,
-                        152 => NonterminalKind::TypeExpression,
-                        153 => NonterminalKind::TypeName,
-                        154 => NonterminalKind::TypedTupleMember,
-                        155 => NonterminalKind::UncheckedBlock,
-                        156 => NonterminalKind::UnicodeStringLiteral,
-                        157 => NonterminalKind::UnicodeStringLiterals,
-                        158 => NonterminalKind::UnnamedFunctionAttribute,
-                        159 => NonterminalKind::UnnamedFunctionAttributes,
-                        160 => NonterminalKind::UnnamedFunctionDefinition,
-                        161 => NonterminalKind::UntypedTupleMember,
-                        162 => NonterminalKind::UserDefinedValueTypeDefinition,
-                        163 => NonterminalKind::UsingAlias,
-                        164 => NonterminalKind::UsingClause,
-                        165 => NonterminalKind::UsingDeconstruction,
-                        166 => NonterminalKind::UsingDeconstructionSymbol,
-                        167 => NonterminalKind::UsingDeconstructionSymbols,
-                        168 => NonterminalKind::UsingDirective,
-                        169 => NonterminalKind::UsingOperator,
-                        170 => NonterminalKind::UsingTarget,
-                        171 => NonterminalKind::VariableDeclarationStatement,
-                        172 => NonterminalKind::VariableDeclarationType,
-                        173 => NonterminalKind::VariableDeclarationValue,
-                        174 => NonterminalKind::VersionComparator,
-                        175 => NonterminalKind::VersionExpression,
-                        176 => NonterminalKind::VersionExpressionSet,
-                        177 => NonterminalKind::VersionExpressionSets,
-                        178 => NonterminalKind::VersionPragma,
-                        179 => NonterminalKind::VersionRange,
-                        180 => NonterminalKind::VersionSpecifiers,
-                        181 => NonterminalKind::WhileStatement,
-                        182 => NonterminalKind::YulArguments,
-                        183 => NonterminalKind::YulAssignmentOperator,
-                        184 => NonterminalKind::YulBlock,
-                        185 => NonterminalKind::YulBreakStatement,
-                        186 => NonterminalKind::YulBuiltInFunction,
-                        187 => NonterminalKind::YulColonEqual,
-                        188 => NonterminalKind::YulContinueStatement,
-                        189 => NonterminalKind::YulDefaultCase,
-                        190 => NonterminalKind::YulExpression,
-                        191 => NonterminalKind::YulForStatement,
-                        192 => NonterminalKind::YulFunctionCallExpression,
-                        193 => NonterminalKind::YulFunctionDefinition,
-                        194 => NonterminalKind::YulIfStatement,
-                        195 => NonterminalKind::YulLabel,
-                        196 => NonterminalKind::YulLeaveStatement,
-                        197 => NonterminalKind::YulLiteral,
-                        198 => NonterminalKind::YulParameters,
-                        199 => NonterminalKind::YulParametersDeclaration,
-                        200 => NonterminalKind::YulPath,
-                        201 => NonterminalKind::YulPathComponent,
-                        202 => NonterminalKind::YulPaths,
-                        203 => NonterminalKind::YulReturnVariables,
-                        204 => NonterminalKind::YulReturnsDeclaration,
-                        205 => NonterminalKind::YulStackAssignmentStatement,
-                        206 => NonterminalKind::YulStatement,
-                        207 => NonterminalKind::YulStatements,
-                        208 => NonterminalKind::YulSwitchCase,
-                        209 => NonterminalKind::YulSwitchCases,
-                        210 => NonterminalKind::YulSwitchStatement,
-                        211 => NonterminalKind::YulValueCase,
-                        212 => NonterminalKind::YulVariableAssignmentStatement,
-                        213 => NonterminalKind::YulVariableDeclarationStatement,
-                        n => {
-                            debug_assert_eq!(n, 214, "invalid enum discriminant");
-                            NonterminalKind::YulVariableDeclarationValue
-                        }
-                    };
-                    let result1 = T::go_to_next_nonterminal_with_kind(
+                    let result0 = T::go_to_next_nonterminal_with_kind(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        v0,
+                        NonterminalKind::_lift(arg1 as u8),
                     );
-                    match result1 {
+                    match result0 {
                         true => 1,
                         false => 0,
                     }
@@ -7109,244 +5717,24 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let base2 = arg1;
-                    let len2 = arg2;
-                    let mut result2 = _rt::Vec::with_capacity(len2);
-                    for i in 0..len2 {
-                        let base = base2.add(i * 1);
-                        let e2 = {
+                    let base1 = arg1;
+                    let len1 = arg2;
+                    let mut result1 = _rt::Vec::with_capacity(len1);
+                    for i in 0..len1 {
+                        let base = base1.add(i * 1);
+                        let e1 = {
                             let l0 = i32::from(*base.add(0).cast::<u8>());
-                            let v1 = match l0 {
-                                0 => NonterminalKind::AbicoderPragma,
-                                1 => NonterminalKind::AdditiveExpression,
-                                2 => NonterminalKind::AddressType,
-                                3 => NonterminalKind::AndExpression,
-                                4 => NonterminalKind::ArgumentsDeclaration,
-                                5 => NonterminalKind::ArrayExpression,
-                                6 => NonterminalKind::ArrayTypeName,
-                                7 => NonterminalKind::ArrayValues,
-                                8 => NonterminalKind::AssemblyFlags,
-                                9 => NonterminalKind::AssemblyFlagsDeclaration,
-                                10 => NonterminalKind::AssemblyStatement,
-                                11 => NonterminalKind::AssignmentExpression,
-                                12 => NonterminalKind::BitwiseAndExpression,
-                                13 => NonterminalKind::BitwiseOrExpression,
-                                14 => NonterminalKind::BitwiseXorExpression,
-                                15 => NonterminalKind::Block,
-                                16 => NonterminalKind::BreakStatement,
-                                17 => NonterminalKind::CallOptions,
-                                18 => NonterminalKind::CallOptionsExpression,
-                                19 => NonterminalKind::CatchClause,
-                                20 => NonterminalKind::CatchClauseError,
-                                21 => NonterminalKind::CatchClauses,
-                                22 => NonterminalKind::ComparisonExpression,
-                                23 => NonterminalKind::ConditionalExpression,
-                                24 => NonterminalKind::ConstantDefinition,
-                                25 => NonterminalKind::ConstructorAttribute,
-                                26 => NonterminalKind::ConstructorAttributes,
-                                27 => NonterminalKind::ConstructorDefinition,
-                                28 => NonterminalKind::ContinueStatement,
-                                29 => NonterminalKind::ContractDefinition,
-                                30 => NonterminalKind::ContractMember,
-                                31 => NonterminalKind::ContractMembers,
-                                32 => NonterminalKind::DecimalNumberExpression,
-                                33 => NonterminalKind::DoWhileStatement,
-                                34 => NonterminalKind::ElementaryType,
-                                35 => NonterminalKind::ElseBranch,
-                                36 => NonterminalKind::EmitStatement,
-                                37 => NonterminalKind::EnumDefinition,
-                                38 => NonterminalKind::EnumMembers,
-                                39 => NonterminalKind::EqualityExpression,
-                                40 => NonterminalKind::ErrorDefinition,
-                                41 => NonterminalKind::ErrorParameter,
-                                42 => NonterminalKind::ErrorParameters,
-                                43 => NonterminalKind::ErrorParametersDeclaration,
-                                44 => NonterminalKind::EventDefinition,
-                                45 => NonterminalKind::EventParameter,
-                                46 => NonterminalKind::EventParameters,
-                                47 => NonterminalKind::EventParametersDeclaration,
-                                48 => NonterminalKind::ExperimentalFeature,
-                                49 => NonterminalKind::ExperimentalPragma,
-                                50 => NonterminalKind::ExponentiationExpression,
-                                51 => NonterminalKind::Expression,
-                                52 => NonterminalKind::ExpressionStatement,
-                                53 => NonterminalKind::FallbackFunctionAttribute,
-                                54 => NonterminalKind::FallbackFunctionAttributes,
-                                55 => NonterminalKind::FallbackFunctionDefinition,
-                                56 => NonterminalKind::ForStatement,
-                                57 => NonterminalKind::ForStatementCondition,
-                                58 => NonterminalKind::ForStatementInitialization,
-                                59 => NonterminalKind::FunctionAttribute,
-                                60 => NonterminalKind::FunctionAttributes,
-                                61 => NonterminalKind::FunctionBody,
-                                62 => NonterminalKind::FunctionCallExpression,
-                                63 => NonterminalKind::FunctionDefinition,
-                                64 => NonterminalKind::FunctionName,
-                                65 => NonterminalKind::FunctionType,
-                                66 => NonterminalKind::FunctionTypeAttribute,
-                                67 => NonterminalKind::FunctionTypeAttributes,
-                                68 => NonterminalKind::HexNumberExpression,
-                                69 => NonterminalKind::HexStringLiteral,
-                                70 => NonterminalKind::HexStringLiterals,
-                                71 => NonterminalKind::IdentifierPath,
-                                72 => NonterminalKind::IfStatement,
-                                73 => NonterminalKind::ImportAlias,
-                                74 => NonterminalKind::ImportClause,
-                                75 => NonterminalKind::ImportDeconstruction,
-                                76 => NonterminalKind::ImportDeconstructionSymbol,
-                                77 => NonterminalKind::ImportDeconstructionSymbols,
-                                78 => NonterminalKind::ImportDirective,
-                                79 => NonterminalKind::IndexAccessEnd,
-                                80 => NonterminalKind::IndexAccessExpression,
-                                81 => NonterminalKind::InheritanceSpecifier,
-                                82 => NonterminalKind::InheritanceType,
-                                83 => NonterminalKind::InheritanceTypes,
-                                84 => NonterminalKind::InterfaceDefinition,
-                                85 => NonterminalKind::InterfaceMembers,
-                                86 => NonterminalKind::LibraryDefinition,
-                                87 => NonterminalKind::LibraryMembers,
-                                88 => NonterminalKind::MappingKey,
-                                89 => NonterminalKind::MappingKeyType,
-                                90 => NonterminalKind::MappingType,
-                                91 => NonterminalKind::MappingValue,
-                                92 => NonterminalKind::MemberAccess,
-                                93 => NonterminalKind::MemberAccessExpression,
-                                94 => NonterminalKind::ModifierAttribute,
-                                95 => NonterminalKind::ModifierAttributes,
-                                96 => NonterminalKind::ModifierDefinition,
-                                97 => NonterminalKind::ModifierInvocation,
-                                98 => NonterminalKind::MultiplicativeExpression,
-                                99 => NonterminalKind::NamedArgument,
-                                100 => NonterminalKind::NamedArgumentGroup,
-                                101 => NonterminalKind::NamedArguments,
-                                102 => NonterminalKind::NamedArgumentsDeclaration,
-                                103 => NonterminalKind::NamedImport,
-                                104 => NonterminalKind::NewExpression,
-                                105 => NonterminalKind::NumberUnit,
-                                106 => NonterminalKind::OrExpression,
-                                107 => NonterminalKind::OverridePaths,
-                                108 => NonterminalKind::OverridePathsDeclaration,
-                                109 => NonterminalKind::OverrideSpecifier,
-                                110 => NonterminalKind::Parameter,
-                                111 => NonterminalKind::Parameters,
-                                112 => NonterminalKind::ParametersDeclaration,
-                                113 => NonterminalKind::PathImport,
-                                114 => NonterminalKind::PositionalArguments,
-                                115 => NonterminalKind::PositionalArgumentsDeclaration,
-                                116 => NonterminalKind::PostfixExpression,
-                                117 => NonterminalKind::Pragma,
-                                118 => NonterminalKind::PragmaDirective,
-                                119 => NonterminalKind::PrefixExpression,
-                                120 => NonterminalKind::ReceiveFunctionAttribute,
-                                121 => NonterminalKind::ReceiveFunctionAttributes,
-                                122 => NonterminalKind::ReceiveFunctionDefinition,
-                                123 => NonterminalKind::ReturnStatement,
-                                124 => NonterminalKind::ReturnsDeclaration,
-                                125 => NonterminalKind::RevertStatement,
-                                126 => NonterminalKind::ShiftExpression,
-                                127 => NonterminalKind::SourceUnit,
-                                128 => NonterminalKind::SourceUnitMember,
-                                129 => NonterminalKind::SourceUnitMembers,
-                                130 => NonterminalKind::StateVariableAttribute,
-                                131 => NonterminalKind::StateVariableAttributes,
-                                132 => NonterminalKind::StateVariableDefinition,
-                                133 => NonterminalKind::StateVariableDefinitionValue,
-                                134 => NonterminalKind::Statement,
-                                135 => NonterminalKind::Statements,
-                                136 => NonterminalKind::StorageLocation,
-                                137 => NonterminalKind::StringExpression,
-                                138 => NonterminalKind::StringLiteral,
-                                139 => NonterminalKind::StringLiterals,
-                                140 => NonterminalKind::StructDefinition,
-                                141 => NonterminalKind::StructMember,
-                                142 => NonterminalKind::StructMembers,
-                                143 => NonterminalKind::ThrowStatement,
-                                144 => NonterminalKind::TryStatement,
-                                145 => NonterminalKind::TupleDeconstructionElement,
-                                146 => NonterminalKind::TupleDeconstructionElements,
-                                147 => NonterminalKind::TupleDeconstructionStatement,
-                                148 => NonterminalKind::TupleExpression,
-                                149 => NonterminalKind::TupleMember,
-                                150 => NonterminalKind::TupleValue,
-                                151 => NonterminalKind::TupleValues,
-                                152 => NonterminalKind::TypeExpression,
-                                153 => NonterminalKind::TypeName,
-                                154 => NonterminalKind::TypedTupleMember,
-                                155 => NonterminalKind::UncheckedBlock,
-                                156 => NonterminalKind::UnicodeStringLiteral,
-                                157 => NonterminalKind::UnicodeStringLiterals,
-                                158 => NonterminalKind::UnnamedFunctionAttribute,
-                                159 => NonterminalKind::UnnamedFunctionAttributes,
-                                160 => NonterminalKind::UnnamedFunctionDefinition,
-                                161 => NonterminalKind::UntypedTupleMember,
-                                162 => NonterminalKind::UserDefinedValueTypeDefinition,
-                                163 => NonterminalKind::UsingAlias,
-                                164 => NonterminalKind::UsingClause,
-                                165 => NonterminalKind::UsingDeconstruction,
-                                166 => NonterminalKind::UsingDeconstructionSymbol,
-                                167 => NonterminalKind::UsingDeconstructionSymbols,
-                                168 => NonterminalKind::UsingDirective,
-                                169 => NonterminalKind::UsingOperator,
-                                170 => NonterminalKind::UsingTarget,
-                                171 => NonterminalKind::VariableDeclarationStatement,
-                                172 => NonterminalKind::VariableDeclarationType,
-                                173 => NonterminalKind::VariableDeclarationValue,
-                                174 => NonterminalKind::VersionComparator,
-                                175 => NonterminalKind::VersionExpression,
-                                176 => NonterminalKind::VersionExpressionSet,
-                                177 => NonterminalKind::VersionExpressionSets,
-                                178 => NonterminalKind::VersionPragma,
-                                179 => NonterminalKind::VersionRange,
-                                180 => NonterminalKind::VersionSpecifiers,
-                                181 => NonterminalKind::WhileStatement,
-                                182 => NonterminalKind::YulArguments,
-                                183 => NonterminalKind::YulAssignmentOperator,
-                                184 => NonterminalKind::YulBlock,
-                                185 => NonterminalKind::YulBreakStatement,
-                                186 => NonterminalKind::YulBuiltInFunction,
-                                187 => NonterminalKind::YulColonEqual,
-                                188 => NonterminalKind::YulContinueStatement,
-                                189 => NonterminalKind::YulDefaultCase,
-                                190 => NonterminalKind::YulExpression,
-                                191 => NonterminalKind::YulForStatement,
-                                192 => NonterminalKind::YulFunctionCallExpression,
-                                193 => NonterminalKind::YulFunctionDefinition,
-                                194 => NonterminalKind::YulIfStatement,
-                                195 => NonterminalKind::YulLabel,
-                                196 => NonterminalKind::YulLeaveStatement,
-                                197 => NonterminalKind::YulLiteral,
-                                198 => NonterminalKind::YulParameters,
-                                199 => NonterminalKind::YulParametersDeclaration,
-                                200 => NonterminalKind::YulPath,
-                                201 => NonterminalKind::YulPathComponent,
-                                202 => NonterminalKind::YulPaths,
-                                203 => NonterminalKind::YulReturnVariables,
-                                204 => NonterminalKind::YulReturnsDeclaration,
-                                205 => NonterminalKind::YulStackAssignmentStatement,
-                                206 => NonterminalKind::YulStatement,
-                                207 => NonterminalKind::YulStatements,
-                                208 => NonterminalKind::YulSwitchCase,
-                                209 => NonterminalKind::YulSwitchCases,
-                                210 => NonterminalKind::YulSwitchStatement,
-                                211 => NonterminalKind::YulValueCase,
-                                212 => NonterminalKind::YulVariableAssignmentStatement,
-                                213 => NonterminalKind::YulVariableDeclarationStatement,
-                                n => {
-                                    debug_assert_eq!(n, 214, "invalid enum discriminant");
-                                    NonterminalKind::YulVariableDeclarationValue
-                                }
-                            };
 
-                            v1
+                            NonterminalKind::_lift(l0 as u8)
                         };
-                        result2.push(e2);
+                        result1.push(e1);
                     }
-                    _rt::cabi_dealloc(base2, len2 * 1, 1);
-                    let result3 = T::go_to_next_nonterminal_with_kinds(
+                    _rt::cabi_dealloc(base1, len1 * 1, 1);
+                    let result2 = T::go_to_next_nonterminal_with_kinds(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        result2,
+                        result1,
                     );
-                    match result3 {
+                    match result2 {
                         true => 1,
                         false => 0,
                     }
@@ -8537,276 +6925,240 @@ macro_rules! __export_slang_impl {
     #[cfg(target_arch = "wasm32")]
     #[link_section = "component-type:wit-bindgen:0.26.0:slang:imports and exports"]
     #[doc(hidden)]
-    pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 16378] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xfe~\x01A\x02\x01A\x02\
-\x01B\x8c\x01\x01q\xd7\x01\x0fabicoder-pragma\0\0\x13additive-expression\0\0\x0c\
-address-type\0\0\x0eand-expression\0\0\x15arguments-declaration\0\0\x10array-exp\
-ression\0\0\x0farray-type-name\0\0\x0carray-values\0\0\x0eassembly-flags\0\0\x1a\
-assembly-flags-declaration\0\0\x12assembly-statement\0\0\x15assignment-expressio\
-n\0\0\x16bitwise-and-expression\0\0\x15bitwise-or-expression\0\0\x16bitwise-xor-\
-expression\0\0\x05block\0\0\x0fbreak-statement\0\0\x0ccall-options\0\0\x17call-o\
-ptions-expression\0\0\x0ccatch-clause\0\0\x12catch-clause-error\0\0\x0dcatch-cla\
-uses\0\0\x15comparison-expression\0\0\x16conditional-expression\0\0\x13constant-\
-definition\0\0\x15constructor-attribute\0\0\x16constructor-attributes\0\0\x16con\
-structor-definition\0\0\x12continue-statement\0\0\x13contract-definition\0\0\x0f\
-contract-member\0\0\x10contract-members\0\0\x19decimal-number-expression\0\0\x12\
-do-while-statement\0\0\x0felementary-type\0\0\x0belse-branch\0\0\x0eemit-stateme\
-nt\0\0\x0fenum-definition\0\0\x0cenum-members\0\0\x13equality-expression\0\0\x10\
-error-definition\0\0\x0ferror-parameter\0\0\x10error-parameters\0\0\x1cerror-par\
-ameters-declaration\0\0\x10event-definition\0\0\x0fevent-parameter\0\0\x10event-\
-parameters\0\0\x1cevent-parameters-declaration\0\0\x14experimental-feature\0\0\x13\
-experimental-pragma\0\0\x19exponentiation-expression\0\0\x0aexpression\0\0\x14ex\
-pression-statement\0\0\x1bfallback-function-attribute\0\0\x1cfallback-function-a\
-ttributes\0\0\x1cfallback-function-definition\0\0\x0dfor-statement\0\0\x17for-st\
-atement-condition\0\0\x1cfor-statement-initialization\0\0\x12function-attribute\0\
-\0\x13function-attributes\0\0\x0dfunction-body\0\0\x18function-call-expression\0\
-\0\x13function-definition\0\0\x0dfunction-name\0\0\x0dfunction-type\0\0\x17funct\
-ion-type-attribute\0\0\x18function-type-attributes\0\0\x15hex-number-expression\0\
-\0\x12hex-string-literal\0\0\x13hex-string-literals\0\0\x0fidentifier-path\0\0\x0c\
-if-statement\0\0\x0cimport-alias\0\0\x0dimport-clause\0\0\x15import-deconstructi\
-on\0\0\x1cimport-deconstruction-symbol\0\0\x1dimport-deconstruction-symbols\0\0\x10\
-import-directive\0\0\x10index-access-end\0\0\x17index-access-expression\0\0\x15i\
-nheritance-specifier\0\0\x10inheritance-type\0\0\x11inheritance-types\0\0\x14int\
-erface-definition\0\0\x11interface-members\0\0\x12library-definition\0\0\x0flibr\
-ary-members\0\0\x0bmapping-key\0\0\x10mapping-key-type\0\0\x0cmapping-type\0\0\x0d\
-mapping-value\0\0\x0dmember-access\0\0\x18member-access-expression\0\0\x12modifi\
-er-attribute\0\0\x13modifier-attributes\0\0\x13modifier-definition\0\0\x13modifi\
-er-invocation\0\0\x19multiplicative-expression\0\0\x0enamed-argument\0\0\x14name\
-d-argument-group\0\0\x0fnamed-arguments\0\0\x1bnamed-arguments-declaration\0\0\x0c\
-named-import\0\0\x0enew-expression\0\0\x0bnumber-unit\0\0\x0dor-expression\0\0\x0e\
-override-paths\0\0\x1aoverride-paths-declaration\0\0\x12override-specifier\0\0\x09\
-parameter\0\0\x0aparameters\0\0\x16parameters-declaration\0\0\x0bpath-import\0\0\
-\x14positional-arguments\0\0\x20positional-arguments-declaration\0\0\x12postfix-\
-expression\0\0\x06pragma\0\0\x10pragma-directive\0\0\x11prefix-expression\0\0\x1a\
-receive-function-attribute\0\0\x1breceive-function-attributes\0\0\x1breceive-fun\
-ction-definition\0\0\x10return-statement\0\0\x13returns-declaration\0\0\x10rever\
-t-statement\0\0\x10shift-expression\0\0\x0bsource-unit\0\0\x12source-unit-member\
-\0\0\x13source-unit-members\0\0\x18state-variable-attribute\0\0\x19state-variabl\
-e-attributes\0\0\x19state-variable-definition\0\0\x1fstate-variable-definition-v\
-alue\0\0\x09statement\0\0\x0astatements\0\0\x10storage-location\0\0\x11string-ex\
-pression\0\0\x0estring-literal\0\0\x0fstring-literals\0\0\x11struct-definition\0\
-\0\x0dstruct-member\0\0\x0estruct-members\0\0\x0fthrow-statement\0\0\x0dtry-stat\
-ement\0\0\x1ctuple-deconstruction-element\0\0\x1dtuple-deconstruction-elements\0\
-\0\x1etuple-deconstruction-statement\0\0\x10tuple-expression\0\0\x0ctuple-member\
-\0\0\x0btuple-value\0\0\x0ctuple-values\0\0\x0ftype-expression\0\0\x09type-name\0\
-\0\x12typed-tuple-member\0\0\x0funchecked-block\0\0\x16unicode-string-literal\0\0\
-\x17unicode-string-literals\0\0\x1aunnamed-function-attribute\0\0\x1bunnamed-fun\
-ction-attributes\0\0\x1bunnamed-function-definition\0\0\x14untyped-tuple-member\0\
-\0\"user-defined-value-type-definition\0\0\x0busing-alias\0\0\x0cusing-clause\0\0\
-\x14using-deconstruction\0\0\x1busing-deconstruction-symbol\0\0\x1cusing-deconst\
-ruction-symbols\0\0\x0fusing-directive\0\0\x0eusing-operator\0\0\x0cusing-target\
-\0\0\x1evariable-declaration-statement\0\0\x19variable-declaration-type\0\0\x1av\
-ariable-declaration-value\0\0\x12version-comparator\0\0\x12version-expression\0\0\
-\x16version-expression-set\0\0\x17version-expression-sets\0\0\x0eversion-pragma\0\
-\0\x0dversion-range\0\0\x12version-specifiers\0\0\x0fwhile-statement\0\0\x0dyul-\
-arguments\0\0\x17yul-assignment-operator\0\0\x09yul-block\0\0\x13yul-break-state\
-ment\0\0\x15yul-built-in-function\0\0\x0fyul-colon-equal\0\0\x16yul-continue-sta\
-tement\0\0\x10yul-default-case\0\0\x0eyul-expression\0\0\x11yul-for-statement\0\0\
-\x1cyul-function-call-expression\0\0\x17yul-function-definition\0\0\x10yul-if-st\
-atement\0\0\x09yul-label\0\0\x13yul-leave-statement\0\0\x0byul-literal\0\0\x0eyu\
-l-parameters\0\0\x1ayul-parameters-declaration\0\0\x08yul-path\0\0\x12yul-path-c\
-omponent\0\0\x09yul-paths\0\0\x14yul-return-variables\0\0\x17yul-returns-declara\
-tion\0\0\x1eyul-stack-assignment-statement\0\0\x0dyul-statement\0\0\x0eyul-state\
-ments\0\0\x0fyul-switch-case\0\0\x10yul-switch-cases\0\0\x14yul-switch-statement\
-\0\0\x0eyul-value-case\0\0!yul-variable-assignment-statement\0\0\"yul-variable-d\
-eclaration-statement\0\0\x1eyul-variable-declaration-value\0\0\x04\0\x10nontermi\
-nal-kind\x03\0\0\x01q\x83\x01\x04item\0\0\x07variant\0\0\x09separator\0\0\x07ope\
-rand\0\0\x0cleft-operand\0\0\x0dright-operand\0\0\x0eleading-trivia\0\0\x0ftrail\
-ing-trivia\0\0\x10abicoder-keyword\0\0\x10abstract-keyword\0\0\x0faddress-keywor\
-d\0\0\x05alias\0\0\x11anonymous-keyword\0\0\x09arguments\0\0\x0aas-keyword\0\0\x10\
-assembly-keyword\0\0\x0aassignment\0\0\x08asterisk\0\0\x0aattributes\0\0\x05bloc\
-k\0\0\x04body\0\0\x0dbreak-keyword\0\0\x0ccase-keyword\0\0\x05cases\0\0\x0dcatch\
--clauses\0\0\x0dcatch-keyword\0\0\x06clause\0\0\x0bclose-brace\0\0\x0dclose-brac\
-ket\0\0\x0bclose-paren\0\0\x05colon\0\0\x09condition\0\0\x10constant-keyword\0\0\
-\x13constructor-keyword\0\0\x10continue-keyword\0\0\x10contract-keyword\0\0\x0fd\
-efault-keyword\0\0\x0ado-keyword\0\0\x08elements\0\0\x0belse-branch\0\0\x0celse-\
-keyword\0\0\x0cemit-keyword\0\0\x03end\0\0\x0cenum-keyword\0\0\x05equal\0\0\x12e\
-qual-greater-than\0\0\x05error\0\0\x0derror-keyword\0\0\x05event\0\0\x0devent-ke\
-yword\0\0\x14experimental-keyword\0\0\x0aexpression\0\0\x10fallback-keyword\0\0\x10\
-false-expression\0\0\x07feature\0\0\x05flags\0\0\x0bfor-keyword\0\0\x0cfrom-keyw\
-ord\0\0\x10function-keyword\0\0\x0eglobal-keyword\0\0\x0aidentifier\0\0\x0aif-ke\
-yword\0\0\x0eimport-keyword\0\0\x05index\0\0\x0findexed-keyword\0\0\x0binheritan\
-ce\0\0\x0einitialization\0\0\x11interface-keyword\0\0\x0ais-keyword\0\0\x05items\
-\0\0\x08iterator\0\0\x08key-type\0\0\x05label\0\0\x0dleave-keyword\0\0\x0blet-ke\
-yword\0\0\x0flibrary-keyword\0\0\x07literal\0\0\x0fmapping-keyword\0\0\x06member\
-\0\0\x07members\0\0\x12minus-greater-than\0\0\x10modifier-keyword\0\0\x04name\0\0\
-\x05names\0\0\x0bnew-keyword\0\0\x0aopen-brace\0\0\x0copen-bracket\0\0\x0aopen-p\
-aren\0\0\x08operator\0\0\x07options\0\0\x0aoverridden\0\0\x10override-keyword\0\0\
-\x0aparameters\0\0\x04path\0\0\x05paths\0\0\x0fpayable-keyword\0\0\x06period\0\0\
-\x06pragma\0\0\x0epragma-keyword\0\0\x0dquestion-mark\0\0\x0freceive-keyword\0\0\
-\x0ereturn-keyword\0\0\x07returns\0\0\x0freturns-keyword\0\0\x0erevert-keyword\0\
-\0\x09semicolon\0\0\x04sets\0\0\x10solidity-keyword\0\0\x05start\0\0\x0astatemen\
-ts\0\0\x10storage-location\0\0\x0estruct-keyword\0\0\x0eswitch-keyword\0\0\x07sy\
-mbols\0\0\x06target\0\0\x0dthrow-keyword\0\0\x0ftrue-expression\0\0\x0btry-keywo\
-rd\0\0\x0ctype-keyword\0\0\x09type-name\0\0\x05types\0\0\x11unchecked-keyword\0\0\
-\x04unit\0\0\x0dusing-keyword\0\0\x05value\0\0\x0avalue-type\0\0\x0bvar-keyword\0\
-\0\x0dvariable-type\0\0\x09variables\0\0\x07version\0\0\x0dwhile-keyword\0\0\x04\
-\0\x0aedge-label\x03\0\x02\x01q\xf0\x02\x07skipped\0\0\x10abicoder-keyword\0\0\x10\
-abstract-keyword\0\0\x0faddress-keyword\0\0\x0dafter-keyword\0\0\x0dalias-keywor\
-d\0\0\x09ampersand\0\0\x13ampersand-ampersand\0\0\x0fampersand-equal\0\0\x11anon\
-ymous-keyword\0\0\x0dapply-keyword\0\0\x0aas-keyword\0\0\x10assembly-keyword\0\0\
-\x08asterisk\0\0\x11asterisk-asterisk\0\0\x0easterisk-equal\0\0\x0cauto-keyword\0\
-\0\x04bang\0\0\x0abang-equal\0\0\x03bar\0\0\x07bar-bar\0\0\x09bar-equal\0\0\x0cb\
-ool-keyword\0\0\x0dbreak-keyword\0\0\x0cbyte-keyword\0\0\x0dbytes-keyword\0\0\x11\
-call-data-keyword\0\0\x05caret\0\0\x0bcaret-equal\0\0\x0ccase-keyword\0\0\x0dcat\
-ch-keyword\0\0\x0bclose-brace\0\0\x0dclose-bracket\0\0\x0bclose-paren\0\0\x05col\
-on\0\0\x0bcolon-equal\0\0\x05comma\0\0\x10constant-keyword\0\0\x13constructor-ke\
-yword\0\0\x10continue-keyword\0\0\x10contract-keyword\0\0\x0fcopy-of-keyword\0\0\
-\x0cdays-keyword\0\0\x0fdecimal-literal\0\0\x0fdefault-keyword\0\0\x0edefine-key\
-word\0\0\x0edelete-keyword\0\0\x0ado-keyword\0\0\x20double-quoted-hex-string-lit\
-eral\0\0\x1cdouble-quoted-string-literal\0\0$double-quoted-unicode-string-litera\
-l\0\0\x1ddouble-quoted-version-literal\0\0\x0celse-keyword\0\0\x0cemit-keyword\0\
-\0\x0bend-of-line\0\0\x0cenum-keyword\0\0\x05equal\0\0\x0bequal-equal\0\0\x12equ\
-al-greater-than\0\0\x0derror-keyword\0\0\x0dether-keyword\0\0\x0devent-keyword\0\
-\0\x14experimental-keyword\0\0\x10external-keyword\0\0\x10fallback-keyword\0\0\x0d\
-false-keyword\0\0\x0dfinal-keyword\0\0\x0efinney-keyword\0\0\x0dfixed-keyword\0\0\
-\x0bfor-keyword\0\0\x0cfrom-keyword\0\0\x10function-keyword\0\0\x0eglobal-keywor\
-d\0\0\x0cgreater-than\0\0\x12greater-than-equal\0\0\x19greater-than-greater-than\
-\0\0\x1fgreater-than-greater-than-equal\0\0&greater-than-greater-than-greater-th\
-an\0\0,greater-than-greater-than-greater-than-equal\0\0\x0cgwei-keyword\0\0\x0bh\
-ex-keyword\0\0\x0bhex-literal\0\0\x0dhours-keyword\0\0\x0aidentifier\0\0\x0aif-k\
-eyword\0\0\x11immutable-keyword\0\0\x12implements-keyword\0\0\x0eimport-keyword\0\
-\0\x0ain-keyword\0\0\x0findexed-keyword\0\0\x0einline-keyword\0\0\x0bint-keyword\
-\0\0\x11interface-keyword\0\0\x10internal-keyword\0\0\x0ais-keyword\0\0\x09less-\
-than\0\0\x0fless-than-equal\0\0\x13less-than-less-than\0\0\x19less-than-less-tha\
-n-equal\0\0\x0blet-keyword\0\0\x0flibrary-keyword\0\0\x0dmacro-keyword\0\0\x0fma\
-pping-keyword\0\0\x0dmatch-keyword\0\0\x0ememory-keyword\0\0\x05minus\0\0\x0bmin\
-us-equal\0\0\x12minus-greater-than\0\0\x0bminus-minus\0\0\x0fminutes-keyword\0\0\
-\x10modifier-keyword\0\0\x12multi-line-comment\0\0\x1bmulti-line-nat-spec-commen\
-t\0\0\x0fmutable-keyword\0\0\x0bnew-keyword\0\0\x0cnull-keyword\0\0\x0aof-keywor\
-d\0\0\x0aopen-brace\0\0\x0copen-bracket\0\0\x0aopen-paren\0\0\x10override-keywor\
-d\0\0\x0fpartial-keyword\0\0\x0fpayable-keyword\0\0\x07percent\0\0\x0dpercent-eq\
-ual\0\0\x06period\0\0\x04plus\0\0\x0aplus-equal\0\0\x09plus-plus\0\0\x0epragma-k\
-eyword\0\0\x0fprivate-keyword\0\0\x0fpromise-keyword\0\0\x0epublic-keyword\0\0\x0c\
-pure-keyword\0\0\x0dquestion-mark\0\0\x0freceive-keyword\0\0\x11reference-keywor\
-d\0\0\x13relocatable-keyword\0\0\x0ereturn-keyword\0\0\x0freturns-keyword\0\0\x0e\
-revert-keyword\0\0\x0esealed-keyword\0\0\x0fseconds-keyword\0\0\x09semicolon\0\0\
-\x13single-line-comment\0\0\x1csingle-line-nat-spec-comment\0\0\x20single-quoted\
--hex-string-literal\0\0\x1csingle-quoted-string-literal\0\0$single-quoted-unicod\
-e-string-literal\0\0\x1dsingle-quoted-version-literal\0\0\x0fsize-of-keyword\0\0\
-\x05slash\0\0\x0bslash-equal\0\0\x10solidity-keyword\0\0\x0estatic-keyword\0\0\x0f\
-storage-keyword\0\0\x0estring-keyword\0\0\x0estruct-keyword\0\0\x10supports-keyw\
-ord\0\0\x0eswitch-keyword\0\0\x0dszabo-keyword\0\0\x0dthrow-keyword\0\0\x05tilde\
-\0\0\x0ctrue-keyword\0\0\x0btry-keyword\0\0\x10type-def-keyword\0\0\x0ctype-keyw\
-ord\0\0\x0ftype-of-keyword\0\0\x0eufixed-keyword\0\0\x0cuint-keyword\0\0\x11unch\
-ecked-keyword\0\0\x0dusing-keyword\0\0\x0bvar-keyword\0\0\x11version-specifier\0\
-\0\x0cview-keyword\0\0\x0fvirtual-keyword\0\0\x0dweeks-keyword\0\0\x0bwei-keywor\
-d\0\0\x0dwhile-keyword\0\0\x0awhitespace\0\0\x0dyears-keyword\0\0\x14yul-abstrac\
-t-keyword\0\0\x0fyul-add-keyword\0\0\x13yul-add-mod-keyword\0\0\x13yul-address-k\
-eyword\0\0\x11yul-after-keyword\0\0\x11yul-alias-keyword\0\0\x0fyul-and-keyword\0\
-\0\x15yul-anonymous-keyword\0\0\x11yul-apply-keyword\0\0\x0eyul-as-keyword\0\0\x14\
-yul-assembly-keyword\0\0\x10yul-auto-keyword\0\0\x13yul-balance-keyword\0\0\x14y\
-ul-base-fee-keyword\0\0\x19yul-blob-base-fee-keyword\0\0\x15yul-blob-hash-keywor\
-d\0\0\x16yul-block-hash-keyword\0\0\x10yul-bool-keyword\0\0\x11yul-break-keyword\
-\0\0\x10yul-byte-keyword\0\0\x11yul-bytes-keyword\0\0\x15yul-call-code-keyword\0\
-\0\x1ayul-call-data-copy-keyword\0\0\x15yul-call-data-keyword\0\0\x1ayul-call-da\
-ta-load-keyword\0\0\x1ayul-call-data-size-keyword\0\0\x10yul-call-keyword\0\0\x16\
-yul-call-value-keyword\0\0\x12yul-caller-keyword\0\0\x10yul-case-keyword\0\0\x11\
-yul-catch-keyword\0\0\x14yul-chain-id-keyword\0\0\x15yul-coin-base-keyword\0\0\x14\
-yul-constant-keyword\0\0\x17yul-constructor-keyword\0\0\x14yul-continue-keyword\0\
-\0\x14yul-contract-keyword\0\0\x13yul-copy-of-keyword\0\0\x13yul-create2-keyword\
-\0\0\x12yul-create-keyword\0\0\x10yul-days-keyword\0\0\x13yul-decimal-literal\0\0\
-\x13yul-default-keyword\0\0\x12yul-define-keyword\0\0\x19yul-delegate-call-keywo\
-rd\0\0\x12yul-delete-keyword\0\0\x16yul-difficulty-keyword\0\0\x0fyul-div-keywor\
-d\0\0\x0eyul-do-keyword\0\0\x10yul-else-keyword\0\0\x10yul-emit-keyword\0\0\x10y\
-ul-enum-keyword\0\0\x0eyul-eq-keyword\0\0\x11yul-ether-keyword\0\0\x11yul-event-\
-keyword\0\0\x0fyul-exp-keyword\0\0\x19yul-ext-code-copy-keyword\0\0\x19yul-ext-c\
-ode-hash-keyword\0\0\x19yul-ext-code-size-keyword\0\0\x14yul-external-keyword\0\0\
-\x14yul-fallback-keyword\0\0\x11yul-false-keyword\0\0\x11yul-final-keyword\0\0\x12\
-yul-finney-keyword\0\0\x11yul-fixed-keyword\0\0\x0fyul-for-keyword\0\0\x14yul-fu\
-nction-keyword\0\0\x0fyul-gas-keyword\0\0\x15yul-gas-limit-keyword\0\0\x15yul-ga\
-s-price-keyword\0\0\x0eyul-gt-keyword\0\0\x10yul-gwei-keyword\0\0\x0fyul-hex-key\
-word\0\0\x0fyul-hex-literal\0\0\x11yul-hours-keyword\0\0\x0eyul-identifier\0\0\x0e\
-yul-if-keyword\0\0\x15yul-immutable-keyword\0\0\x16yul-implements-keyword\0\0\x12\
-yul-import-keyword\0\0\x0eyul-in-keyword\0\0\x13yul-indexed-keyword\0\0\x12yul-i\
-nline-keyword\0\0\x0fyul-int-keyword\0\0\x15yul-interface-keyword\0\0\x14yul-int\
-ernal-keyword\0\0\x13yul-invalid-keyword\0\0\x0eyul-is-keyword\0\0\x13yul-is-zer\
-o-keyword\0\0\x15yul-keccak256-keyword\0\0\x11yul-leave-keyword\0\0\x0fyul-let-k\
-eyword\0\0\x13yul-library-keyword\0\0\x10yul-log0-keyword\0\0\x10yul-log1-keywor\
-d\0\0\x10yul-log2-keyword\0\0\x10yul-log3-keyword\0\0\x10yul-log4-keyword\0\0\x0e\
-yul-lt-keyword\0\0\x11yul-mcopy-keyword\0\0\x11yul-mload-keyword\0\0\x11yul-msiz\
-e-keyword\0\0\x13yul-mstore8-keyword\0\0\x12yul-mstore-keyword\0\0\x11yul-macro-\
-keyword\0\0\x13yul-mapping-keyword\0\0\x11yul-match-keyword\0\0\x12yul-memory-ke\
-yword\0\0\x13yul-minutes-keyword\0\0\x0fyul-mod-keyword\0\0\x14yul-modifier-keyw\
-ord\0\0\x0fyul-mul-keyword\0\0\x13yul-mul-mod-keyword\0\0\x13yul-mutable-keyword\
-\0\0\x0fyul-new-keyword\0\0\x0fyul-not-keyword\0\0\x10yul-null-keyword\0\0\x12yu\
-l-number-keyword\0\0\x0eyul-of-keyword\0\0\x0eyul-or-keyword\0\0\x12yul-origin-k\
-eyword\0\0\x14yul-override-keyword\0\0\x13yul-partial-keyword\0\0\x13yul-payable\
--keyword\0\0\x0fyul-pop-keyword\0\0\x12yul-pragma-keyword\0\0\x17yul-prev-randao\
--keyword\0\0\x13yul-private-keyword\0\0\x13yul-promise-keyword\0\0\x12yul-public\
--keyword\0\0\x10yul-pure-keyword\0\0\x13yul-receive-keyword\0\0\x15yul-reference\
--keyword\0\0\x17yul-relocatable-keyword\0\0\x1cyul-return-data-copy-keyword\0\0\x1c\
-yul-return-data-size-keyword\0\0\x12yul-return-keyword\0\0\x13yul-returns-keywor\
-d\0\0\x12yul-revert-keyword\0\0\x10yul-sdiv-keyword\0\0\x11yul-sload-keyword\0\0\
-\x10yul-smod-keyword\0\0\x12yul-sstore-keyword\0\0\x0fyul-sar-keyword\0\0\x12yul\
--sealed-keyword\0\0\x13yul-seconds-keyword\0\0\x18yul-self-balance-keyword\0\0\x19\
-yul-self-destruct-keyword\0\0\x0fyul-sgt-keyword\0\0\x10yul-sha3-keyword\0\0\x0f\
-yul-shl-keyword\0\0\x0fyul-shr-keyword\0\0\x17yul-sign-extend-keyword\0\0\x13yul\
--size-of-keyword\0\0\x0fyul-slt-keyword\0\0\x17yul-static-call-keyword\0\0\x12yu\
-l-static-keyword\0\0\x10yul-stop-keyword\0\0\x13yul-storage-keyword\0\0\x12yul-s\
-tring-keyword\0\0\x12yul-struct-keyword\0\0\x0fyul-sub-keyword\0\0\x13yul-suicid\
-e-keyword\0\0\x14yul-supports-keyword\0\0\x12yul-switch-keyword\0\0\x11yul-szabo\
--keyword\0\0\x11yul-tload-keyword\0\0\x12yul-tstore-keyword\0\0\x11yul-throw-key\
-word\0\0\x15yul-timestamp-keyword\0\0\x10yul-true-keyword\0\0\x0fyul-try-keyword\
-\0\0\x14yul-type-def-keyword\0\0\x10yul-type-keyword\0\0\x13yul-type-of-keyword\0\
-\0\x12yul-ufixed-keyword\0\0\x10yul-uint-keyword\0\0\x15yul-unchecked-keyword\0\0\
-\x11yul-using-keyword\0\0\x0fyul-var-keyword\0\0\x10yul-view-keyword\0\0\x13yul-\
-virtual-keyword\0\0\x11yul-weeks-keyword\0\0\x0fyul-wei-keyword\0\0\x11yul-while\
--keyword\0\0\x0fyul-xor-keyword\0\0\x11yul-years-keyword\0\0\x04\0\x0dterminal-k\
-ind\x03\0\x04\x04\0\x08language\x03\x01\x04\0\x0bparse-error\x03\x01\x04\0\x0cpa\
-rse-output\x03\x01\x04\0\x10nonterminal-node\x03\x01\x04\0\x0dterminal-node\x03\x01\
-\x01i\x09\x01i\x0a\x01q\x02\x0bnonterminal\x01\x0b\0\x08terminal\x01\x0c\0\x04\0\
-\x04node\x03\0\x0d\x04\0\x06cursor\x03\x01\x04\0\x05query\x03\x01\x01r\x03\x07me\
-ssages\x04liney\x06columny\x04\0\x0bquery-error\x03\0\x11\x01i\x0f\x01p\x13\x01o\
-\x02s\x14\x01p\x15\x01r\x02\x0cquery-numbery\x08captures\x16\x04\0\x0bquery-matc\
-h\x03\0\x17\x04\0\x14query-match-iterator\x03\x01\x01q\x04\x05error\0\0\x07warni\
-ng\0\0\x0binformation\0\0\x04hint\0\0\x04\0\x08severity\x03\0\x1a\x01r\x04\x04ut\
-f8y\x05utf16y\x04liney\x06columny\x04\0\x0atext-index\x03\0\x1c\x01r\x02\x05star\
-t\x1d\x03end\x1d\x04\0\x0atext-range\x03\0\x1e\x01ps\x01@\0\0\x20\x04\0#[static]\
-language.supported-versions\x01!\x01i\x06\x01j\x01\"\x01s\x01@\x01\x07versions\0\
-#\x04\0\x14[static]language.new\x01$\x01h\x06\x01@\x01\x04self%\0s\x04\0\x18[met\
-hod]language.version\x01&\x01i\x08\x01@\x03\x04self%\x04kind\x01\x05inputs\0'\x04\
-\0\x16[method]language.parse\x01(\x01h\x07\x01@\x01\x04self)\0\x1b\x04\0\x1c[met\
-hod]parse-error.severity\x01*\x01@\x01\x04self)\0\x1f\x04\0\x1e[method]parse-err\
-or.text-range\x01+\x01@\x01\x04self)\0s\x04\0\x1b[method]parse-error.message\x01\
-,\x01h\x08\x01@\x01\x04self-\0\x0e\x04\0\x19[method]parse-output.tree\x01.\x01i\x07\
-\x01p/\x01@\x01\x04self-\00\x04\0\x1b[method]parse-output.errors\x011\x01@\x01\x04\
-self-\0\x7f\x04\0\x1d[method]parse-output.is-valid\x012\x01@\x01\x04self-\0\x13\x04\
-\0'[method]parse-output.create-tree-cursor\x013\x01h\x09\x01@\x01\x04self4\0\x01\
-\x04\0\x1d[method]nonterminal-node.kind\x015\x01@\x01\x04self4\0\x1d\x04\0![meth\
-od]nonterminal-node.text-len\x016\x01p\x0e\x01@\x01\x04self4\07\x04\0![method]no\
-nterminal-node.children\x018\x01@\x02\x04self4\x0btext-offset\x1d\0\x13\x04\0&[m\
-ethod]nonterminal-node.create-cursor\x019\x01@\x01\x04self4\0s\x04\0\x20[method]\
-nonterminal-node.unparse\x01:\x01h\x0a\x01@\x01\x04self;\0\x05\x04\0\x1a[method]\
-terminal-node.kind\x01<\x01@\x01\x04self;\0\x1d\x04\0\x1e[method]terminal-node.t\
-ext-len\x01=\x01@\x01\x04self;\0s\x04\0\x1a[method]terminal-node.text\x01>\x01h\x0f\
-\x01@\x01\x04self?\x01\0\x04\0\x14[method]cursor.reset\x01@\x04\0\x17[method]cur\
-sor.complete\x01@\x01@\x01\x04self?\0\x7f\x04\0\x1b[method]cursor.is-completed\x01\
-A\x01@\x01\x04self?\0\x13\x04\0\x14[method]cursor.clone\x01B\x04\0\x14[method]cu\
-rsor.spawn\x01B\x01@\x01\x04self?\0\x0e\x04\0\x13[method]cursor.node\x01C\x01k\x03\
-\x01@\x01\x04self?\0\xc4\0\x04\0\x14[method]cursor.label\x01E\x01@\x01\x04self?\0\
-\x1d\x04\0\x1a[method]cursor.text-offset\x01F\x01@\x01\x04self?\0\x1f\x04\0\x19[\
-method]cursor.text-range\x01G\x01@\x01\x04self?\0y\x04\0\x14[method]cursor.depth\
-\x01H\x01p\x0b\x01@\x01\x04self?\0\xc9\0\x04\0\x18[method]cursor.ancestors\x01J\x04\
-\0\x19[method]cursor.go-to-next\x01A\x04\0([method]cursor.go-to-next-non-descend\
-ent\x01A\x04\0\x1d[method]cursor.go-to-previous\x01A\x04\0\x1b[method]cursor.go-\
-to-parent\x01A\x04\0\x20[method]cursor.go-to-first-child\x01A\x04\0\x1f[method]c\
-ursor.go-to-last-child\x01A\x01@\x02\x04self?\x0cchild-numbery\0\x7f\x04\0\x1e[m\
-ethod]cursor.go-to-nth-child\x01K\x04\0![method]cursor.go-to-next-sibling\x01A\x04\
-\0%[method]cursor.go-to-previous-sibling\x01A\x04\0\"[method]cursor.go-to-next-t\
-erminal\x01A\x01@\x02\x04self?\x04kind\x05\0\x7f\x04\0,[method]cursor.go-to-next\
--terminal-with-kind\x01L\x01p\x05\x01@\x02\x04self?\x05kinds\xcd\0\0\x7f\x04\0-[\
-method]cursor.go-to-next-terminal-with-kinds\x01N\x04\0%[method]cursor.go-to-nex\
-t-nonterminal\x01A\x01@\x02\x04self?\x04kind\x01\0\x7f\x04\0/[method]cursor.go-t\
-o-next-nonterminal-with-kind\x01O\x01p\x01\x01@\x02\x04self?\x05kinds\xd0\0\0\x7f\
-\x04\00[method]cursor.go-to-next-nonterminal-with-kinds\x01Q\x01h\x10\x01p\xd2\0\
-\x01i\x19\x01@\x02\x04self?\x07queries\xd3\0\0\xd4\0\x04\0\x14[method]cursor.que\
-ry\x01U\x01i\x10\x01j\x01\xd6\0\x01\x12\x01@\x01\x04texts\0\xd7\0\x04\0\x13[stat\
-ic]query.parse\x01X\x01h\x19\x01k\x18\x01@\x01\x04self\xd9\0\0\xda\0\x04\0![meth\
-od]query-match-iterator.next\x01[\x04\x01\x18nomic:slang/parser@1.0.0\x05\0\x04\x01\
-\x17nomic:slang/slang@1.0.0\x04\0\x0b\x0b\x01\0\x05slang\x03\0\0\0G\x09producers\
-\x01\x0cprocessed-by\x02\x0dwit-component\x070.209.1\x10wit-bindgen-rust\x060.26\
-.0";
+    pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 14942] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xe2s\x01A\x02\x01A\x02\
+\x01B\x8c\x01\x01m\xd7\x01\x0fabicoder-pragma\x13additive-expression\x0caddress-\
+type\x0eand-expression\x15arguments-declaration\x10array-expression\x0farray-typ\
+e-name\x0carray-values\x0eassembly-flags\x1aassembly-flags-declaration\x12assemb\
+ly-statement\x15assignment-expression\x16bitwise-and-expression\x15bitwise-or-ex\
+pression\x16bitwise-xor-expression\x05block\x0fbreak-statement\x0ccall-options\x17\
+call-options-expression\x0ccatch-clause\x12catch-clause-error\x0dcatch-clauses\x15\
+comparison-expression\x16conditional-expression\x13constant-definition\x15constr\
+uctor-attribute\x16constructor-attributes\x16constructor-definition\x12continue-\
+statement\x13contract-definition\x0fcontract-member\x10contract-members\x19decim\
+al-number-expression\x12do-while-statement\x0felementary-type\x0belse-branch\x0e\
+emit-statement\x0fenum-definition\x0cenum-members\x13equality-expression\x10erro\
+r-definition\x0ferror-parameter\x10error-parameters\x1cerror-parameters-declarat\
+ion\x10event-definition\x0fevent-parameter\x10event-parameters\x1cevent-paramete\
+rs-declaration\x14experimental-feature\x13experimental-pragma\x19exponentiation-\
+expression\x0aexpression\x14expression-statement\x1bfallback-function-attribute\x1c\
+fallback-function-attributes\x1cfallback-function-definition\x0dfor-statement\x17\
+for-statement-condition\x1cfor-statement-initialization\x12function-attribute\x13\
+function-attributes\x0dfunction-body\x18function-call-expression\x13function-def\
+inition\x0dfunction-name\x0dfunction-type\x17function-type-attribute\x18function\
+-type-attributes\x15hex-number-expression\x12hex-string-literal\x13hex-string-li\
+terals\x0fidentifier-path\x0cif-statement\x0cimport-alias\x0dimport-clause\x15im\
+port-deconstruction\x1cimport-deconstruction-symbol\x1dimport-deconstruction-sym\
+bols\x10import-directive\x10index-access-end\x17index-access-expression\x15inher\
+itance-specifier\x10inheritance-type\x11inheritance-types\x14interface-definitio\
+n\x11interface-members\x12library-definition\x0flibrary-members\x0bmapping-key\x10\
+mapping-key-type\x0cmapping-type\x0dmapping-value\x0dmember-access\x18member-acc\
+ess-expression\x12modifier-attribute\x13modifier-attributes\x13modifier-definiti\
+on\x13modifier-invocation\x19multiplicative-expression\x0enamed-argument\x14name\
+d-argument-group\x0fnamed-arguments\x1bnamed-arguments-declaration\x0cnamed-impo\
+rt\x0enew-expression\x0bnumber-unit\x0dor-expression\x0eoverride-paths\x1aoverri\
+de-paths-declaration\x12override-specifier\x09parameter\x0aparameters\x16paramet\
+ers-declaration\x0bpath-import\x14positional-arguments\x20positional-arguments-d\
+eclaration\x12postfix-expression\x06pragma\x10pragma-directive\x11prefix-express\
+ion\x1areceive-function-attribute\x1breceive-function-attributes\x1breceive-func\
+tion-definition\x10return-statement\x13returns-declaration\x10revert-statement\x10\
+shift-expression\x0bsource-unit\x12source-unit-member\x13source-unit-members\x18\
+state-variable-attribute\x19state-variable-attributes\x19state-variable-definiti\
+on\x1fstate-variable-definition-value\x09statement\x0astatements\x10storage-loca\
+tion\x11string-expression\x0estring-literal\x0fstring-literals\x11struct-definit\
+ion\x0dstruct-member\x0estruct-members\x0fthrow-statement\x0dtry-statement\x1ctu\
+ple-deconstruction-element\x1dtuple-deconstruction-elements\x1etuple-deconstruct\
+ion-statement\x10tuple-expression\x0ctuple-member\x0btuple-value\x0ctuple-values\
+\x0ftype-expression\x09type-name\x12typed-tuple-member\x0funchecked-block\x16uni\
+code-string-literal\x17unicode-string-literals\x1aunnamed-function-attribute\x1b\
+unnamed-function-attributes\x1bunnamed-function-definition\x14untyped-tuple-memb\
+er\"user-defined-value-type-definition\x0busing-alias\x0cusing-clause\x14using-d\
+econstruction\x1busing-deconstruction-symbol\x1cusing-deconstruction-symbols\x0f\
+using-directive\x0eusing-operator\x0cusing-target\x1evariable-declaration-statem\
+ent\x19variable-declaration-type\x1avariable-declaration-value\x12version-compar\
+ator\x12version-expression\x16version-expression-set\x17version-expression-sets\x0e\
+version-pragma\x0dversion-range\x12version-specifiers\x0fwhile-statement\x0dyul-\
+arguments\x17yul-assignment-operator\x09yul-block\x13yul-break-statement\x15yul-\
+built-in-function\x0fyul-colon-equal\x16yul-continue-statement\x10yul-default-ca\
+se\x0eyul-expression\x11yul-for-statement\x1cyul-function-call-expression\x17yul\
+-function-definition\x10yul-if-statement\x09yul-label\x13yul-leave-statement\x0b\
+yul-literal\x0eyul-parameters\x1ayul-parameters-declaration\x08yul-path\x12yul-p\
+ath-component\x09yul-paths\x14yul-return-variables\x17yul-returns-declaration\x1e\
+yul-stack-assignment-statement\x0dyul-statement\x0eyul-statements\x0fyul-switch-\
+case\x10yul-switch-cases\x14yul-switch-statement\x0eyul-value-case!yul-variable-\
+assignment-statement\"yul-variable-declaration-statement\x1eyul-variable-declara\
+tion-value\x04\0\x10nonterminal-kind\x03\0\0\x01m\x83\x01\x04item\x07variant\x09\
+separator\x07operand\x0cleft-operand\x0dright-operand\x0eleading-trivia\x0ftrail\
+ing-trivia\x10abicoder-keyword\x10abstract-keyword\x0faddress-keyword\x05alias\x11\
+anonymous-keyword\x09arguments\x0aas-keyword\x10assembly-keyword\x0aassignment\x08\
+asterisk\x0aattributes\x05block\x04body\x0dbreak-keyword\x0ccase-keyword\x05case\
+s\x0dcatch-clauses\x0dcatch-keyword\x06clause\x0bclose-brace\x0dclose-bracket\x0b\
+close-paren\x05colon\x09condition\x10constant-keyword\x13constructor-keyword\x10\
+continue-keyword\x10contract-keyword\x0fdefault-keyword\x0ado-keyword\x08element\
+s\x0belse-branch\x0celse-keyword\x0cemit-keyword\x03end\x0cenum-keyword\x05equal\
+\x12equal-greater-than\x05error\x0derror-keyword\x05event\x0devent-keyword\x14ex\
+perimental-keyword\x0aexpression\x10fallback-keyword\x10false-expression\x07feat\
+ure\x05flags\x0bfor-keyword\x0cfrom-keyword\x10function-keyword\x0eglobal-keywor\
+d\x0aidentifier\x0aif-keyword\x0eimport-keyword\x05index\x0findexed-keyword\x0bi\
+nheritance\x0einitialization\x11interface-keyword\x0ais-keyword\x05items\x08iter\
+ator\x08key-type\x05label\x0dleave-keyword\x0blet-keyword\x0flibrary-keyword\x07\
+literal\x0fmapping-keyword\x06member\x07members\x12minus-greater-than\x10modifie\
+r-keyword\x04name\x05names\x0bnew-keyword\x0aopen-brace\x0copen-bracket\x0aopen-\
+paren\x08operator\x07options\x0aoverridden\x10override-keyword\x0aparameters\x04\
+path\x05paths\x0fpayable-keyword\x06period\x06pragma\x0epragma-keyword\x0dquesti\
+on-mark\x0freceive-keyword\x0ereturn-keyword\x07returns\x0freturns-keyword\x0ere\
+vert-keyword\x09semicolon\x04sets\x10solidity-keyword\x05start\x0astatements\x10\
+storage-location\x0estruct-keyword\x0eswitch-keyword\x07symbols\x06target\x0dthr\
+ow-keyword\x0ftrue-expression\x0btry-keyword\x0ctype-keyword\x09type-name\x05typ\
+es\x11unchecked-keyword\x04unit\x0dusing-keyword\x05value\x0avalue-type\x0bvar-k\
+eyword\x0dvariable-type\x09variables\x07version\x0dwhile-keyword\x04\0\x0aedge-l\
+abel\x03\0\x02\x01m\xf0\x02\x07skipped\x10abicoder-keyword\x10abstract-keyword\x0f\
+address-keyword\x0dafter-keyword\x0dalias-keyword\x09ampersand\x13ampersand-ampe\
+rsand\x0fampersand-equal\x11anonymous-keyword\x0dapply-keyword\x0aas-keyword\x10\
+assembly-keyword\x08asterisk\x11asterisk-asterisk\x0easterisk-equal\x0cauto-keyw\
+ord\x04bang\x0abang-equal\x03bar\x07bar-bar\x09bar-equal\x0cbool-keyword\x0dbrea\
+k-keyword\x0cbyte-keyword\x0dbytes-keyword\x11call-data-keyword\x05caret\x0bcare\
+t-equal\x0ccase-keyword\x0dcatch-keyword\x0bclose-brace\x0dclose-bracket\x0bclos\
+e-paren\x05colon\x0bcolon-equal\x05comma\x10constant-keyword\x13constructor-keyw\
+ord\x10continue-keyword\x10contract-keyword\x0fcopy-of-keyword\x0cdays-keyword\x0f\
+decimal-literal\x0fdefault-keyword\x0edefine-keyword\x0edelete-keyword\x0ado-key\
+word\x20double-quoted-hex-string-literal\x1cdouble-quoted-string-literal$double-\
+quoted-unicode-string-literal\x1ddouble-quoted-version-literal\x0celse-keyword\x0c\
+emit-keyword\x0bend-of-line\x0cenum-keyword\x05equal\x0bequal-equal\x12equal-gre\
+ater-than\x0derror-keyword\x0dether-keyword\x0devent-keyword\x14experimental-key\
+word\x10external-keyword\x10fallback-keyword\x0dfalse-keyword\x0dfinal-keyword\x0e\
+finney-keyword\x0dfixed-keyword\x0bfor-keyword\x0cfrom-keyword\x10function-keywo\
+rd\x0eglobal-keyword\x0cgreater-than\x12greater-than-equal\x19greater-than-great\
+er-than\x1fgreater-than-greater-than-equal&greater-than-greater-than-greater-tha\
+n,greater-than-greater-than-greater-than-equal\x0cgwei-keyword\x0bhex-keyword\x0b\
+hex-literal\x0dhours-keyword\x0aidentifier\x0aif-keyword\x11immutable-keyword\x12\
+implements-keyword\x0eimport-keyword\x0ain-keyword\x0findexed-keyword\x0einline-\
+keyword\x0bint-keyword\x11interface-keyword\x10internal-keyword\x0ais-keyword\x09\
+less-than\x0fless-than-equal\x13less-than-less-than\x19less-than-less-than-equal\
+\x0blet-keyword\x0flibrary-keyword\x0dmacro-keyword\x0fmapping-keyword\x0dmatch-\
+keyword\x0ememory-keyword\x05minus\x0bminus-equal\x12minus-greater-than\x0bminus\
+-minus\x0fminutes-keyword\x10modifier-keyword\x12multi-line-comment\x1bmulti-lin\
+e-nat-spec-comment\x0fmutable-keyword\x0bnew-keyword\x0cnull-keyword\x0aof-keywo\
+rd\x0aopen-brace\x0copen-bracket\x0aopen-paren\x10override-keyword\x0fpartial-ke\
+yword\x0fpayable-keyword\x07percent\x0dpercent-equal\x06period\x04plus\x0aplus-e\
+qual\x09plus-plus\x0epragma-keyword\x0fprivate-keyword\x0fpromise-keyword\x0epub\
+lic-keyword\x0cpure-keyword\x0dquestion-mark\x0freceive-keyword\x11reference-key\
+word\x13relocatable-keyword\x0ereturn-keyword\x0freturns-keyword\x0erevert-keywo\
+rd\x0esealed-keyword\x0fseconds-keyword\x09semicolon\x13single-line-comment\x1cs\
+ingle-line-nat-spec-comment\x20single-quoted-hex-string-literal\x1csingle-quoted\
+-string-literal$single-quoted-unicode-string-literal\x1dsingle-quoted-version-li\
+teral\x0fsize-of-keyword\x05slash\x0bslash-equal\x10solidity-keyword\x0estatic-k\
+eyword\x0fstorage-keyword\x0estring-keyword\x0estruct-keyword\x10supports-keywor\
+d\x0eswitch-keyword\x0dszabo-keyword\x0dthrow-keyword\x05tilde\x0ctrue-keyword\x0b\
+try-keyword\x10type-def-keyword\x0ctype-keyword\x0ftype-of-keyword\x0eufixed-key\
+word\x0cuint-keyword\x11unchecked-keyword\x0dusing-keyword\x0bvar-keyword\x11ver\
+sion-specifier\x0cview-keyword\x0fvirtual-keyword\x0dweeks-keyword\x0bwei-keywor\
+d\x0dwhile-keyword\x0awhitespace\x0dyears-keyword\x14yul-abstract-keyword\x0fyul\
+-add-keyword\x13yul-add-mod-keyword\x13yul-address-keyword\x11yul-after-keyword\x11\
+yul-alias-keyword\x0fyul-and-keyword\x15yul-anonymous-keyword\x11yul-apply-keywo\
+rd\x0eyul-as-keyword\x14yul-assembly-keyword\x10yul-auto-keyword\x13yul-balance-\
+keyword\x14yul-base-fee-keyword\x19yul-blob-base-fee-keyword\x15yul-blob-hash-ke\
+yword\x16yul-block-hash-keyword\x10yul-bool-keyword\x11yul-break-keyword\x10yul-\
+byte-keyword\x11yul-bytes-keyword\x15yul-call-code-keyword\x1ayul-call-data-copy\
+-keyword\x15yul-call-data-keyword\x1ayul-call-data-load-keyword\x1ayul-call-data\
+-size-keyword\x10yul-call-keyword\x16yul-call-value-keyword\x12yul-caller-keywor\
+d\x10yul-case-keyword\x11yul-catch-keyword\x14yul-chain-id-keyword\x15yul-coin-b\
+ase-keyword\x14yul-constant-keyword\x17yul-constructor-keyword\x14yul-continue-k\
+eyword\x14yul-contract-keyword\x13yul-copy-of-keyword\x13yul-create2-keyword\x12\
+yul-create-keyword\x10yul-days-keyword\x13yul-decimal-literal\x13yul-default-key\
+word\x12yul-define-keyword\x19yul-delegate-call-keyword\x12yul-delete-keyword\x16\
+yul-difficulty-keyword\x0fyul-div-keyword\x0eyul-do-keyword\x10yul-else-keyword\x10\
+yul-emit-keyword\x10yul-enum-keyword\x0eyul-eq-keyword\x11yul-ether-keyword\x11y\
+ul-event-keyword\x0fyul-exp-keyword\x19yul-ext-code-copy-keyword\x19yul-ext-code\
+-hash-keyword\x19yul-ext-code-size-keyword\x14yul-external-keyword\x14yul-fallba\
+ck-keyword\x11yul-false-keyword\x11yul-final-keyword\x12yul-finney-keyword\x11yu\
+l-fixed-keyword\x0fyul-for-keyword\x14yul-function-keyword\x0fyul-gas-keyword\x15\
+yul-gas-limit-keyword\x15yul-gas-price-keyword\x0eyul-gt-keyword\x10yul-gwei-key\
+word\x0fyul-hex-keyword\x0fyul-hex-literal\x11yul-hours-keyword\x0eyul-identifie\
+r\x0eyul-if-keyword\x15yul-immutable-keyword\x16yul-implements-keyword\x12yul-im\
+port-keyword\x0eyul-in-keyword\x13yul-indexed-keyword\x12yul-inline-keyword\x0fy\
+ul-int-keyword\x15yul-interface-keyword\x14yul-internal-keyword\x13yul-invalid-k\
+eyword\x0eyul-is-keyword\x13yul-is-zero-keyword\x15yul-keccak256-keyword\x11yul-\
+leave-keyword\x0fyul-let-keyword\x13yul-library-keyword\x10yul-log0-keyword\x10y\
+ul-log1-keyword\x10yul-log2-keyword\x10yul-log3-keyword\x10yul-log4-keyword\x0ey\
+ul-lt-keyword\x11yul-mcopy-keyword\x11yul-mload-keyword\x11yul-msize-keyword\x13\
+yul-mstore8-keyword\x12yul-mstore-keyword\x11yul-macro-keyword\x13yul-mapping-ke\
+yword\x11yul-match-keyword\x12yul-memory-keyword\x13yul-minutes-keyword\x0fyul-m\
+od-keyword\x14yul-modifier-keyword\x0fyul-mul-keyword\x13yul-mul-mod-keyword\x13\
+yul-mutable-keyword\x0fyul-new-keyword\x0fyul-not-keyword\x10yul-null-keyword\x12\
+yul-number-keyword\x0eyul-of-keyword\x0eyul-or-keyword\x12yul-origin-keyword\x14\
+yul-override-keyword\x13yul-partial-keyword\x13yul-payable-keyword\x0fyul-pop-ke\
+yword\x12yul-pragma-keyword\x17yul-prev-randao-keyword\x13yul-private-keyword\x13\
+yul-promise-keyword\x12yul-public-keyword\x10yul-pure-keyword\x13yul-receive-key\
+word\x15yul-reference-keyword\x17yul-relocatable-keyword\x1cyul-return-data-copy\
+-keyword\x1cyul-return-data-size-keyword\x12yul-return-keyword\x13yul-returns-ke\
+yword\x12yul-revert-keyword\x10yul-sdiv-keyword\x11yul-sload-keyword\x10yul-smod\
+-keyword\x12yul-sstore-keyword\x0fyul-sar-keyword\x12yul-sealed-keyword\x13yul-s\
+econds-keyword\x18yul-self-balance-keyword\x19yul-self-destruct-keyword\x0fyul-s\
+gt-keyword\x10yul-sha3-keyword\x0fyul-shl-keyword\x0fyul-shr-keyword\x17yul-sign\
+-extend-keyword\x13yul-size-of-keyword\x0fyul-slt-keyword\x17yul-static-call-key\
+word\x12yul-static-keyword\x10yul-stop-keyword\x13yul-storage-keyword\x12yul-str\
+ing-keyword\x12yul-struct-keyword\x0fyul-sub-keyword\x13yul-suicide-keyword\x14y\
+ul-supports-keyword\x12yul-switch-keyword\x11yul-szabo-keyword\x11yul-tload-keyw\
+ord\x12yul-tstore-keyword\x11yul-throw-keyword\x15yul-timestamp-keyword\x10yul-t\
+rue-keyword\x0fyul-try-keyword\x14yul-type-def-keyword\x10yul-type-keyword\x13yu\
+l-type-of-keyword\x12yul-ufixed-keyword\x10yul-uint-keyword\x15yul-unchecked-key\
+word\x11yul-using-keyword\x0fyul-var-keyword\x10yul-view-keyword\x13yul-virtual-\
+keyword\x11yul-weeks-keyword\x0fyul-wei-keyword\x11yul-while-keyword\x0fyul-xor-\
+keyword\x11yul-years-keyword\x04\0\x0dterminal-kind\x03\0\x04\x04\0\x08language\x03\
+\x01\x04\0\x0bparse-error\x03\x01\x04\0\x0cparse-output\x03\x01\x04\0\x10nonterm\
+inal-node\x03\x01\x04\0\x0dterminal-node\x03\x01\x01i\x09\x01i\x0a\x01q\x02\x0bn\
+onterminal\x01\x0b\0\x08terminal\x01\x0c\0\x04\0\x04node\x03\0\x0d\x04\0\x06curs\
+or\x03\x01\x04\0\x05query\x03\x01\x01r\x03\x07messages\x04liney\x06columny\x04\0\
+\x0bquery-error\x03\0\x11\x01i\x0f\x01p\x13\x01o\x02s\x14\x01p\x15\x01r\x02\x0cq\
+uery-numbery\x08captures\x16\x04\0\x0bquery-match\x03\0\x17\x04\0\x14query-match\
+-iterator\x03\x01\x01m\x04\x05error\x07warning\x0binformation\x04hint\x04\0\x08s\
+everity\x03\0\x1a\x01r\x04\x04utf8y\x05utf16y\x04liney\x06columny\x04\0\x0atext-\
+index\x03\0\x1c\x01r\x02\x05start\x1d\x03end\x1d\x04\0\x0atext-range\x03\0\x1e\x01\
+ps\x01@\0\0\x20\x04\0#[static]language.supported-versions\x01!\x01i\x06\x01j\x01\
+\"\x01s\x01@\x01\x07versions\0#\x04\0\x14[static]language.new\x01$\x01h\x06\x01@\
+\x01\x04self%\0s\x04\0\x18[method]language.version\x01&\x01i\x08\x01@\x03\x04sel\
+f%\x04kind\x01\x05inputs\0'\x04\0\x16[method]language.parse\x01(\x01h\x07\x01@\x01\
+\x04self)\0\x1b\x04\0\x1c[method]parse-error.severity\x01*\x01@\x01\x04self)\0\x1f\
+\x04\0\x1e[method]parse-error.text-range\x01+\x01@\x01\x04self)\0s\x04\0\x1b[met\
+hod]parse-error.message\x01,\x01h\x08\x01@\x01\x04self-\0\x0e\x04\0\x19[method]p\
+arse-output.tree\x01.\x01i\x07\x01p/\x01@\x01\x04self-\00\x04\0\x1b[method]parse\
+-output.errors\x011\x01@\x01\x04self-\0\x7f\x04\0\x1d[method]parse-output.is-val\
+id\x012\x01@\x01\x04self-\0\x13\x04\0'[method]parse-output.create-tree-cursor\x01\
+3\x01h\x09\x01@\x01\x04self4\0\x01\x04\0\x1d[method]nonterminal-node.kind\x015\x01\
+@\x01\x04self4\0\x1d\x04\0![method]nonterminal-node.text-len\x016\x01p\x0e\x01@\x01\
+\x04self4\07\x04\0![method]nonterminal-node.children\x018\x01@\x02\x04self4\x0bt\
+ext-offset\x1d\0\x13\x04\0&[method]nonterminal-node.create-cursor\x019\x01@\x01\x04\
+self4\0s\x04\0\x20[method]nonterminal-node.unparse\x01:\x01h\x0a\x01@\x01\x04sel\
+f;\0\x05\x04\0\x1a[method]terminal-node.kind\x01<\x01@\x01\x04self;\0\x1d\x04\0\x1e\
+[method]terminal-node.text-len\x01=\x01@\x01\x04self;\0s\x04\0\x1a[method]termin\
+al-node.text\x01>\x01h\x0f\x01@\x01\x04self?\x01\0\x04\0\x14[method]cursor.reset\
+\x01@\x04\0\x17[method]cursor.complete\x01@\x01@\x01\x04self?\0\x7f\x04\0\x1b[me\
+thod]cursor.is-completed\x01A\x01@\x01\x04self?\0\x13\x04\0\x14[method]cursor.cl\
+one\x01B\x04\0\x14[method]cursor.spawn\x01B\x01@\x01\x04self?\0\x0e\x04\0\x13[me\
+thod]cursor.node\x01C\x01k\x03\x01@\x01\x04self?\0\xc4\0\x04\0\x14[method]cursor\
+.label\x01E\x01@\x01\x04self?\0\x1d\x04\0\x1a[method]cursor.text-offset\x01F\x01\
+@\x01\x04self?\0\x1f\x04\0\x19[method]cursor.text-range\x01G\x01@\x01\x04self?\0\
+y\x04\0\x14[method]cursor.depth\x01H\x01p\x0b\x01@\x01\x04self?\0\xc9\0\x04\0\x18\
+[method]cursor.ancestors\x01J\x04\0\x19[method]cursor.go-to-next\x01A\x04\0([met\
+hod]cursor.go-to-next-non-descendent\x01A\x04\0\x1d[method]cursor.go-to-previous\
+\x01A\x04\0\x1b[method]cursor.go-to-parent\x01A\x04\0\x20[method]cursor.go-to-fi\
+rst-child\x01A\x04\0\x1f[method]cursor.go-to-last-child\x01A\x01@\x02\x04self?\x0c\
+child-numbery\0\x7f\x04\0\x1e[method]cursor.go-to-nth-child\x01K\x04\0![method]c\
+ursor.go-to-next-sibling\x01A\x04\0%[method]cursor.go-to-previous-sibling\x01A\x04\
+\0\"[method]cursor.go-to-next-terminal\x01A\x01@\x02\x04self?\x04kind\x05\0\x7f\x04\
+\0,[method]cursor.go-to-next-terminal-with-kind\x01L\x01p\x05\x01@\x02\x04self?\x05\
+kinds\xcd\0\0\x7f\x04\0-[method]cursor.go-to-next-terminal-with-kinds\x01N\x04\0\
+%[method]cursor.go-to-next-nonterminal\x01A\x01@\x02\x04self?\x04kind\x01\0\x7f\x04\
+\0/[method]cursor.go-to-next-nonterminal-with-kind\x01O\x01p\x01\x01@\x02\x04sel\
+f?\x05kinds\xd0\0\0\x7f\x04\00[method]cursor.go-to-next-nonterminal-with-kinds\x01\
+Q\x01h\x10\x01p\xd2\0\x01i\x19\x01@\x02\x04self?\x07queries\xd3\0\0\xd4\0\x04\0\x14\
+[method]cursor.query\x01U\x01i\x10\x01j\x01\xd6\0\x01\x12\x01@\x01\x04texts\0\xd7\
+\0\x04\0\x13[static]query.parse\x01X\x01h\x19\x01k\x18\x01@\x01\x04self\xd9\0\0\xda\
+\0\x04\0![method]query-match-iterator.next\x01[\x04\x01\x18nomic:slang/parser@1.\
+0.0\x05\0\x04\x01\x17nomic:slang/slang@1.0.0\x04\0\x0b\x0b\x01\0\x05slang\x03\0\0\
+\0G\x09producers\x01\x0cprocessed-by\x02\x0dwit-component\x070.209.1\x10wit-bind\
+gen-rust\x060.26.0";
   };
   )
 }

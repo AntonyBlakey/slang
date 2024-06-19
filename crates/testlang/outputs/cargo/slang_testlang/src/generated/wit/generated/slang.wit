@@ -8,7 +8,7 @@ world slang {
 
 interface parser {
 
-    variant nonterminal-kind {
+    enum nonterminal-kind {
                 %addition-expression,
                 %expression,
                 %literal,
@@ -24,7 +24,7 @@ interface parser {
                 %tree-node-children,
     }
 
-    variant edge-label {
+    enum edge-label {
         // Built-in:
             %item,
             %variant,
@@ -48,7 +48,7 @@ interface parser {
                 %semicolon,
     }
 
-    variant terminal-kind {
+    enum terminal-kind {
         // Built-in:
         skipped,
 
@@ -170,7 +170,7 @@ interface parser {
         next: func() -> option<query-match>;
     }
     
-    variant severity {
+    enum severity {
         error,
         warning,
         information,

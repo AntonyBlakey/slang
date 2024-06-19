@@ -8,7 +8,7 @@ world slang {
 
 interface parser {
 
-    variant nonterminal-kind {
+    enum nonterminal-kind {
                 %abicoder-pragma,
                 %additive-expression,
                 %address-type,
@@ -226,7 +226,7 @@ interface parser {
                 %yul-variable-declaration-value,
     }
 
-    variant edge-label {
+    enum edge-label {
         // Built-in:
             %item,
             %variant,
@@ -363,7 +363,7 @@ interface parser {
                 %while-keyword,
     }
 
-    variant terminal-kind {
+    enum terminal-kind {
         // Built-in:
         skipped,
 
@@ -838,7 +838,7 @@ interface parser {
         next: func() -> option<query-match>;
     }
     
-    variant severity {
+    enum severity {
         error,
         warning,
         information,
