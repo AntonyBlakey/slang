@@ -16,8 +16,7 @@ pub mod exports {
                 static __FORCE_SECTION_REF: fn() =
                     super::super::super::super::__link_custom_section_describing_imports;
                 use super::super::super::super::_rt;
-                #[repr(u8)]
-                #[derive(Clone, Copy, Eq, PartialEq)]
+                #[derive(Clone, Copy)]
                 pub enum NonterminalKind {
                     Stub1,
                     Stub2,
@@ -38,26 +37,7 @@ pub mod exports {
                         }
                     }
                 }
-
-                impl NonterminalKind {
-                    #[doc(hidden)]
-                    pub unsafe fn _lift(val: u8) -> NonterminalKind {
-                        if !cfg!(debug_assertions) {
-                            return ::core::mem::transmute(val);
-                        }
-
-                        match val {
-                            0 => NonterminalKind::Stub1,
-                            1 => NonterminalKind::Stub2,
-                            2 => NonterminalKind::Stub3,
-
-                            _ => panic!("invalid enum discriminant"),
-                        }
-                    }
-                }
-
-                #[repr(u8)]
-                #[derive(Clone, Copy, Eq, PartialEq)]
+                #[derive(Clone, Copy)]
                 pub enum EdgeLabel {
                     /// Built-in:
                     Item,
@@ -98,34 +78,7 @@ pub mod exports {
                         }
                     }
                 }
-
-                impl EdgeLabel {
-                    #[doc(hidden)]
-                    pub unsafe fn _lift(val: u8) -> EdgeLabel {
-                        if !cfg!(debug_assertions) {
-                            return ::core::mem::transmute(val);
-                        }
-
-                        match val {
-                            0 => EdgeLabel::Item,
-                            1 => EdgeLabel::Variant,
-                            2 => EdgeLabel::Separator,
-                            3 => EdgeLabel::Operand,
-                            4 => EdgeLabel::LeftOperand,
-                            5 => EdgeLabel::RightOperand,
-                            6 => EdgeLabel::LeadingTrivia,
-                            7 => EdgeLabel::TrailingTrivia,
-                            8 => EdgeLabel::Stub1,
-                            9 => EdgeLabel::Stub2,
-                            10 => EdgeLabel::Stub3,
-
-                            _ => panic!("invalid enum discriminant"),
-                        }
-                    }
-                }
-
-                #[repr(u8)]
-                #[derive(Clone, Copy, Eq, PartialEq)]
+                #[derive(Clone, Copy)]
                 pub enum TerminalKind {
                     /// Built-in:
                     Skipped,
@@ -143,24 +96,6 @@ pub mod exports {
                             TerminalKind::Stub1 => f.debug_tuple("TerminalKind::Stub1").finish(),
                             TerminalKind::Stub2 => f.debug_tuple("TerminalKind::Stub2").finish(),
                             TerminalKind::Stub3 => f.debug_tuple("TerminalKind::Stub3").finish(),
-                        }
-                    }
-                }
-
-                impl TerminalKind {
-                    #[doc(hidden)]
-                    pub unsafe fn _lift(val: u8) -> TerminalKind {
-                        if !cfg!(debug_assertions) {
-                            return ::core::mem::transmute(val);
-                        }
-
-                        match val {
-                            0 => TerminalKind::Skipped,
-                            1 => TerminalKind::Stub1,
-                            2 => TerminalKind::Stub2,
-                            3 => TerminalKind::Stub3,
-
-                            _ => panic!("invalid enum discriminant"),
                         }
                     }
                 }
@@ -1336,8 +1271,7 @@ pub mod exports {
                     }
                 }
 
-                #[repr(u8)]
-                #[derive(Clone, Copy, Eq, PartialEq)]
+                #[derive(Clone, Copy)]
                 pub enum Severity {
                     Error,
                     Warning,
@@ -1356,25 +1290,6 @@ pub mod exports {
                         }
                     }
                 }
-
-                impl Severity {
-                    #[doc(hidden)]
-                    pub unsafe fn _lift(val: u8) -> Severity {
-                        if !cfg!(debug_assertions) {
-                            return ::core::mem::transmute(val);
-                        }
-
-                        match val {
-                            0 => Severity::Error,
-                            1 => Severity::Warning,
-                            2 => Severity::Information,
-                            3 => Severity::Hint,
-
-                            _ => panic!("invalid enum discriminant"),
-                        }
-                    }
-                }
-
                 #[repr(C)]
                 #[derive(Clone, Copy)]
                 pub struct TextIndex {
@@ -1541,14 +1456,22 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let len0 = arg3;
-                    let bytes0 = _rt::Vec::from_raw_parts(arg2.cast(), len0, len0);
-                    let result1 = T::parse(
+                    let v0 = match arg1 {
+                        0 => NonterminalKind::Stub1,
+                        1 => NonterminalKind::Stub2,
+                        n => {
+                            debug_assert_eq!(n, 2, "invalid enum discriminant");
+                            NonterminalKind::Stub3
+                        }
+                    };
+                    let len1 = arg3;
+                    let bytes1 = _rt::Vec::from_raw_parts(arg2.cast(), len1, len1);
+                    let result2 = T::parse(
                         LanguageBorrow::lift(arg0 as u32 as usize).get(),
-                        NonterminalKind::_lift(arg1 as u8),
-                        _rt::string_lift(bytes0),
+                        v0,
+                        _rt::string_lift(bytes1),
                     );
-                    (result1).take_handle() as i32
+                    (result2).take_handle() as i32
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -1558,7 +1481,13 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
                     let result0 = T::severity(ParseErrorBorrow::lift(arg0 as u32 as usize).get());
-                    result0.clone() as i32
+                    let result1 = match result0 {
+                        Severity::Error => 0i32,
+                        Severity::Warning => 1i32,
+                        Severity::Information => 2i32,
+                        Severity::Hint => 3i32,
+                    };
+                    result1
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -1720,7 +1649,12 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
                     let result0 = T::kind(NonterminalNodeBorrow::lift(arg0 as u32 as usize).get());
-                    result0.clone() as i32
+                    let result1 = match result0 {
+                        NonterminalKind::Stub1 => 0i32,
+                        NonterminalKind::Stub2 => 1i32,
+                        NonterminalKind::Stub3 => 2i32,
+                    };
+                    result1
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -1867,7 +1801,13 @@ pub mod exports {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
                     let result0 = T::kind(TerminalNodeBorrow::lift(arg0 as u32 as usize).get());
-                    result0.clone() as i32
+                    let result1 = match result0 {
+                        TerminalKind::Skipped => 0i32,
+                        TerminalKind::Stub1 => 1i32,
+                        TerminalKind::Stub2 => 2i32,
+                        TerminalKind::Stub3 => 3i32,
+                    };
+                    result1
                 }
                 #[doc(hidden)]
                 #[allow(non_snake_case)]
@@ -1996,7 +1936,41 @@ pub mod exports {
                     match result0 {
                         Some(e) => {
                             *ptr1.add(0).cast::<u8>() = (1i32) as u8;
-                            *ptr1.add(1).cast::<u8>() = (e.clone() as i32) as u8;
+                            match e {
+                                EdgeLabel::Item => {
+                                    *ptr1.add(1).cast::<u8>() = (0i32) as u8;
+                                }
+                                EdgeLabel::Variant => {
+                                    *ptr1.add(1).cast::<u8>() = (1i32) as u8;
+                                }
+                                EdgeLabel::Separator => {
+                                    *ptr1.add(1).cast::<u8>() = (2i32) as u8;
+                                }
+                                EdgeLabel::Operand => {
+                                    *ptr1.add(1).cast::<u8>() = (3i32) as u8;
+                                }
+                                EdgeLabel::LeftOperand => {
+                                    *ptr1.add(1).cast::<u8>() = (4i32) as u8;
+                                }
+                                EdgeLabel::RightOperand => {
+                                    *ptr1.add(1).cast::<u8>() = (5i32) as u8;
+                                }
+                                EdgeLabel::LeadingTrivia => {
+                                    *ptr1.add(1).cast::<u8>() = (6i32) as u8;
+                                }
+                                EdgeLabel::TrailingTrivia => {
+                                    *ptr1.add(1).cast::<u8>() = (7i32) as u8;
+                                }
+                                EdgeLabel::Stub1 => {
+                                    *ptr1.add(1).cast::<u8>() = (8i32) as u8;
+                                }
+                                EdgeLabel::Stub2 => {
+                                    *ptr1.add(1).cast::<u8>() = (9i32) as u8;
+                                }
+                                EdgeLabel::Stub3 => {
+                                    *ptr1.add(1).cast::<u8>() = (10i32) as u8;
+                                }
+                            }
                         }
                         None => {
                             *ptr1.add(0).cast::<u8>() = (0i32) as u8;
@@ -2265,11 +2239,20 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let result0 = T::go_to_next_terminal_with_kind(
+                    let v0 = match arg1 {
+                        0 => TerminalKind::Skipped,
+                        1 => TerminalKind::Stub1,
+                        2 => TerminalKind::Stub2,
+                        n => {
+                            debug_assert_eq!(n, 3, "invalid enum discriminant");
+                            TerminalKind::Stub3
+                        }
+                    };
+                    let result1 = T::go_to_next_terminal_with_kind(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        TerminalKind::_lift(arg1 as u8),
+                        v0,
                     );
-                    match result0 {
+                    match result1 {
                         true => 1,
                         false => 0,
                     }
@@ -2285,24 +2268,33 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let base1 = arg1;
-                    let len1 = arg2;
-                    let mut result1 = _rt::Vec::with_capacity(len1);
-                    for i in 0..len1 {
-                        let base = base1.add(i * 1);
-                        let e1 = {
+                    let base2 = arg1;
+                    let len2 = arg2;
+                    let mut result2 = _rt::Vec::with_capacity(len2);
+                    for i in 0..len2 {
+                        let base = base2.add(i * 1);
+                        let e2 = {
                             let l0 = i32::from(*base.add(0).cast::<u8>());
+                            let v1 = match l0 {
+                                0 => TerminalKind::Skipped,
+                                1 => TerminalKind::Stub1,
+                                2 => TerminalKind::Stub2,
+                                n => {
+                                    debug_assert_eq!(n, 3, "invalid enum discriminant");
+                                    TerminalKind::Stub3
+                                }
+                            };
 
-                            TerminalKind::_lift(l0 as u8)
+                            v1
                         };
-                        result1.push(e1);
+                        result2.push(e2);
                     }
-                    _rt::cabi_dealloc(base1, len1 * 1, 1);
-                    let result2 = T::go_to_next_terminal_with_kinds(
+                    _rt::cabi_dealloc(base2, len2 * 1, 1);
+                    let result3 = T::go_to_next_terminal_with_kinds(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        result1,
+                        result2,
                     );
-                    match result2 {
+                    match result3 {
                         true => 1,
                         false => 0,
                     }
@@ -2331,11 +2323,19 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let result0 = T::go_to_next_nonterminal_with_kind(
+                    let v0 = match arg1 {
+                        0 => NonterminalKind::Stub1,
+                        1 => NonterminalKind::Stub2,
+                        n => {
+                            debug_assert_eq!(n, 2, "invalid enum discriminant");
+                            NonterminalKind::Stub3
+                        }
+                    };
+                    let result1 = T::go_to_next_nonterminal_with_kind(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        NonterminalKind::_lift(arg1 as u8),
+                        v0,
                     );
-                    match result0 {
+                    match result1 {
                         true => 1,
                         false => 0,
                     }
@@ -2351,24 +2351,32 @@ pub mod exports {
                 ) -> i32 {
                     #[cfg(target_arch = "wasm32")]
                     _rt::run_ctors_once();
-                    let base1 = arg1;
-                    let len1 = arg2;
-                    let mut result1 = _rt::Vec::with_capacity(len1);
-                    for i in 0..len1 {
-                        let base = base1.add(i * 1);
-                        let e1 = {
+                    let base2 = arg1;
+                    let len2 = arg2;
+                    let mut result2 = _rt::Vec::with_capacity(len2);
+                    for i in 0..len2 {
+                        let base = base2.add(i * 1);
+                        let e2 = {
                             let l0 = i32::from(*base.add(0).cast::<u8>());
+                            let v1 = match l0 {
+                                0 => NonterminalKind::Stub1,
+                                1 => NonterminalKind::Stub2,
+                                n => {
+                                    debug_assert_eq!(n, 2, "invalid enum discriminant");
+                                    NonterminalKind::Stub3
+                                }
+                            };
 
-                            NonterminalKind::_lift(l0 as u8)
+                            v1
                         };
-                        result1.push(e1);
+                        result2.push(e2);
                     }
-                    _rt::cabi_dealloc(base1, len1 * 1, 1);
-                    let result2 = T::go_to_next_nonterminal_with_kinds(
+                    _rt::cabi_dealloc(base2, len2 * 1, 1);
+                    let result3 = T::go_to_next_nonterminal_with_kinds(
                         CursorBorrow::lift(arg0 as u32 as usize).get(),
-                        result1,
+                        result2,
                     );
-                    match result2 {
+                    match result3 {
                         true => 1,
                         false => 0,
                     }
@@ -3559,65 +3567,67 @@ macro_rules! __export_slang_impl {
     #[cfg(target_arch = "wasm32")]
     #[link_section = "component-type:wit-bindgen:0.26.0:slang:imports and exports"]
     #[doc(hidden)]
-    pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 3016] = *b"\
-\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xcc\x16\x01A\x02\x01\
-A\x02\x01B\x8c\x01\x01m\x03\x05stub1\x05stub2\x05stub3\x04\0\x10nonterminal-kind\
-\x03\0\0\x01m\x0b\x04item\x07variant\x09separator\x07operand\x0cleft-operand\x0d\
-right-operand\x0eleading-trivia\x0ftrailing-trivia\x05stub1\x05stub2\x05stub3\x04\
-\0\x0aedge-label\x03\0\x02\x01m\x04\x07skipped\x05stub1\x05stub2\x05stub3\x04\0\x0d\
-terminal-kind\x03\0\x04\x04\0\x08language\x03\x01\x04\0\x0bparse-error\x03\x01\x04\
-\0\x0cparse-output\x03\x01\x04\0\x10nonterminal-node\x03\x01\x04\0\x0dterminal-n\
-ode\x03\x01\x01i\x09\x01i\x0a\x01q\x02\x0bnonterminal\x01\x0b\0\x08terminal\x01\x0c\
-\0\x04\0\x04node\x03\0\x0d\x04\0\x06cursor\x03\x01\x04\0\x05query\x03\x01\x01r\x03\
-\x07messages\x04liney\x06columny\x04\0\x0bquery-error\x03\0\x11\x01i\x0f\x01p\x13\
-\x01o\x02s\x14\x01p\x15\x01r\x02\x0cquery-numbery\x08captures\x16\x04\0\x0bquery\
--match\x03\0\x17\x04\0\x14query-match-iterator\x03\x01\x01m\x04\x05error\x07warn\
-ing\x0binformation\x04hint\x04\0\x08severity\x03\0\x1a\x01r\x04\x04utf8y\x05utf1\
-6y\x04liney\x06columny\x04\0\x0atext-index\x03\0\x1c\x01r\x02\x05start\x1d\x03en\
-d\x1d\x04\0\x0atext-range\x03\0\x1e\x01ps\x01@\0\0\x20\x04\0#[static]language.su\
-pported-versions\x01!\x01i\x06\x01j\x01\"\x01s\x01@\x01\x07versions\0#\x04\0\x14\
-[static]language.new\x01$\x01h\x06\x01@\x01\x04self%\0s\x04\0\x18[method]languag\
-e.version\x01&\x01i\x08\x01@\x03\x04self%\x04kind\x01\x05inputs\0'\x04\0\x16[met\
-hod]language.parse\x01(\x01h\x07\x01@\x01\x04self)\0\x1b\x04\0\x1c[method]parse-\
-error.severity\x01*\x01@\x01\x04self)\0\x1f\x04\0\x1e[method]parse-error.text-ra\
-nge\x01+\x01@\x01\x04self)\0s\x04\0\x1b[method]parse-error.message\x01,\x01h\x08\
-\x01@\x01\x04self-\0\x0e\x04\0\x19[method]parse-output.tree\x01.\x01i\x07\x01p/\x01\
-@\x01\x04self-\00\x04\0\x1b[method]parse-output.errors\x011\x01@\x01\x04self-\0\x7f\
-\x04\0\x1d[method]parse-output.is-valid\x012\x01@\x01\x04self-\0\x13\x04\0'[meth\
-od]parse-output.create-tree-cursor\x013\x01h\x09\x01@\x01\x04self4\0\x01\x04\0\x1d\
-[method]nonterminal-node.kind\x015\x01@\x01\x04self4\0\x1d\x04\0![method]nonterm\
-inal-node.text-len\x016\x01p\x0e\x01@\x01\x04self4\07\x04\0![method]nonterminal-\
-node.children\x018\x01@\x02\x04self4\x0btext-offset\x1d\0\x13\x04\0&[method]nont\
-erminal-node.create-cursor\x019\x01@\x01\x04self4\0s\x04\0\x20[method]nontermina\
-l-node.unparse\x01:\x01h\x0a\x01@\x01\x04self;\0\x05\x04\0\x1a[method]terminal-n\
-ode.kind\x01<\x01@\x01\x04self;\0\x1d\x04\0\x1e[method]terminal-node.text-len\x01\
-=\x01@\x01\x04self;\0s\x04\0\x1a[method]terminal-node.text\x01>\x01h\x0f\x01@\x01\
-\x04self?\x01\0\x04\0\x14[method]cursor.reset\x01@\x04\0\x17[method]cursor.compl\
-ete\x01@\x01@\x01\x04self?\0\x7f\x04\0\x1b[method]cursor.is-completed\x01A\x01@\x01\
-\x04self?\0\x13\x04\0\x14[method]cursor.clone\x01B\x04\0\x14[method]cursor.spawn\
-\x01B\x01@\x01\x04self?\0\x0e\x04\0\x13[method]cursor.node\x01C\x01k\x03\x01@\x01\
-\x04self?\0\xc4\0\x04\0\x14[method]cursor.label\x01E\x01@\x01\x04self?\0\x1d\x04\
-\0\x1a[method]cursor.text-offset\x01F\x01@\x01\x04self?\0\x1f\x04\0\x19[method]c\
-ursor.text-range\x01G\x01@\x01\x04self?\0y\x04\0\x14[method]cursor.depth\x01H\x01\
-p\x0b\x01@\x01\x04self?\0\xc9\0\x04\0\x18[method]cursor.ancestors\x01J\x04\0\x19\
-[method]cursor.go-to-next\x01A\x04\0([method]cursor.go-to-next-non-descendent\x01\
-A\x04\0\x1d[method]cursor.go-to-previous\x01A\x04\0\x1b[method]cursor.go-to-pare\
-nt\x01A\x04\0\x20[method]cursor.go-to-first-child\x01A\x04\0\x1f[method]cursor.g\
-o-to-last-child\x01A\x01@\x02\x04self?\x0cchild-numbery\0\x7f\x04\0\x1e[method]c\
-ursor.go-to-nth-child\x01K\x04\0![method]cursor.go-to-next-sibling\x01A\x04\0%[m\
-ethod]cursor.go-to-previous-sibling\x01A\x04\0\"[method]cursor.go-to-next-termin\
-al\x01A\x01@\x02\x04self?\x04kind\x05\0\x7f\x04\0,[method]cursor.go-to-next-term\
-inal-with-kind\x01L\x01p\x05\x01@\x02\x04self?\x05kinds\xcd\0\0\x7f\x04\0-[metho\
-d]cursor.go-to-next-terminal-with-kinds\x01N\x04\0%[method]cursor.go-to-next-non\
-terminal\x01A\x01@\x02\x04self?\x04kind\x01\0\x7f\x04\0/[method]cursor.go-to-nex\
-t-nonterminal-with-kind\x01O\x01p\x01\x01@\x02\x04self?\x05kinds\xd0\0\0\x7f\x04\
-\00[method]cursor.go-to-next-nonterminal-with-kinds\x01Q\x01h\x10\x01p\xd2\0\x01\
-i\x19\x01@\x02\x04self?\x07queries\xd3\0\0\xd4\0\x04\0\x14[method]cursor.query\x01\
-U\x01i\x10\x01j\x01\xd6\0\x01\x12\x01@\x01\x04texts\0\xd7\0\x04\0\x13[static]que\
-ry.parse\x01X\x01h\x19\x01k\x18\x01@\x01\x04self\xd9\0\0\xda\0\x04\0![method]que\
-ry-match-iterator.next\x01[\x04\x01\x18nomic:slang/parser@1.0.0\x05\0\x04\x01\x17\
-nomic:slang/slang@1.0.0\x04\0\x0b\x0b\x01\0\x05slang\x03\0\0\0G\x09producers\x01\
-\x0cprocessed-by\x02\x0dwit-component\x070.209.1\x10wit-bindgen-rust\x060.26.0";
+    pub static __WIT_BINDGEN_COMPONENT_TYPE: [u8; 3060] = *b"\
+\0asm\x0d\0\x01\0\0\x19\x16wit-component-encoding\x04\0\x07\xf8\x16\x01A\x02\x01\
+A\x02\x01B\x8c\x01\x01q\x03\x05stub1\0\0\x05stub2\0\0\x05stub3\0\0\x04\0\x10nont\
+erminal-kind\x03\0\0\x01q\x0b\x04item\0\0\x07variant\0\0\x09separator\0\0\x07ope\
+rand\0\0\x0cleft-operand\0\0\x0dright-operand\0\0\x0eleading-trivia\0\0\x0ftrail\
+ing-trivia\0\0\x05stub1\0\0\x05stub2\0\0\x05stub3\0\0\x04\0\x0aedge-label\x03\0\x02\
+\x01q\x04\x07skipped\0\0\x05stub1\0\0\x05stub2\0\0\x05stub3\0\0\x04\0\x0dtermina\
+l-kind\x03\0\x04\x04\0\x08language\x03\x01\x04\0\x0bparse-error\x03\x01\x04\0\x0c\
+parse-output\x03\x01\x04\0\x10nonterminal-node\x03\x01\x04\0\x0dterminal-node\x03\
+\x01\x01i\x09\x01i\x0a\x01q\x02\x0bnonterminal\x01\x0b\0\x08terminal\x01\x0c\0\x04\
+\0\x04node\x03\0\x0d\x04\0\x06cursor\x03\x01\x04\0\x05query\x03\x01\x01r\x03\x07\
+messages\x04liney\x06columny\x04\0\x0bquery-error\x03\0\x11\x01i\x0f\x01p\x13\x01\
+o\x02s\x14\x01p\x15\x01r\x02\x0cquery-numbery\x08captures\x16\x04\0\x0bquery-mat\
+ch\x03\0\x17\x04\0\x14query-match-iterator\x03\x01\x01q\x04\x05error\0\0\x07warn\
+ing\0\0\x0binformation\0\0\x04hint\0\0\x04\0\x08severity\x03\0\x1a\x01r\x04\x04u\
+tf8y\x05utf16y\x04liney\x06columny\x04\0\x0atext-index\x03\0\x1c\x01r\x02\x05sta\
+rt\x1d\x03end\x1d\x04\0\x0atext-range\x03\0\x1e\x01ps\x01@\0\0\x20\x04\0#[static\
+]language.supported-versions\x01!\x01i\x06\x01j\x01\"\x01s\x01@\x01\x07versions\0\
+#\x04\0\x14[static]language.new\x01$\x01h\x06\x01@\x01\x04self%\0s\x04\0\x18[met\
+hod]language.version\x01&\x01i\x08\x01@\x03\x04self%\x04kind\x01\x05inputs\0'\x04\
+\0\x16[method]language.parse\x01(\x01h\x07\x01@\x01\x04self)\0\x1b\x04\0\x1c[met\
+hod]parse-error.severity\x01*\x01@\x01\x04self)\0\x1f\x04\0\x1e[method]parse-err\
+or.text-range\x01+\x01@\x01\x04self)\0s\x04\0\x1b[method]parse-error.message\x01\
+,\x01h\x08\x01@\x01\x04self-\0\x0e\x04\0\x19[method]parse-output.tree\x01.\x01i\x07\
+\x01p/\x01@\x01\x04self-\00\x04\0\x1b[method]parse-output.errors\x011\x01@\x01\x04\
+self-\0\x7f\x04\0\x1d[method]parse-output.is-valid\x012\x01@\x01\x04self-\0\x13\x04\
+\0'[method]parse-output.create-tree-cursor\x013\x01h\x09\x01@\x01\x04self4\0\x01\
+\x04\0\x1d[method]nonterminal-node.kind\x015\x01@\x01\x04self4\0\x1d\x04\0![meth\
+od]nonterminal-node.text-len\x016\x01p\x0e\x01@\x01\x04self4\07\x04\0![method]no\
+nterminal-node.children\x018\x01@\x02\x04self4\x0btext-offset\x1d\0\x13\x04\0&[m\
+ethod]nonterminal-node.create-cursor\x019\x01@\x01\x04self4\0s\x04\0\x20[method]\
+nonterminal-node.unparse\x01:\x01h\x0a\x01@\x01\x04self;\0\x05\x04\0\x1a[method]\
+terminal-node.kind\x01<\x01@\x01\x04self;\0\x1d\x04\0\x1e[method]terminal-node.t\
+ext-len\x01=\x01@\x01\x04self;\0s\x04\0\x1a[method]terminal-node.text\x01>\x01h\x0f\
+\x01@\x01\x04self?\x01\0\x04\0\x14[method]cursor.reset\x01@\x04\0\x17[method]cur\
+sor.complete\x01@\x01@\x01\x04self?\0\x7f\x04\0\x1b[method]cursor.is-completed\x01\
+A\x01@\x01\x04self?\0\x13\x04\0\x14[method]cursor.clone\x01B\x04\0\x14[method]cu\
+rsor.spawn\x01B\x01@\x01\x04self?\0\x0e\x04\0\x13[method]cursor.node\x01C\x01k\x03\
+\x01@\x01\x04self?\0\xc4\0\x04\0\x14[method]cursor.label\x01E\x01@\x01\x04self?\0\
+\x1d\x04\0\x1a[method]cursor.text-offset\x01F\x01@\x01\x04self?\0\x1f\x04\0\x19[\
+method]cursor.text-range\x01G\x01@\x01\x04self?\0y\x04\0\x14[method]cursor.depth\
+\x01H\x01p\x0b\x01@\x01\x04self?\0\xc9\0\x04\0\x18[method]cursor.ancestors\x01J\x04\
+\0\x19[method]cursor.go-to-next\x01A\x04\0([method]cursor.go-to-next-non-descend\
+ent\x01A\x04\0\x1d[method]cursor.go-to-previous\x01A\x04\0\x1b[method]cursor.go-\
+to-parent\x01A\x04\0\x20[method]cursor.go-to-first-child\x01A\x04\0\x1f[method]c\
+ursor.go-to-last-child\x01A\x01@\x02\x04self?\x0cchild-numbery\0\x7f\x04\0\x1e[m\
+ethod]cursor.go-to-nth-child\x01K\x04\0![method]cursor.go-to-next-sibling\x01A\x04\
+\0%[method]cursor.go-to-previous-sibling\x01A\x04\0\"[method]cursor.go-to-next-t\
+erminal\x01A\x01@\x02\x04self?\x04kind\x05\0\x7f\x04\0,[method]cursor.go-to-next\
+-terminal-with-kind\x01L\x01p\x05\x01@\x02\x04self?\x05kinds\xcd\0\0\x7f\x04\0-[\
+method]cursor.go-to-next-terminal-with-kinds\x01N\x04\0%[method]cursor.go-to-nex\
+t-nonterminal\x01A\x01@\x02\x04self?\x04kind\x01\0\x7f\x04\0/[method]cursor.go-t\
+o-next-nonterminal-with-kind\x01O\x01p\x01\x01@\x02\x04self?\x05kinds\xd0\0\0\x7f\
+\x04\00[method]cursor.go-to-next-nonterminal-with-kinds\x01Q\x01h\x10\x01p\xd2\0\
+\x01i\x19\x01@\x02\x04self?\x07queries\xd3\0\0\xd4\0\x04\0\x14[method]cursor.que\
+ry\x01U\x01i\x10\x01j\x01\xd6\0\x01\x12\x01@\x01\x04texts\0\xd7\0\x04\0\x13[stat\
+ic]query.parse\x01X\x01h\x19\x01k\x18\x01@\x01\x04self\xd9\0\0\xda\0\x04\0![meth\
+od]query-match-iterator.next\x01[\x04\x01\x18nomic:slang/parser@1.0.0\x05\0\x04\x01\
+\x17nomic:slang/slang@1.0.0\x04\0\x0b\x0b\x01\0\x05slang\x03\0\0\0G\x09producers\
+\x01\x0cprocessed-by\x02\x0dwit-component\x070.209.1\x10wit-bindgen-rust\x060.26\
+.0";
   };
   )
 }
